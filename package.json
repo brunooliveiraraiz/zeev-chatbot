@@ -1,0 +1,26 @@
+{
+  "name": "zeev-embedded-chatbot",
+  "version": "1.0.0",
+  "description": "MVP de chat embutido no portal Zeev com triagem automática e criação de tickets",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:widget\"",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:widget": "npm run dev --workspace=apps/widget",
+    "build": "npm run build --workspace=apps/api && npm run build --workspace=apps/widget",
+    "build:api": "npm run build --workspace=apps/api",
+    "build:widget": "npm run build --workspace=apps/widget",
+    "test": "npm run test --workspace=apps/api",
+    "lint": "npm run lint --workspace=apps/api && npm run lint --workspace=apps/widget",
+    "start": "npm run start --workspace=apps/api"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

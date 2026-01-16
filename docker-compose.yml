@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - AUTH_MODE=DEV
+      - MOCK_MODE=true
+      - DATABASE_URL=file:/app/data/chatbot.db
+    volumes:
+      - ./apps/api/data:/app/data
+    restart: unless-stopped
+
+  widget:
+    build:
+      context: .
+      dockerfile: apps/widget/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    restart: unless-stopped

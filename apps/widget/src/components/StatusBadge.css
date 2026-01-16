@@ -1,0 +1,14 @@
+.status-badge {
+  padding: 4px 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.typing-indicator {
+  font-style: italic;
+}
+
+.error-indicator {
+  color: #e74c3c;
+  font-weight: 500;
+}

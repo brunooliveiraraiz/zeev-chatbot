@@ -1,0 +1,52 @@
+.composer {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #e9ecef;
+  background-color: white;
+}
+
+.composer-input {
+  flex: 1;
+  border: 1px solid #ced4da;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.composer-input:focus {
+  border-color: #007bff;
+}
+
+.composer-input:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.composer-send {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+}
+
+.composer-send:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.composer-send:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
