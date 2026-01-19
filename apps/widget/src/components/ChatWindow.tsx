@@ -66,8 +66,8 @@ export function ChatWindow({ sessionId, stage }: ChatWindowProps) {
   };
 
   const handleOpenLink = (url: string) => {
-    // Abre na mesma aba para manter contexto de autenticação
-    window.location.href = url;
+    // Abre em nova aba sem noopener para manter contexto de autenticação
+    window.open(url, '_blank');
   };
 
   const handleDownloadConversation = () => {

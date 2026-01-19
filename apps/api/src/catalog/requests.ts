@@ -255,18 +255,18 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Financeiro] Baixa de pagamento e vinculação de nota de crédito',
     area: 'Atendimento',
     description: 'Solicitações para casos onde o responsável realiza um pagamento que não foi registrado no sistema.',
-    tags: ['atendimento', 'financeiro', 'baixa', 'pagamento', 'nota de crédito', 'comprovante'],
+    tags: ['atendimento', 'financeiro', 'baixa', 'pagamento nao registrado', 'nota de credito', 'comprovante', 'paguei', 'nao consta', 'nao aparece'],
     examples: [
       'paguei mas não foi registrado',
       'pagamento não computado',
       'boleto pago não baixado',
       'vincular nota de crédito',
       'comprovante de pagamento',
-      'pagamento não aparece',
+      'pagamento não aparece no sistema',
       'baixar pagamento manualmente',
       'crédito não vinculado',
       'pagamento não consta',
-      'registro de pagamento'
+      'já paguei mas não aparece'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=mpuQkqMF2EEdG86STj%2B3aa1shkhIdz%2Bm1aoNV%2Bm%2Fz30MSuJ6a2uZ0ekpIZEgAGgw4rkUo1cTIsEReY9j8yDIfA%3D%3D'
   },
@@ -277,14 +277,14 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Comercial] Criação de plano de pagamento / serviço',
     area: 'Comercial',
     description: 'Atendimento de solicitações para criação ou personalização de planos de pagamento ou serviços.',
-    tags: ['comercial', 'plano', 'pagamento', 'serviço', 'personalização', 'criar plano'],
+    tags: ['comercial', 'criar plano', 'novo plano', 'plano personalizado', 'servico', 'personalizacao', 'montar plano', 'customizar'],
     examples: [
       'criar plano de pagamento',
       'novo plano personalizado',
       'cadastrar serviço',
-      'plano diferenciado',
+      'plano diferenciado para cliente',
       'personalizar forma de pagamento',
-      'criar novo serviço',
+      'criar novo serviço comercial',
       'plano especial',
       'customizar plano',
       'serviço personalizado',
@@ -461,7 +461,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[DP] Solicitações',
     area: 'DP',
     description: 'Utilize este processo para tratar assuntos como: folha de pagamento, benefícios, férias e documentações.',
-    tags: ['dp', 'departamento pessoal', 'folha', 'pagamento', 'férias', 'benefícios', 'documentação'],
+    tags: ['dp', 'departamento pessoal', 'folha pagamento', 'ferias', 'beneficios', 'documentacao', 'holerite', 'contracheque', 'salario'],
     examples: [
       'dúvida sobre folha de pagamento',
       'solicitar férias',
@@ -503,18 +503,18 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Financeiro] Solicitação de cadastro',
     area: 'Financeiro',
     description: 'Pedido de criação ou atualização de dados cadastrais financeiros de fornecedores, unidades ou outros parceiros.',
-    tags: ['financeiro', 'cadastro', 'fornecedor', 'dados cadastrais', 'atualização'],
+    tags: ['financeiro', 'cadastro', 'fornecedor', 'dados cadastrais', 'atualizacao', 'cadastrar fornecedor', 'incluir fornecedor', 'parceiro'],
     examples: [
       'cadastrar fornecedor',
       'atualizar dados cadastrais',
       'cadastro de parceiro',
-      'incluir fornecedor',
-      'atualizar dados bancários',
+      'incluir fornecedor no sistema',
+      'atualizar dados bancários fornecedor',
       'cadastrar novo fornecedor',
-      'alterar cadastro',
+      'alterar cadastro fornecedor',
       'dados cadastrais fornecedor',
       'atualização cadastral',
-      'cadastro financeiro'
+      'cadastro de fornecedor'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=bWxd0fqxy6qYGTTf3p7HOzci1wrQ6harJ%2F9NNQ7s%2FehtNVDJnIplRTF%2F8qH7xteiA3bbL9w7AG%2Bkn6yr2cTS%2BQ%3D%3D'
   },
@@ -523,18 +523,18 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Financeiro] Solicitações Financeiras',
     area: 'Financeiro',
     description: 'Demandas gerais relacionadas a processos financeiros, como pagamentos, reembolsos, fundo fixo e adiantamentos.',
-    tags: ['financeiro', 'pagamento', 'reembolso', 'fundo fixo', 'adiantamento', 'nota fiscal', 'boleto'],
+    tags: ['financeiro', 'pagamento', 'reembolso', 'fundo fixo', 'adiantamento', 'nota fiscal', 'boleto', 'solicitacao financeira', 'demanda financeira', 'despesa', 'pagar', 'financas'],
     examples: [
       'solicitar pagamento',
+      'solicitação financeira',
+      'abrir solicitação financeira',
+      'demanda financeira',
       'reembolso de despesa',
       'fundo fixo',
       'adiantamento financeiro',
       'pagar fornecedor',
       'processar nota fiscal',
-      'pagamento urgente',
-      'reembolsar despesa',
-      'solicitar adiantamento',
-      'pagar boleto'
+      'pagamento urgente'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=JF8cyskH5H5NVXdGFS50IoV6EkeXgdnRHvOYXb9nr49zF4q0ncagv9R%2FpvTp7Uwweb28QfAYhAJ3jRBqzxLWlw%3D%3D'
   },
