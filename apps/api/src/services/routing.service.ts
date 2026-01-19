@@ -45,6 +45,9 @@ export class RoutingService {
     const normalized = normalizeText(request.message);
     const resolvedStage = request.stage ?? env.STAGE_DEFAULT;
 
+    // Armazena mensagem de mudança de contexto para incluir depois
+    let contextChangeMessage: string | undefined;
+
     // Primeiro, tentar troubleshooting se tiver sessionId
     if (request.sessionId) {
       const troubleshootingResult = this.troubleshootingService.processMessage(
@@ -52,9 +55,8 @@ export class RoutingService {
         request.message
       );
 
-      // Se resolveu o problema, retornar sucesso e resetar sessão
-      if (troubleshootingResult.solved) {
-        this.troubleshootingService.resetSession(request.sessionId);
+      // Se é mensagem irrelevante, retornar aviso e continuar troubleshooting
+      if (troubleshootingResult.isIrrelevant) {
         const response: RouteResponse = {
           type: 'troubleshooting',
           text: troubleshootingResult.response,
@@ -62,8 +64,22 @@ export class RoutingService {
         return { response, topMatches: [], normalized, stage: resolvedStage };
       }
 
-      // Se deve escalar
-      if (troubleshootingResult.shouldEscalate) {
+      // Se houve mudança de contexto, armazenar mensagem e fazer routing normal
+      if (troubleshootingResult.contextChanged) {
+        // Armazena mensagem para incluir no response final
+        contextChangeMessage = troubleshootingResult.response;
+        // Sessão já foi resetada no troubleshooting service
+        // Faz routing normal abaixo (pula o bloco de shouldEscalate)
+      } else if (troubleshootingResult.solved) {
+        // Se resolveu o problema, retornar sucesso e resetar sessão
+        this.troubleshootingService.resetSession(request.sessionId);
+        const response: RouteResponse = {
+          type: 'troubleshooting',
+          text: troubleshootingResult.response,
+        };
+        return { response, topMatches: [], normalized, stage: resolvedStage };
+      } else if (troubleshootingResult.shouldEscalate) {
+        // Se deve escalar (mas NÃO é mudança de contexto)
         const session = this.troubleshootingService.getSession(request.sessionId);
 
         // Se tem categoria identificada no troubleshooting, usar ela
@@ -127,6 +143,11 @@ export class RoutingService {
 
     const decision = this.decide(top1, top2);
     const response = this.buildResponse(decision, matches, resolvedStage);
+
+    // Se houve mudança de contexto, incluir mensagem no início
+    if (contextChangeMessage && response.type === 'direct_link') {
+      response.text = contextChangeMessage + '\n\n' + response.text;
+    }
 
     this.logResult(request.sessionId, resolvedStage, normalized, matches);
 

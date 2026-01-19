@@ -114,10 +114,105 @@ export class TroubleshootingService {
     return null;
   }
 
+  /**
+   * Detecta se a mensagem do usuário mudou de contexto/categoria
+   * Retorna a nova categoria se detectar mudança significativa
+   */
+  detectContextChange(
+    userMessage: string,
+    currentCategory?: string
+  ): {
+    hasChanged: boolean;
+    newCategory?: 'ti_infraestrutura' | 'ti_sistemas' | 'ti_bi' | 'ti_ticket_raiz';
+  } {
+    if (!currentCategory) {
+      return { hasChanged: false };
+    }
+
+    // Buscar melhor match em TODAS as categorias (sem filtro)
+    const bestMatch = this.findRelevantKnowledgeWithScore(userMessage);
+
+    if (!bestMatch || bestMatch.score < 3) {
+      // Score muito baixo, não é uma solicitação clara
+      return { hasChanged: false };
+    }
+
+    // Verificar se a categoria mudou
+    if (bestMatch.knowledge.category !== currentCategory) {
+      logger.info(`Context change detected: ${currentCategory} → ${bestMatch.knowledge.category} (score: ${bestMatch.score})`);
+      return {
+        hasChanged: true,
+        newCategory: bestMatch.knowledge.category,
+      };
+    }
+
+    return { hasChanged: false };
+  }
+
+  /**
+   * Detecta se a mensagem é irrelevante (cumprimentos, off-topic, etc.)
+   */
+  isIrrelevantMessage(userMessage: string): boolean {
+    const normalized = userMessage.toLowerCase().trim();
+
+    // Lista de padrões irrelevantes
+    const irrelevantPatterns = [
+      // Cumprimentos básicos
+      /^(oi|olá|ola|hey|opa|eai|e ai)$/,
+      /^(bom dia|boa tarde|boa noite)$/,
+      /^(tudo bem|como vai|tudo bom|beleza)\??$/,
+
+      // Despedidas
+      /^(tchau|até|até logo|até mais|valeu|obrigado|obrigada|thanks|flw)$/,
+
+      // Respostas vazias ou muito curtas sem contexto
+      /^(sim|não|nao|ok|beleza|certo|entendi)$/,
+
+      // Perguntas sobre o bot
+      /^(quem é você|o que você faz|você é um bot)\??$/,
+
+      // Mensagens muito curtas (menos de 3 caracteres)
+      /^.{1,2}$/,
+    ];
+
+    // Verifica padrões
+    for (const pattern of irrelevantPatterns) {
+      if (pattern.test(normalized)) {
+        logger.info(`Irrelevant message detected: "${userMessage}"`);
+        return true;
+      }
+    }
+
+    // Mensagens sobre assuntos totalmente fora do contexto
+    const offTopicKeywords = [
+      'tempo', 'clima', 'chuva', 'sol',
+      'futebol', 'jogo', 'placar',
+      'notícia', 'noticia', 'política', 'politica',
+      'receita', 'comida', 'restaurante',
+      'filme', 'série', 'novela',
+    ];
+
+    const tokens = normalized.split(/\s+/);
+    const hasOnlyOffTopicWords = tokens.length > 0 &&
+      tokens.every(token =>
+        offTopicKeywords.includes(token) ||
+        token.length <= 2
+      );
+
+    if (hasOnlyOffTopicWords) {
+      logger.info(`Off-topic message detected: "${userMessage}"`);
+      return true;
+    }
+
+    return false;
+  }
+
   processMessage(sessionId: string, userMessage: string, category?: string): {
     response: string;
     shouldEscalate: boolean;
     solved: boolean;
+    contextChanged?: boolean;
+    isIrrelevant?: boolean;
   } {
     const session = this.getOrCreateSession(sessionId);
 
@@ -126,6 +221,41 @@ export class TroubleshootingService {
 
     // Incrementar contador de tentativas
     session.attemptCount++;
+
+    // NOVO: Verificar se é mensagem irrelevante (só se já está em troubleshooting)
+    if (session.knowledgeItemId && this.isIrrelevantMessage(userMessage)) {
+      const response = 'Estou aqui para te ajudar com solicitações. Vamos continuar com o que você estava pedindo?';
+      this.addMessage(sessionId, 'bot', response);
+      return {
+        response,
+        shouldEscalate: false,
+        solved: false,
+        isIrrelevant: true,
+      };
+    }
+
+    // NOVO: Verificar mudança de contexto (só se já está em troubleshooting)
+    if (session.knowledgeItemId && session.category) {
+      const contextChange = this.detectContextChange(userMessage, session.category);
+
+      if (contextChange.hasChanged) {
+        // Usuário mudou de assunto, resetar e escalar para nova categoria
+        logger.info(`User changed context from ${session.category} to ${contextChange.newCategory}, resetting session`);
+
+        const response = 'Percebi que você mudou de assunto. Vou te direcionar para a solicitação correta.';
+        this.addMessage(sessionId, 'bot', response);
+
+        // Resetar sessão para permitir novo troubleshooting
+        this.resetSession(sessionId);
+
+        return {
+          response,
+          shouldEscalate: true,
+          solved: false,
+          contextChanged: true,
+        };
+      }
+    }
 
     // Se já atingiu o máximo de tentativas, escalar
     if (session.attemptCount >= this.MAX_ATTEMPTS) {
