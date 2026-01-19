@@ -1,0 +1,802 @@
+Tipos de Acesso
+Tipo 1: Sistema/Aplicação
+Tipo 2: Pasta de Rede
+Tipo 3: SharePoint/OneDrive
+Tipo 4: Arquivo Específico
+Tipo 5: Banco de Dados
+Tipo 6: VPN/Rede
+Fluxo Completo
+PASSO 1: Confirmação e Identificação
+IA: "Entendi que você precisa de acesso a algo.
+     É isso mesmo?"
+
+User: [Sim]
+
+IA: "O que você precisa acessar?
+
+     1️⃣ Um sistema/aplicação
+     2️⃣ Uma pasta de rede
+     3️⃣ SharePoint/OneDrive
+     4️⃣ Um arquivo específico
+     5️⃣ Outro"
+
+User: [Escolhe opção]
+
+[BASEADO NA ESCOLHA, SEGUE FLUXO ESPECÍFICO]
+FLUXO A: Acesso a Sistema/Aplicação
+IA: "Qual sistema você precisa acessar?"
+
+User: [Nome do sistema - ex: "SAP", "BI", "CRM"]
+
+[NORMALIZA NOME DO SISTEMA]
+[VERIFICA SE SISTEMA EXISTE NO CATÁLOGO]
+
+IF sistema não encontrado:
+  IA: "Não encontrei esse sistema na nossa base.
+       Pode escrever o nome completo ou como aparece
+       na tela de login?"
+
+  [TENTA NOVAMENTE - ATÉ 2x]
+
+  IF ainda não encontra:
+    IA: "Vou transferir para um analista que vai
+         identificar o sistema e configurar o acesso."
+    [ESCALA - MOTIVO: "Sistema não identificado"]
+
+IF sistema encontrado:
+
+  [VERIFICA ACESSO ATUAL DO USUÁRIO]
+  [EXECUTA: checkUserAccess(userId, systemId)]
+
+  IF usuário JÁ tem acesso:
+    IA: "Vejo que você já tem acesso ao {SISTEMA}.
+
+         Qual problema está tendo ao tentar entrar?
+         1️⃣ Senha não funciona
+         2️⃣ Mensagem de erro
+         3️⃣ Não sei onde acessar
+         4️⃣ Outro"
+
+    [TRATA PROBLEMA ESPECÍFICO]
+
+  ELSE:
+    IA: "Você não tem acesso ao {SISTEMA} ainda.
+
+         Qual seu cargo/função?"
+
+    User: [Cargo]
+
+    IA: "E qual área/departamento?"
+
+    User: [Área]
+
+    [CONSULTA MATRIZ DE ACESSOS]
+    [VERIFICA SE CARGO+ÁREA TEM DIREITO AO SISTEMA]
+
+    IF acesso está nas regras padrão:
+      IA: "Perfeito! Seu cargo tem direito a esse acesso.
+           Vou configurar agora... ⏳"
+
+      [EXECUTA: grantAccess(userId, systemId, role)]
+
+      IF sucesso:
+        IA: "Acesso concedido! ✅
+
+             Você pode acessar o sistema em:
+             {SYSTEM_URL}
+
+             Use suas credenciais do Windows.
+
+             Pode levar até 5 minutos para sincronizar.
+             Tente fazer login e me avise se funcionou."
+
+        [AGUARDA CONFIRMAÇÃO]
+
+      ELSE (erro):
+        IA: "Encontrei um problema ao conceder o acesso.
+             Vou transferir para um analista resolver."
+        [ESCALA - MOTIVO: "Erro ao conceder acesso - {ERRO}"]
+
+    ELSE (fora do padrão):
+      IA: "Entendo. Para esse sistema, seu cargo requer
+           aprovação do gestor.
+
+           Quem é seu gestor direto?"
+
+      User: [Nome do gestor]
+
+      [BUSCA GESTOR NO AD]
+
+      IF gestor encontrado:
+        IA: "Perfeito! Vou enviar uma solicitação de
+             aprovação para {GESTOR}.
+
+             Você receberá um email quando for aprovado.
+             Geralmente leva até 1 dia útil.
+
+             Chamado #{TICKET_ID} aberto para acompanhamento."
+
+        [CRIA WORKFLOW DE APROVAÇÃO]
+        [ENVIA EMAIL PARA GESTOR]
+        [TICKET FICA AGUARDANDO APROVAÇÃO]
+
+      ELSE:
+        IA: "Não encontrei esse gestor. Vou transferir
+             para um analista verificar."
+        [ESCALA - MOTIVO: "Gestor não encontrado"]
+FLUXO B: Acesso a Pasta de Rede
+IA: "Qual o caminho da pasta que você precisa acessar?
+     Exemplo: \\servidor\departamento\projeto"
+
+User: [Caminho da pasta]
+
+[NORMALIZA O CAMINHO]
+[VERIFICA SE PASTA EXISTE]
+
+IF pasta não existe:
+  IA: "Não encontrei essa pasta.
+       Tem certeza que o caminho está correto?
+
+       Você pode copiar e colar o endereço completo?"
+
+  [TENTA NOVAMENTE]
+
+  IF ainda não encontra:
+    [ESCALA - MOTIVO: "Pasta não encontrada"]
+
+IF pasta existe:
+
+  [VERIFICA PERMISSÕES ATUAIS]
+  [EXECUTA: checkFolderPermissions(userId, folderPath)]
+
+  IF usuário JÁ tem acesso:
+    IA: "Você já tem permissão nessa pasta.
+
+         Qual erro aparece quando tenta abrir?"
+
+    [TROUBLESHOOTING DE ACESSO]
+
+  ELSE:
+    IA: "Você precisa de permissão de:
+         1️⃣ Leitura (apenas visualizar)
+         2️⃣ Modificação (visualizar e editar)"
+
+    User: [Escolhe]
+
+    IA: "Para conceder acesso a pastas compartilhadas,
+         preciso da aprovação do dono da pasta.
+
+         Você sabe quem é o responsável por essa pasta?"
+
+    User: [Nome ou "não sei"]
+
+    IF sabe:
+      [VALIDA SE PESSOA É REALMENTE O DONO]
+      [ENVIA SOLICITAÇÃO DE APROVAÇÃO]
+
+      IA: "Perfeito! Enviei solicitação de aprovação
+           para {RESPONSÁVEL}.
+
+           Você receberá email quando for aprovado.
+           Chamado #{TICKET_ID} aberto."
+
+    ELSE (não sabe):
+      [IDENTIFICA DONO DA PASTA AUTOMATICAMENTE]
+
+      IF consegue identificar:
+        IA: "Identifiquei que o responsável é {DONO}.
+             Enviei solicitação para ele.
+
+             Você receberá email quando for aprovado."
+
+        [ENVIA APROVAÇÃO]
+
+      ELSE:
+        IA: "Vou transferir para um analista identificar
+             o responsável e configurar o acesso."
+        [ESCALA - MOTIVO: "Dono da pasta não identificado"]
+FLUXO C: Acesso SharePoint/OneDrive
+IA: "Qual o nome do site SharePoint ou pasta OneDrive?"
+
+User: [Nome do site/pasta]
+
+[BUSCA NO SHAREPOINT]
+
+IF encontrado:
+  IA: "Encontrei: {SITE_NAME}
+       Link: {SITE_URL}
+
+       É esse?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    [VERIFICA PERMISSÕES]
+
+    IF usuário já tem acesso:
+      IA: "Você já está com permissão neste site.
+           Consegue abrir o link acima?"
+
+      [TROUBLESHOOTING]
+
+    ELSE:
+      IA: "Você não tem permissão ainda.
+           Vou solicitar acesso ao administrador do site.
+
+           Qual nível de permissão você precisa?
+           1️⃣ Leitura
+           2️⃣ Contribuição (editar)
+           3️⃣ Total"
+
+      User: [Escolhe]
+
+      [IDENTIFICA ADMINISTRADOR DO SITE]
+      [ENVIA SOLICITAÇÃO DE ACESSO]
+
+      IA: "Solicitação enviada para {ADMIN}.
+           Você receberá email quando for aprovado."
+
+ELSE (não encontrado):
+  IA: "Não encontrei esse site. Pode me enviar
+       o link completo do SharePoint?"
+
+  User: [Envia link]
+
+  [VALIDA LINK]
+  [TENTA IDENTIFICAR SITE]
+
+  IF ainda não encontra:
+    [ESCALA - MOTIVO: "Site SharePoint não encontrado"]
+Matriz de Acessos (Exemplo)
+Sistema: SAP
+Acessos Automáticos (não precisa aprovação):
+  - Cargo: "Analista Financeiro" → Role: "FI_VIEWER"
+  - Cargo: "Gerente Financeiro" → Role: "FI_FULL"
+  - Área: "Financeiro" + Seniority: "Junior" → Role: "FI_LIMITED"
+
+Acessos com Aprovação de Gestor:
+  - Outros cargos → Requer aprovação
+
+Sistema: BI - Business Intelligence
+Acessos Automáticos:
+  - Cargo: "Analista" (qualquer área) → Role: "BI_VIEWER"
+  - Cargo: "Coordenador" → Role: "BI_ADVANCED"
+
+Acessos com Aprovação:
+  - Role: "BI_ADMIN" → Requer aprovação TI
+
+Pastas de Rede:
+Padrão:
+  - Usuário tem acesso automático à pasta do próprio departamento
+  - Outras pastas: requer aprovação do dono
+
+SharePoint:
+Padrão:
+  - Sem acesso automático
+  - Sempre requer aprovação do administrador do site
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+32.	❌ Sistema não está no catálogo
+33.	❌ Pasta de rede não existe ou não encontrada
+34.	❌ Erro ao conceder acesso via API
+35.	❌ Acesso requer perfil especial/sensível
+36.	❌ Não consegue identificar dono/responsável
+37.	❌ Conflito de permissões (usuário tem mas não funciona)
+38.	❌ Solicitação de acesso administrativo
+39.	❌ Acesso a dados financeiros/confidenciais (requer N2)
+40.	❌ Problema de sincronização AD/Azure
+APIs e Comandos
+# Verificar acesso atual
+checkUserAccess(
+  userId: string,
+  resourceId: string,
+  resourceType: 'system' | 'folder' | 'sharepoint'
+) -> {
+  hasAccess: boolean,
+  currentRole: string,
+  grantedDate: datetime
+}
+
+# Conceder acesso (sistemas)
+grantAccess(
+  userId: string,
+  systemId: string,
+  role: string,
+  approver: string = 'auto'
+) -> {success: boolean, effectiveAt: datetime}
+
+# Verificar permissões pasta
+checkFolderPermissions(
+  userId: string,
+  folderPath: string
+) -> {
+  canRead: boolean,
+  canWrite: boolean,
+  canDelete: boolean
+}
+
+# Conceder permissão pasta
+grantFolderPermission(
+  userId: string,
+  folderPath: string,
+  permission: 'read' | 'modify' | 'full',
+  approverUserId: string
+) -> {success: boolean, approvalRequired: boolean}
+
+# Enviar solicitação de aprovação
+sendApprovalRequest(
+  requesterId: string,
+  approverId: string,
+  resourceType: string,
+  resourceId: string,
+  reason: string
+) -> {requestId: string, status: 'pending'}
+
+# Consultar matriz de acessos
+checkAccessMatrix(
+  userId: string,
+  systemId: string
+) -> {
+  autoGrantAllowed: boolean,
+  suggestedRole: string,
+  requiresApproval: boolean,
+  approver: string
+}
+Exemplos de Diálogos
+Exemplo 1: Acesso Automático (Sucesso)
+User: "Não consigo acessar o BI"
+
+IA: "Entendi que você precisa de acesso ao BI.
+     Qual seu cargo?"
+
+User: "Analista de Marketing"
+
+IA: "Perfeito! Analistas têm direito a acesso ao BI.
+     Configurando agora... ⏳"
+
+[CONCEDE ACESSO]
+
+IA: "Pronto! Acesso concedido. ✅
+
+     Acesse em: https://bi.raiz.com
+     Use suas credenciais do Windows.
+
+     Pode levar até 5 minutos para sincronizar.
+     Tente agora e me avise se funcionou."
+
+User: "Funcionou! Obrigado"
+
+IA: "Ótimo! 🎉 Mais alguma coisa?"
+
+[SUCESSO]
+Exemplo 2: Requer Aprovação
+User: "Preciso de acesso à pasta \\servidor\financeiro\notas_fiscais"
+
+IA: "Entendi. Essa é uma pasta do departamento Financeiro.
+
+     Para conceder acesso, preciso da aprovação do
+     responsável pela pasta.
+
+     Identifiquei que o responsável é: João Silva
+     É com ele que você deve solicitar?"
+
+User: "Sim, ele pediu para eu solicitar"
+
+IA: "Perfeito! Você precisa de:
+     1️⃣ Apenas visualizar (leitura)
+     2️⃣ Editar arquivos (modificação)"
+
+User: "Só visualizar"
+
+IA: "Certo! Enviei solicitação de aprovação para João Silva.
+
+     Você receberá um email quando ele aprovar.
+     Geralmente leva até 1 dia útil.
+
+     Chamado #45678 aberto para acompanhamento.
+     Mais alguma coisa?"
+
+[WORKFLOW DE APROVAÇÃO CRIADO]
+________________________________________________________________________________
+CATEGORIA 3: EMAIL/OUTLOOK
+Volume: 1.403 chamados/ano (7.0% do TI)
+Potencial de Automação: 60%
+Média de Mensagens: 3.2
+Complexidade: ⭐⭐ Média
+Economia Estimada: 421 horas/ano
+Identificadores
+Keywords principais:
+•	email, outlook, correio, mensagem
+•	não envia, não recebe, travou, lento
+•	caixa postal, quota, cheia, espaço
+•	sincronização, sincronizar, não atualiza
+Patterns:
+/(email|outlook|correio).*não.*(envia|recebe|funciona)/i
+/(caixa.*postal.*(cheia|quota)|outlook.*travou)/i
+Tipos de Problemas
+Problema 1: Outlook Não Abre/Travou
+Problema 2: Não Envia Emails
+Problema 3: Não Recebe Emails
+Problema 4: Caixa Postal Cheia
+Problema 5: Sincronização Lenta
+Problema 6: Perfil Corrompido
+Problema 7: Configuração de Conta
+Fluxo Completo
+PASSO 1: Identificar Problema Específico
+IA: "Entendi que você está com problema no email.
+     Qual dessas situações descreve melhor seu problema?
+
+     1️⃣ Outlook não abre ou travou
+     2️⃣ Não consigo enviar emails
+     3️⃣ Não estou recebendo emails
+     4️⃣ Caixa postal cheia
+     5️⃣ Muito lento para sincronizar
+     6️⃣ Outro problema"
+
+User: [Escolhe opção]
+
+[SEGUE FLUXO ESPECÍFICO DO PROBLEMA]
+FLUXO A: Outlook Não Abre/Travou
+IA: "O Outlook está aberto neste momento?"
+
+User: [Sim/Não]
+
+IF Sim (travado):
+  IA: "Vou orient você a fechar forçadamente e reiniciar.
+
+       Siga estes passos:
+
+       1. Pressione Ctrl + Shift + Esc (abre Gerenciador Tarefas)
+       2. Procure por 'Outlook' na lista
+       3. Clique com botão direito e escolha 'Finalizar tarefa'
+       4. Aguarde 10 segundos
+       5. Abra o Outlook novamente
+
+       Conseguiu fechar e reabrir?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    IA: "O Outlook abriu normalmente agora?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Ótimo! Problema resolvido. 🎉"
+      [SUCESSO]
+
+    ELSE:
+      IA: "Qual mensagem de erro aparece?"
+      [CONTINUA TROUBLESHOOTING]
+
+  ELSE:
+    IA: "Não conseguiu fechar? Vamos tentar reiniciar
+         o computador.
+
+         Salve tudo que estiver aberto e reinicie.
+         Depois me avise se o Outlook abriu."
+
+IF Não (não abre):
+  IA: "Quando você clica no ícone do Outlook, o que acontece?
+
+       1️⃣ Nada acontece
+       2️⃣ Aparece mensagem de erro
+       3️⃣ Começa a abrir mas trava
+       4️⃣ Abre mas fica carregando infinito"
+
+  User: [Escolhe]
+
+  CASE 1 (Nada acontece):
+    IA: "Vamos reparar a instalação do Office.
+
+         Acesse: https://office.raiz.com/repair
+         Clique em 'Reparação Rápida'
+         Aguarde finalizar (5-10 min)
+
+         Avise quando terminar."
+
+    [AGUARDA CONFIRMAÇÃO]
+
+  CASE 2 (Erro):
+    IA: "Qual o código ou mensagem do erro?"
+
+    User: [Descreve erro]
+
+    [CONSULTA BASE DE CONHECIMENTO DE ERROS]
+
+    IF erro conhecido:
+      [APLICA FIX AUTOMÁTICO]
+
+    ELSE:
+      [ESCALA - MOTIVO: "Erro desconhecido - {ERRO}"]
+
+  CASE 3 (Trava ao abrir):
+    IA: "Pode ser um problema no perfil do Outlook.
+         Vou orientar você a abrir em modo seguro:
+
+         1. Pressione Win + R
+         2. Digite: outlook.exe /safe
+         3. Pressione Enter
+
+         O Outlook abriu?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Ótimo! O problema é no perfil.
+           Vou recriar seu perfil do Outlook.
+
+           Isso não apaga seus emails (estão no servidor).
+           Posso prosseguir?"
+
+      User: [Sim]
+
+      [EXECUTA SCRIPT: recreateOutlookProfile(userId)]
+
+      IA: "Perfil recriado! Feche o Outlook e abra
+           novamente normalmente.
+
+           Funcionou?"
+
+    ELSE:
+      [ESCALA - MOTIVO: "Não abre nem em safe mode"]
+
+  CASE 4 (Carregando infinito):
+    IA: "Quantos emails você tem na caixa de entrada?"
+
+    User: [Quantidade]
+
+    IF > 10000:
+      IA: "Você tem muitos emails. Isso pode deixar
+           o Outlook lento.
+
+           Vou orientar você a arquivar emails antigos.
+           [ENVIA TUTORIAL]
+
+           Mas primeiro, vamos tentar abrir em modo cache:
+           [INSTRUI CONFIGURAÇÃO]"
+
+    ELSE:
+      [TROUBLESHOOTING ADICIONAL]
+FLUXO B: Não Envia Emails
+IA: "Quando você tenta enviar, o que acontece?
+
+     1️⃣ Email fica preso na caixa de saída
+     2️⃣ Aparece mensagem de erro
+     3️⃣ Email é enviado mas não chega ao destino
+     4️⃣ Botão enviar não funciona"
+
+User: [Escolhe]
+
+CASE 1 (Preso na caixa saída):
+  IA: "Vamos tentar reenviar:
+
+       1. Vá na pasta 'Caixa de Saída'
+       2. Abra o email preso
+       3. Clique em 'Enviar' novamente
+
+       Funcionou?"
+
+  User: [Sim/Não]
+
+  IF Não:
+    IA: "Pode ter anexo muito grande.
+         O email tem anexo?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Qual o tamanho do anexo?"
+
+      User: [Tamanho]
+
+      IF tamanho > 25MB:
+        IA: "O limite de anexo é 25 MB.
+
+             Recomendo usar o OneDrive:
+             1. Faça upload do arquivo no OneDrive
+             2. Compartilhe o link no email
+
+             Quer que eu ensine como fazer?"
+
+      ELSE:
+        IA: "Vamos excluir esse email da caixa de saída
+             e criar um novo. Ok?"
+
+        [ORIENTA EXCLUSÃO E RECRIAÇÃO]
+
+    ELSE:
+      [VERIFICA CONFIGURAÇÕES SMTP]
+      [TENTA REENVIAR VIA WEBMAIL]
+
+CASE 2 (Erro):
+  IA: "Qual mensagem de erro aparece?"
+
+  User: [Descreve erro]
+
+  ERROS COMUNS:
+  - "Relaying denied" → Problema autenticação SMTP
+  - "Mailbox full" → Caixa do DESTINATÁRIO cheia
+  - "Message too large" → Anexo muito grande
+  - "Domain not found" → Email destinatário inválido
+
+  [APLICA FIX CONFORME ERRO]
+  [OU ESCALA SE DESCONHECIDO]
+
+CASE 3 (Não chega):
+  IA: "Para qual email você está enviando?"
+
+  User: [Email destino]
+
+  IA: "É email externo (@gmail, @hotmail) ou
+       interno (@raiz.com)?"
+
+  User: [Externo/Interno]
+
+  IF Interno:
+    [VERIFICA SE DESTINATÁRIO EXISTE]
+    [VERIFICA CAIXA POSTAL DO DESTINATÁRIO]
+
+    IA: "Verifiquei: o destinatário está com a caixa
+         cheia. O email não chegou por isso.
+
+         Precisa avisar a pessoa para liberar espaço."
+
+  IF Externo:
+    IA: "Emails externos às vezes vão para spam.
+         Pode pedir para o destinatário verificar
+         a caixa de spam/lixo eletrônico?
+
+         Ou você pode reenviar o email."
+
+CASE 4 (Botão não funciona):
+  IA: "Vamos reiniciar o Outlook.
+       Feche e abra novamente."
+
+  [ORIENTA REINICIALIZAÇÃO]
+FLUXO C: Caixa Postal Cheia
+IA: "Vou verificar sua caixa postal... ⏳"
+
+[EXECUTA: checkMailboxQuota(userId)]
+
+[RETORNA: current: 9.8GB, quota: 10GB, percentUsed: 98%]
+
+IA: "Sua caixa postal está usando 9.8 GB de 10 GB (98%).
+     Está quase no limite! ⚠️
+
+     Vou orientar você a liberar espaço:
+
+     OPÇÃO 1: Excluir emails antigos
+     - Vá na pasta 'Itens Excluídos' e esvazie
+     - Procure emails com anexos grandes e exclua
+
+     OPÇÃO 2: Arquivar emails antigos
+     - Arquivos ficam no seu computador
+     - Libera espaço no servidor
+     - [LINK TUTORIAL]
+
+     OPÇÃO 3: Mover para OneDrive
+     - Salve anexos importantes no OneDrive
+     - Exclua os emails com esses anexos
+
+     Qual opção prefere?"
+
+User: [Escolhe]
+
+IF Opção 1:
+  IA: "Vá em 'Itens Excluídos' → Clique com direito
+       → 'Esvaziar Pasta'
+
+       Depois me avise quantos GB ficou."
+
+IF Opção 2:
+  [ENVIA TUTORIAL DE ARQUIVAMENTO]
+  [INSTRUI PASSO A PASSO]
+
+IF Opção 3:
+  [ENVIA LINK DO ONEDRIVE]
+  [ORIENTA UPLOAD]
+
+[AGUARDA AÇÃO DO USUÁRIO]
+
+User: "Pronto, excluí bastante coisa"
+
+IA: "Ótimo! Deixa eu verificar... ⏳"
+
+[EXECUTA: checkMailboxQuota(userId)]
+
+[RETORNA: current: 7.2GB, quota: 10GB, percentUsed: 72%]
+
+IA: "Perfeito! Agora está em 7.2 GB (72%). ✅
+     Muito melhor!
+
+     Para evitar esse problema:
+     • Esvazie 'Itens Excluídos' regularmente
+     • Não guarde emails muito antigos
+     • Use OneDrive para arquivos grandes
+
+     Seu problema está resolvido?"
+
+[CONFIRMAÇÃO FINAL]
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+41.	❌ Outlook não abre nem em safe mode
+42.	❌ Erro desconhecido ao enviar/receber
+43.	❌ Problema de sincronização Exchange
+44.	❌ Corrupção de arquivos PST/OST
+45.	❌ Necessário aumentar quota de caixa postal
+46.	❌ Problema em múltiplos usuários (pode ser servidor)
+47.	❌ Regras de email não funcionam
+48.	❌ Delegação de caixa postal
+49.	❌ Migração de emails
+APIs e Comandos
+# Verificar quota caixa postal
+checkMailboxQuota(
+  userId: string
+) -> {
+  current: number,  # GB usado
+  quota: number,    # GB total
+  percentUsed: number,
+  itemCount: number
+}
+
+# Verificar status conta Exchange
+checkExchangeAccount(
+  userId: string
+) -> {
+  enabled: boolean,
+  lastSync: datetime,
+  hasMobileDevices: boolean
+}
+
+# Recriar perfil Outlook
+recreateOutlookProfile(
+  userId: string
+) -> {success: boolean}
+
+# Verificar problemas entrega
+checkEmailDelivery(
+  senderEmail: string,
+  recipientEmail: string,
+  messageId: string
+) -> {
+  delivered: boolean,
+  status: string,
+  error: string
+}
+
+# Limpar cache Outlook
+clearOutlookCache(
+  userId: string
+) -> {success: boolean}
+Exemplos de Diálogos
+Exemplo: Caixa Postal Cheia (Sucesso)
+User: "Não consigo receber emails"
+
+IA: "Vou verificar sua caixa postal... ⏳
+
+     Encontrei o problema! Sua caixa está 98% cheia
+     (9.8 de 10 GB).
+
+     Quando chega no limite, novos emails não entram.
+
+     Vou orientar você a liberar espaço.
+     Primeiro, vamos esvaziar a pasta 'Itens Excluídos':"
+
+[ORIENTA PASSO A PASSO]
+
+User: "Pronto"
+
+IA: "Verificando... Agora está em 72%. Muito melhor! ✅
+     Seus emails voltarão a chegar normalmente.
+
+     Resolvido?"
+
+User: "Sim, obrigado!"
+
+[SUCESSO]
+________________________________________________________________________________
+CATEGORIA 4: INSTALAÇÃO DE SOFTWARE
+Volume: 530 chamados/ano (2.7% do TI)
+Potencial de Automação: 80%
+Média de Mensagens: 2.5

@@ -1,0 +1,1034 @@
+         Vou registrar seu chamado e notificar
+         quando resolver."
+
+    [REGISTRA EM INCIDENTE EXISTENTE]
+
+  ELSE:
+    IA: "Não há problema geral no sistema.
+         A lentidão parece ser só sua.
+
+         [CONTINUA TROUBLESHOOTING LOCAL]"
+
+IF Não (só eu):
+  IA: "Vou testar sua conexão com o sistema... ⏳"
+
+  [TESTA LATÊNCIA]
+
+  IF latência alta:
+    IA: "Sua conexão com o servidor está lenta.
+         Latência: {MS}ms (normal: <50ms)
+
+         Você está:
+         1️⃣ No escritório
+         2️⃣ Remoto (VPN)"
+
+    User: [Escolhe]
+
+    IF VPN:
+      IA: "A VPN pode estar lenta.
+           [TROUBLESHOOT VPN]"
+
+    IF Escritório:
+      IA: "Problema de rede local.
+           [TROUBLESHOOT REDE]"
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+86.	❌ Lentidão persistente após otimizações
+87.	❌ Necessário upgrade de hardware
+88.	❌ Suspeita de malware/vírus
+89.	❌ Problema específico de programa complexo
+90.	❌ Lentidão de sistema crítico da empresa
+91.	❌ Problema de performance de servidor
+92.	❌ Disco com erro (bad sectors)
+93.	❌ Memória com defeito
+94.	❌ Após 3 tentativas sem melhora significativa
+APIs e Comandos
+# Verificar recursos do sistema
+checkSystemResources(
+  deviceId: string
+) -> {
+  cpu: number,          # % uso
+  memory: number,       # % uso
+  disk: number,         # % uso
+  networkLatency: number,
+  topProcesses: [
+    {name: string, cpuUsage: number, memoryUsage: number}
+  ]
+}
+
+# Matar processos desnecessários
+killUnnecessaryProcesses(
+  deviceId: string
+) -> {
+  success: boolean,
+  processesKilled: number,
+  resourcesFreed: {cpu: number, memory: number}
+}
+
+# Obter especificações
+getDeviceSpecs(
+  deviceId: string
+) -> {
+  cpu: string,
+  ram: number,
+  diskType: 'HDD' | 'SSD',
+  diskSize: number,
+  os: string
+}
+
+# Limpar cache/temp
+clearSystemCache(
+  deviceId: string,
+  targetType: 'system' | 'browser' | 'app'
+) -> {
+  success: boolean,
+  spaceFreed: number  # MB
+}
+
+# Verificar saúde do disco
+checkDiskHealth(
+  deviceId: string
+) -> {
+  status: 'healthy' | 'warning' | 'critical',
+  badSectors: number,
+  smartStatus: string
+}
+Exemplos de Diálogos
+Exemplo: Muitos Programas Abertos (Sucesso)
+User: "Meu PC está muito lento"
+
+IA: "Vou verificar o que está consumindo recursos... ⏳
+
+     Encontrei o problema!
+
+     Você está usando 95% da memória.
+     Programas abertos:
+     • Chrome (38 abas) - 52%
+     • Outlook - 18%
+     • Excel - 12%
+
+     Vou fechar programas em segundo plano
+     não essenciais. Ok?"
+
+User: "Ok"
+
+IA: "Pronto! ✅
+
+     Também recomendo fechar abas do Chrome
+     que não está usando.
+
+     Melhorou?"
+
+User: "Sim, muito mais rápido!"
+
+IA: "Ótimo! 🎉
+
+     Dica: Evite abrir muitas abas ao mesmo tempo.
+     Use favoritos para sites importantes."
+
+[SUCESSO - TEMPO: 3 minutos]
+________________________________________________________________________________
+CATEGORIA 9: ERRO DE SISTEMA
+Volume: 5.797 chamados/ano (29.1% do TI - MAIOR!)
+Potencial de Automação: 30%
+Média de Mensagens: 5.2
+Complexidade: ⭐⭐⭐⭐⭐ Muito Alta
+Economia Estimada: 870 horas/ano
+Identificadores
+Keywords principais:
+•	erro, error, mensagem de erro, falha
+•	não funciona, não abre, travou, crash
+•	exception, bug, problema no sistema
+Patterns:
+/(erro|error|falha|exception|crash)/i
+/(não.*funciona|não.*abre|mensagem)/i
+Nota Importante
+⚠️ Esta é a categoria mais complexa e diversa.
+Erros de sistema são muito variados e específicos. A estratégia do N1 aqui é:
+95.	**COLETAR informações detalhadas** do erro
+96.	**CONSULTAR base de conhecimento** de erros conhecidos
+97.	**APLICAR fix automático** se erro for conhecido
+98.	**ESCALAR com contexto completo** se erro for desconhecido
+Fluxo Completo
+PASSO 1: Identificar Sistema/Programa
+IA: "Entendi que você está com um erro.
+
+     Onde está acontecendo o erro?
+
+     1️⃣ Sistema Windows
+     2️⃣ Programa específico (Office, navegador, etc)
+     3️⃣ Sistema interno da empresa (Totvs, SAP, etc)
+     4️⃣ Site/sistema web"
+
+User: [Escolhe]
+
+IF 1 (Windows):
+  [VAI PARA FLUXO A]
+
+IF 2 (Programa):
+  IA: "Qual programa?"
+  User: [Nome]
+  [VAI PARA FLUXO B]
+
+IF 3 (Sistema interno):
+  IA: "Qual sistema?"
+  User: [Nome]
+  [VAI PARA FLUXO C - MAIS COMUM]
+
+IF 4 (Web):
+  IA: "Qual site?"
+  User: [URL]
+  [VAI PARA FLUXO D]
+PASSO 2: Coletar Informações do Erro
+IA: "Vou precisar de algumas informações sobre o erro.
+
+     Aparece alguma mensagem de erro na tela?"
+
+User: [Sim/Não]
+
+IF Sim:
+  IA: "Pode me enviar:
+       • Print da tela do erro, OU
+       • Copiar e colar o texto do erro
+
+       Qual você prefere?"
+
+  User: [Escolhe]
+
+  IF Print:
+    IA: "Envie o print aqui."
+
+    [RECEBE IMAGEM]
+    [EXECUTA: extractTextFromImage(image)]
+    [EXTRAI CÓDIGO/MENSAGEM DE ERRO]
+
+  IF Texto:
+    IA: "Cole a mensagem de erro aqui:"
+
+    User: [Cola erro]
+
+    [CAPTURA MENSAGEM]
+
+  [TEM MENSAGEM DE ERRO AGORA]
+
+  IA: "Obrigada! Vou analisar... ⏳"
+
+  [NORMALIZA MENSAGEM]
+  [EXTRAI CÓDIGO DE ERRO SE HOUVER]
+  [CONSULTA: searchKnowledgeBase(errorMessage, systemName)]
+
+  IF erro conhecido:
+    IA: "Identifiquei o problema! ✅
+
+         Erro: {ERRO_NOME}
+         Causa: {CAUSA}
+
+         Vou aplicar a solução... ⏳"
+
+    [EXECUTA FIX AUTOMÁTICO]
+
+    IF sucesso:
+      IA: "Corrigido! ✅
+
+           Tente novamente agora. Funcionou?"
+
+      [CONFIRMAÇÃO]
+
+    ELSE:
+      IA: "Não consegui corrigir automaticamente.
+           Vou transferir para um especialista."
+
+      [ESCALA com todas as informações]
+
+  ELSE (erro desconhecido):
+    IA: "Este erro não está na minha base de dados.
+
+         Vou coletar mais informações para o
+         especialista resolver mais rápido.
+
+         [CONTINUA COLETA DE DADOS]"
+
+IF Não (sem mensagem):
+  IA: "O que exatamente acontece quando tenta usar?"
+
+  User: [Descreve comportamento]
+
+  [ANALISA DESCRIÇÃO]
+  [TENTA IDENTIFICAR PADRÃO]
+  [OU ESCALA PARA INVESTIGAÇÃO]
+PASSO 3: Coleta Adicional (se necessário)
+IA: "Para ajudar o especialista, preciso de mais info:
+
+     1. Quando começou a dar esse erro?
+        • Hoje
+        • Alguns dias
+        • Sempre
+
+     2. Acontece:
+        • Sempre que tenta fazer X
+        • Às vezes (aleatório)
+        • Só com arquivo/dados específicos
+
+     3. Já funcionou antes ou nunca funcionou?"
+
+[COLETA RESPOSTAS]
+
+[COMPILA RELATÓRIO COMPLETO]
+
+IA: "Perfeito! Tenho todas as informações.
+
+     Vou transferir para um especialista que vai
+     investigar e resolver.
+
+     Resumo do seu chamado:
+     • Sistema: {SISTEMA}
+     • Erro: {ERRO}
+     • Quando: {CONTEXTO}
+
+     Ticket #{ID} aberto.
+     Você receberá retorno em até {SLA}."
+
+[ESCALA PARA N2 COM CONTEXTO COMPLETO]
+Base de Erros Conhecidos (Exemplos)
+# Erro Windows
+Erro: "DLL missing"
+Código: null
+Solução: reinstalar Microsoft Visual C++ Redistributable
+Automação: possível
+Script: installVCRedist()
+
+# Erro Office
+Erro: "Excel cannot access the file"
+Código: null
+Causa: Permissão de arquivo
+Solução: verificar permissões, desbloquear arquivo
+Automação: parcial
+
+# Erro Totvs RM
+Erro: "Erro ao conectar com o banco de dados"
+Código: "DB-001"
+Causa: Timeout de conexão
+Solução: verificar VPN, reiniciar serviço
+Automação: possível
+Script: restartTotvService()
+
+# Erro Navegador
+Erro: "ERR_CONNECTION_REFUSED"
+Código: null
+Causa: Site fora ou firewall bloqueando
+Solução: verificar se site está no ar, liberar no firewall
+Automação: diagnóstico automático
+
+# Erro SAP
+Erro: "RFC destination does not exist"
+Código: null
+Causa: Configuração de conexão
+Solução: recriar conexão RFC
+Automação: não (requer especialista)
+Fluxo Específico: Erros Totvs RM
+[Usuário reporta erro no Totvs]
+
+IA: "Entendi que o erro é no Totvs.
+
+     Em qual módulo você estava trabalhando?
+
+     1️⃣ Financeiro
+     2️⃣ RH/Folha
+     3️⃣ Compras
+     4️⃣ Fiscal
+     5️⃣ Outro/Não sei"
+
+User: [Escolhe módulo]
+
+IA: "O que você estava fazendo quando deu o erro?"
+
+User: [Descreve ação - ex: "Lançando uma nota fiscal"]
+
+IA: "Pode me enviar o print da tela de erro?"
+
+[RECEBE PRINT]
+
+[ANALISA CÓDIGO DE ERRO DO TOTVS]
+
+ERROS TOTVS COMUNS:
+
+1. "Erro ao conectar com banco":
+   - Verifica conexão VPN
+   - Testa conectividade com servidor
+   - Reinicia serviço Totvs (se possível)
+   - Se não resolver: escala para N2 Totvs
+
+2. "Usuário sem permissão":
+   - Verifica permissões do usuário no módulo
+   - Se falta permissão: cria solicitação de acesso
+   - Se tem permissão mas dá erro: escala
+
+3. "Timeout":
+   - Verifica se há lentidão geral no sistema
+   - Verifica latência de rede
+   - Orienta tentar novamente
+   - Se persistir: escala
+
+4. "Registro bloqueado por outro usuário":
+   - Explica que alguém está editando
+   - Orienta aguardar ou verificar quem está usando
+   - Não precisa escalar (comportamento normal)
+
+5. "Erro de validação de campo":
+   - Identifica qual campo tem erro
+   - Orienta sobre formato correto
+   - Exemplo: CPF, data, valor
+   - Se dúvida sobre regra: escala para especialista Totvs
+
+[SE ERRO NÃO CONHECIDO]
+  IA: "Este erro específico do Totvs requer análise
+       de um especialista.
+
+       Vou transferir seu chamado com todas as
+       informações coletadas.
+
+       Especialista Totvs responderá em até {SLA}."
+
+  [ESCALA PARA N2 TOTVS - EQUIPE ESPECIALIZADA]
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+99.	❌ Erro desconhecido (não está na base)
+100.	❌ Fix automático falhou
+101.	❌ Erro em sistema crítico da empresa (Totvs, SAP, ERP)
+102.	❌ Erro afetando múltiplos usuários (pode ser servidor)
+103.	❌ Erro de corrupção de dados
+104.	❌ Erro que bloqueia trabalho completamente
+105.	❌ Erro de segurança/acesso
+106.	❌ Erro em integração entre sistemas
+107.	❌ SEMPRE escalar erros de sistemas críticos de negócio
+APIs e Comandos
+# Buscar erro na base de conhecimento
+searchKnowledgeBase(
+  errorMessage: string,
+  systemName: string,
+  errorCode: string = null
+) -> {
+  found: boolean,
+  errorId: string,
+  name: string,
+  cause: string,
+  solution: string,
+  autoFixAvailable: boolean,
+  fixScript: string
+}
+
+# Aplicar fix automático
+applyAutoFix(
+  errorId: string,
+  userId: string,
+  deviceId: string
+) -> {
+  success: boolean,
+  stepsExecuted: [string],
+  error: string
+}
+
+# Extrair texto de imagem (OCR)
+extractTextFromImage(
+  image: base64
+) -> {
+  text: string,
+  confidence: number
+}
+
+# Log de erro estruturado
+logError(
+  userId: string,
+  systemName: string,
+  errorMessage: string,
+  errorCode: string,
+  context: object,
+  screenshot: base64
+) -> {errorLogId: string}
+
+# Verificar incidentes conhecidos
+checkKnownIncidents(
+  systemName: string
+) -> {
+  hasIncident: boolean,
+  incidentId: string,
+  description: string,
+  eta: datetime,
+  affectedUsers: number
+}
+Exemplos de Diálogos
+Exemplo: Erro Conhecido com Fix (Sucesso)
+User: "Deu erro no Excel, não abre"
+
+IA: "Pode me enviar print do erro?"
+
+[User envia print com: "VCRUNTIME140.dll missing"]
+
+IA: "Identifiquei o problema! ✅
+
+     Falta um componente do Windows (DLL).
+
+     Vou instalar agora... ⏳"
+
+[Instala Visual C++ Redistributable]
+
+IA: "Componente instalado! ✅
+
+     Tente abrir o Excel agora. Funcionou?"
+
+User: "Funcionou! Obrigado!"
+
+[SUCESSO - TEMPO: 3 minutos]
+Exemplo: Erro Desconhecido (Escalação)
+User: "Erro estranho no Totvs"
+
+IA: "Pode me enviar o print do erro?"
+
+[User envia erro: "RM.FIN.2847 - Inconsistência interna"]
+
+IA: "Vou pesquisar esse erro... ⏳
+
+     Este é um erro interno do Totvs que precisa
+     de análise especializada.
+
+     Para agilizar, me diga:
+     1. O que você estava fazendo?
+     2. Quando começou?"
+
+User: "Lançando NF, começou hoje"
+
+IA: "Perfeito! Vou transferir para especialista Totvs.
+
+     Resumo:
+     • Erro: RM.FIN.2847
+     • Módulo: Financeiro
+     • Ação: Lançamento de NF
+     • Print anexado
+
+     Ticket #45678.
+     Retorno em até 4h úteis."
+
+[ESCALADO COM CONTEXTO COMPLETO]
+________________________________________________________________________________
+CATEGORIA 10: HARDWARE
+Volume: 412 chamados/ano (2.1% do TI)
+Potencial de Automação: 20%
+Média de Mensagens: 2.8
+Complexidade: ⭐⭐⭐⭐ Alta
+Economia Estimada: 41 horas/ano
+Identificadores
+Keywords principais:
+•	teclado, mouse, monitor, tela
+•	não funciona, quebrou, com defeito
+•	headset, fone, webcam, câmera
+•	bateria, carregador, porta USB
+Patterns:
+/(teclado|mouse|monitor|tela|headset|webcam)/i
+/(hardware|físico|equipamento|periférico)/i
+Nota Importante
+⚠️ Problemas de hardware requerem verificação física.
+A IA N1 pode:
+•	✅ Fazer triagem inicial
+•	✅ Orientar testes básicos
+•	✅ Agilizar abertura de chamado
+•	❌ Não pode resolver remotamente (na maioria dos casos)
+Fluxo Completo
+PASSO 1: Identificar Equipamento
+IA: "Entendi que você tem problema com equipamento.
+
+     Qual equipamento está com problema?
+
+     1️⃣ Teclado
+     2️⃣ Mouse
+     3️⃣ Monitor/Tela
+     4️⃣ Headset/Fone
+     5️⃣ Webcam
+     6️⃣ Notebook (bateria, carregador, etc)
+     7️⃣ Outro"
+
+User: [Escolhe]
+
+[SEGUE FLUXO ESPECÍFICO]
+FLUXO A: Teclado/Mouse
+IA: "O que está acontecendo com o {EQUIPAMENTO}?
+
+     1️⃣ Não funciona (nada responde)
+     2️⃣ Funciona mas com defeito (teclas falhando, cursor pulando)
+     3️⃣ Funciona às vezes"
+
+User: [Escolhe]
+
+CASE 1 (Não funciona):
+  IA: "É com fio ou sem fio (wireless)?"
+
+  User: [Com fio / Sem fio]
+
+  IF Com fio:
+    IA: "O cabo está conectado firmemente no computador?"
+
+    User: [Sim/Não]
+
+    IF Não:
+      IA: "Conecte bem e teste novamente. Funcionou?"
+
+    IF Sim:
+      IA: "Tente conectar em outra porta USB.
+           Funcionou?"
+
+      User: [Sim/Não]
+
+      IF Sim:
+        IA: "Ótimo! A porta anterior pode estar
+             com defeito. Continue usando essa porta."
+
+      IF Não:
+        IA: "O {EQUIPAMENTO} deve estar com defeito.
+
+             Vou abrir chamado para troca.
+
+             Você está:
+             1️⃣ No escritório (podemos trocar hoje)
+             2️⃣ Remoto (enviaremos por correio)"
+
+        [CRIA CHAMADO HARDWARE]
+
+  IF Sem fio:
+    IA: "Já trocou a pilha recentemente?"
+
+    User: [Sim/Não]
+
+    IF Não:
+      IA: "Experimente trocar a pilha primeiro.
+           Depois me avise se funcionou."
+
+      [AGUARDA]
+
+    IF Sim:
+      IA: "O receptor USB está conectado?"
+
+      [TROUBLESHOOT WIRELESS]
+
+CASE 2 (Defeito):
+  IA: "Quais teclas/botões não estão funcionando?"
+
+  User: [Descreve]
+
+  IA: "Se algumas teclas falham, pode ser:
+       • Sujeira embaixo da tecla
+       • Tecla com defeito
+
+       Para limpeza:
+       • Vire o teclado de cabeça pra baixo
+       • Dê leves batidas
+       • Use ar comprimido se tiver
+
+       Se não resolver, precisa trocar.
+       Quer que eu abra chamado para troca?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    [CRIA CHAMADO HARDWARE - TROCA]
+
+CASE 3 (Às vezes):
+  IA: "Pode ser mau contato.
+
+       Se é com fio: verifique o cabo
+       Se é sem fio: troque a pilha
+
+       Quer que eu já abra chamado para troca?"
+
+  [DECISÃO DO USUÁRIO]
+FLUXO B: Monitor/Tela
+IA: "O que está acontecendo com o monitor?
+
+     1️⃣ Tela preta (sem imagem)
+     2️⃣ Imagem com problema (borrada, piscando, cores erradas)
+     3️⃣ Monitor não liga"
+
+User: [Escolhe]
+
+CASE 1 (Tela preta):
+  IA: "A luz do monitor está acesa?"
+
+  User: [Sim/Não]
+
+  IF Sim (luz acesa mas sem imagem):
+    IA: "O computador está ligado?"
+
+    User: [Sim]
+
+    IA: "Pode ser cabo solto.
+
+         Verifique se:
+         • Cabo está conectado no monitor E no PC
+         • Cabo não está danificado
+
+         Está tudo conectado?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Tente apertar as teclas:
+           Win + Ctrl + Shift + B
+
+           Isso reseta o driver de vídeo.
+
+           A tela voltou?"
+
+      User: [Sim/Não]
+
+      IF Não:
+        IA: "Pode ser:
+             • Cabo com defeito
+             • Placa de vídeo
+             • Monitor com problema
+
+             Vou abrir chamado para técnico verificar
+             fisicamente."
+
+        [ESCALA - MOTIVO: "Tela preta, cabo ok"]
+
+  IF Não (luz não acesa):
+    IA: "O monitor está ligado na tomada?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Pressione o botão de ligar do monitor
+           e me diga se a luz acende."
+
+      [TROUBLESHOOT ENERGIA]
+
+CASE 2 (Problema de imagem):
+  IA: "Que tipo de problema na imagem?
+
+       1️⃣ Borrada/desfocada
+       2️⃣ Piscando
+       3️⃣ Cores estranhas
+       4️⃣ Linhas na tela"
+
+  User: [Escolhe]
+
+  CASE "Borrada":
+    IA: "Vamos ajustar a resolução:
+
+         1. Clique direito na área de trabalho
+         2. 'Configurações de vídeo'
+         3. Verifique resolução (deve ser 1920x1080
+            para monitores Full HD)
+
+         Melhorou?"
+
+  CASE "Piscando":
+    IA: "Pode ser cabo mal encaixado ou com defeito.
+
+         Desconecte e reconecte o cabo do monitor.
+
+         Se não resolver, vou abrir chamado para troca."
+
+  CASE "Cores estranhas":
+    IA: "Verifique se o cabo está bem conectado.
+
+         Se persistir, pode ser defeito do monitor.
+         Vou abrir chamado."
+
+  CASE "Linhas":
+    IA: "Linhas na tela geralmente indicam defeito
+         do painel do monitor.
+
+         Vou abrir chamado para troca."
+
+    [CRIA CHAMADO HARDWARE - TROCA MONITOR]
+
+CASE 3 (Não liga):
+  [SIMILAR CASE 1 - Luz não acesa]
+FLUXO C: Headset/Webcam
+IA: "O problema é com {EQUIPAMENTO}.
+
+     O que está acontecendo?
+
+     1️⃣ Não funciona (não detecta)
+     2️⃣ Funciona mas com defeito (áudio ruim, imagem ruim)
+     3️⃣ Funciona em outro PC mas não neste"
+
+User: [Escolhe]
+
+CASE 1 (Não detecta):
+  IA: "É USB ou P2 (entrada de áudio)?"
+
+  User: [USB / P2]
+
+  IF USB:
+    IA: "Conectado direto no PC ou em hub USB?"
+
+    User: [Direto / Hub]
+
+    IF Hub:
+      IA: "Tente conectar direto no PC.
+           Hubs às vezes dão problema."
+
+    IA: "Tente outra porta USB. Funcionou?"
+
+    [TROUBLESHOOT USB]
+
+  IF P2:
+    IA: "Verifique se conectou na entrada correta:
+         • Verde = Fone de ouvido
+         • Rosa/Vermelho = Microfone
+
+         Está na entrada certa?"
+
+    [TROUBLESHOOT P2]
+
+CASE 2 (Defeito):
+  IF Headset:
+    IA: "O problema é:
+         • Não ouve áudio
+         • Microfone não funciona
+         • Ambos"
+
+    [TROUBLESHOOT ESPECÍFICO]
+
+    IA: "Testou em outro computador? Funciona?"
+
+    User: [Sim funciona / Não testei / Não funciona]
+
+    IF "Não funciona":
+      IA: "Headset está com defeito.
+           Vou abrir chamado para troca."
+
+      [CRIA CHAMADO HARDWARE]
+
+  IF Webcam:
+    IA: "A imagem está:
+         • Escura
+         • Tremida
+         • Com cor ruim
+         • Outro"
+
+    [TROUBLESHOOT QUALIDADE]
+
+    SE não resolve:
+      [CRIA CHAMADO HARDWARE]
+
+CASE 3 (Só não funciona aqui):
+  IA: "Se funciona em outro PC, pode ser:
+       • Driver
+       • Configuração do Windows
+       • Porta USB com problema
+
+       Vou reinstalar o driver... ⏳"
+
+  [REINSTALA DRIVER]
+
+  IA: "Driver reinstalado. Teste agora."
+
+  [SE NÃO FUNCIONAR: INVESTIGA MAIS OU ESCALA]
+FLUXO D: Notebook (Bateria/Carregador)
+IA: "Qual o problema com o notebook?
+
+     1️⃣ Não liga
+     2️⃣ Não carrega
+     3️⃣ Bateria dura pouco
+     4️⃣ Superaquecimento"
+
+User: [Escolhe]
+
+CASE 1 (Não liga):
+  IA: "Quando aperta o botão de ligar, acontece algo?
+       (luz, ventilador, etc)"
+
+  User: [Sim/Não]
+
+  IF Não:
+    IA: "Está conectado no carregador?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "A luz do carregador está acesa?"
+
+      [TROUBLESHOOT ENERGIA]
+
+    IF Não:
+      IA: "Conecte no carregador e aguarde 5 minutos.
+           Depois tente ligar."
+
+      [SE NÃO LIGAR: HARDWARE COM DEFEITO]
+
+  IF Sim (liga algo mas não inicia):
+    IA: "Precisa de análise técnica.
+         Vou abrir chamado urgente."
+
+    [ESCALA - MOTIVO: "Notebook não inicia"]
+
+CASE 2 (Não carrega):
+  IA: "A luz do carregador (no cabo) está acesa?"
+
+  User: [Sim/Não]
+
+  IF Não:
+    IA: "O carregador pode estar com defeito.
+
+         Você tem outro carregador para testar?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Teste com outro carregador e me avise."
+
+      [AGUARDA RESULTADO]
+
+    IF Não:
+      IA: "Vou abrir chamado para troca de carregador."
+
+      [CRIA CHAMADO HARDWARE]
+
+  IF Sim (luz acesa mas não carrega):
+    IA: "Pode ser problema na entrada do notebook
+         ou na bateria.
+
+         Isso precisa de análise física.
+         Vou abrir chamado."
+
+    [ESCALA - MOTIVO: "Notebook não carrega, carregador OK"]
+
+CASE 3 (Bateria dura pouco):
+  IA: "Quanto tempo a bateria dura?"
+
+  User: [Tempo]
+
+  IF < 1 hora:
+    IA: "Bateria muito fraca. Pode estar no fim da vida.
+
+         Há quanto tempo tem esse notebook?"
+
+    User: [Tempo]
+
+    IF > 3 anos:
+      IA: "Normal bateria durar menos após 3+ anos.
+
+           Vou verificar se está elegível para troca."
+
+      [CONSULTA POLÍTICA HARDWARE]
+
+      IF elegível:
+        IA: "Você está elegível para troca de bateria!
+             Vou abrir a solicitação."
+
+        [CRIA CHAMADO HARDWARE]
+
+CASE 4 (Superaquecimento):
+  IA: "O notebook fica tão quente que desliga sozinho?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    IA: "Isso é sério. Pode ser:
+         • Ventilador entupido
+         • Pasta térmica seca
+
+         Precisa de limpeza técnica urgente.
+         Vou abrir chamado."
+
+    [ESCALA - MOTIVO: "Notebook superaquece e desliga"]
+
+  IF Não:
+    IA: "Esquenta mas não desliga?
+
+         Recomendo:
+         • Usar em superfície plana e dura
+         • Não usar na cama/sofá
+         • Verificar se saídas de ar estão desobstruídas
+
+         Se esquentar muito mesmo assim, pode precisar
+         de limpeza. Quer que eu abra chamado?"
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+108.	✅ **SEMPRE escalar problemas físicos de hardware**
+109.	✅ Necessário troca de equipamento
+110.	✅ Problema elétrico (não liga, não carrega)
+111.	✅ Tela/monitor com defeito visual
+112.	✅ Notebook não inicia
+113.	✅ Suspeita de dano físico
+114.	✅ Equipamento molhado
+115.	✅ Superaquecimento crítico
+116.	✅ Após orientação básica sem sucesso
+A IA N1 faz triagem e agiliza a abertura do chamado, mas hardware quase sempre vai para N2.
+APIs e Comandos
+# Criar chamado de hardware
+createHardwareTicket(
+  userId: string,
+  equipmentType: string,
+  issue: string,
+  location: 'office' | 'remote',
+  priority: 'normal' | 'urgent'
+) -> {
+  ticketId: string,
+  eta: datetime,
+  trackingInfo: string
+}
+
+# Verificar elegibilidade para troca
+checkHardwareEligibility(
+  userId: string,
+  equipmentType: string
+) -> {
+  eligible: boolean,
+  reason: string,
+  currentAge: number,
+  policyAge: number
+}
+
+# Verificar estoque
+checkHardwareStock(
+  equipmentType: string,
+  location: string
+) -> {
+  available: boolean,
+  quantity: number,
+  eta: datetime
+}
+
+# Reinstalar driver
+reinstallDriver(
+  deviceId: string,
+  driverType: 'audio' | 'video' | 'usb' | 'network'
+) -> {success: boolean}
+Exemplos de Diálogos
+Exemplo: Troca de Mouse (Típico)
+User: "Meu mouse não funciona"
+
+IA: "É com fio ou sem fio?"
+
+User: "Com fio"
+
+IA: "Está conectado no computador?"
+
+User: "Sim"
+
+IA: "Tente conectar em outra porta USB. Funcionou?"
+
+User: "Não"
+
+IA: "O mouse deve estar com defeito.
+
+     Vou abrir chamado para troca.
+
+     Você está no escritório ou remoto?"
+
+User: "Escritório"
+
+IA: "Perfeito! Chamado #34567 aberto.
+
+     Técnico levará um mouse novo para você
+     hoje ainda.
+
+     Enquanto isso, pode usar o teclado:
+     • Tab para navegar
+     • Enter para clicar
+
+     Mais alguma coisa?"
+
+[CHAMADO ABERTO - TEMPO: 2 minutos]

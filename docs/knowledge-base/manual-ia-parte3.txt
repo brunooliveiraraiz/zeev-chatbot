@@ -1,0 +1,934 @@
+Complexidade: ⭐⭐ Média
+Economia Estimada: 212 horas/ano
+Identificadores
+Keywords principais:
+•	instalar, instalação, preciso de, software, programa
+•	aplicativo, ferramenta, app, download
+•	não tenho, preciso usar, como instalo
+•	versão, atualizar, upgrade
+Patterns:
+/(instal|preciso.*programa|software|aplicativo)/i
+/(como.*instalar|não.*tenho.*(acesso|programa))/i
+Fluxo Completo
+PASSO 1: Identificar Software
+IA: "Entendi que você precisa instalar um software.
+     Qual programa você precisa?"
+
+User: [Nome do software - ex: "Adobe Reader", "Zoom", "Chrome"]
+
+[NORMALIZA NOME]
+[CONSULTA CATÁLOGO DE SOFTWARE APROVADO]
+
+IF software encontrado no catálogo:
+  [CONTINUA]
+
+ELSE (não encontrado):
+  IA: "Não encontrei {SOFTWARE} na lista de programas aprovados.
+
+       Pode me dar mais detalhes sobre esse software?
+       Para que você precisa usá-lo?"
+
+  User: [Explica uso]
+
+  [ANALISA JUSTIFICATIVA]
+
+  IA: "Entendo. Para softwares que não estão no catálogo
+       padrão, preciso enviar para aprovação do gestor de TI.
+
+       Vou abrir um chamado para análise.
+       Geralmente leva 2-3 dias úteis.
+
+       Posso abrir a solicitação?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    [CRIA TICKET DE SOLICITAÇÃO]
+    [ENVIA PARA N2 - MOTIVO: "Software não catalogado"]
+    IA: "Chamado #{TICKET_ID} aberto.
+         Você receberá email com a resposta."
+    [ENCERRA]
+
+  IF Não:
+    [ENCERRA]
+PASSO 2: Verificar Instalação Atual
+[EXECUTA: checkInstalledSoftware(userId, softwareId)]
+
+IF já instalado:
+  IA: "Verifiquei que você já tem {SOFTWARE} instalado.
+
+       Qual problema está tendo?
+       1️⃣ Não sei onde encontrar/abrir
+       2️⃣ Preciso de versão mais nova
+       3️⃣ Não está funcionando
+       4️⃣ Outro"
+
+  User: [Escolhe]
+
+  CASE 1 (Não sabe onde está):
+    IA: "O {SOFTWARE} está em:
+         [CAMINHO/ATALHO]
+
+         Para abrir:
+         • Pressione Win + S
+         • Digite '{SOFTWARE}'
+         • Clique no programa
+
+         Ou acesse: Iniciar → Todos Programas → {SOFTWARE}
+
+         Conseguiu encontrar?"
+
+    [CONFIRMAÇÃO]
+
+  CASE 2 (Versão antiga):
+    IA: "Você está na versão {VERSÃO_ATUAL}.
+         A versão mais recente é {VERSÃO_NOVA}.
+
+         Vou atualizar para você. Ok?"
+
+    User: [Sim]
+
+    [VAI PARA PASSO 3 - INSTALAÇÃO]
+
+  CASE 3 (Não funciona):
+    IA: "O que acontece quando tenta abrir?"
+
+    [TROUBLESHOOTING]
+    [OU ESCALA SE COMPLEXO]
+
+  CASE 4:
+    IA: "Pode descrever melhor o problema?"
+    [ANALISA E DECIDE]
+
+ELSE (não instalado):
+  [CONTINUA PARA INSTALAÇÃO]
+PASSO 3: Validar Permissão
+[CONSULTA MATRIZ DE PERMISSÕES]
+[EXECUTA: checkSoftwarePolicy(userId, softwareId)]
+
+IF usuário tem direito automático:
+  IA: "Seu cargo/área tem direito a esse software. ✅
+       Vou instalar agora."
+
+  [VAI PARA PASSO 4 - INSTALAÇÃO]
+
+ELSE IF requer licença limitada:
+  [VERIFICA LICENÇAS DISPONÍVEIS]
+
+  IF licenças disponíveis > 0:
+    IA: "Temos licenças disponíveis.
+         Vou alocar uma para você e instalar."
+
+    [VAI PARA PASSO 4]
+
+  ELSE:
+    IA: "No momento não temos licenças disponíveis
+         de {SOFTWARE}.
+
+         Você será adicionado à fila de espera.
+         Quando houver disponibilidade, instalaremos
+         automaticamente.
+
+         Chamado #{TICKET_ID} aberto para acompanhamento."
+
+    [ADICIONA À FILA]
+    [ENCERRA]
+
+ELSE (requer aprovação):
+  IA: "Para este software, preciso da aprovação do
+       seu gestor direto.
+
+       Quem é seu gestor?"
+
+  User: [Nome do gestor]
+
+  [VALIDA GESTOR]
+
+  IA: "Perfeito! Enviei solicitação de aprovação
+       para {GESTOR}.
+
+       Se aprovado, o software será instalado
+       automaticamente.
+
+       Você receberá email com a resposta.
+       Chamado #{TICKET_ID} aberto."
+
+  [CRIA WORKFLOW DE APROVAÇÃO]
+  [ENCERRA]
+PASSO 4: Instalação Remota
+IA: "Vou instalar {SOFTWARE} remotamente no seu computador.
+
+     ⚠️ IMPORTANTE:
+     • Salve todos os arquivos abertos
+     • O processo leva 3-5 minutos
+     • Você poderá continuar trabalhando normalmente
+
+     Pode prosseguir?"
+
+User: [Sim/Não]
+
+IF Não:
+  IA: "Sem problemas. Quando quiser instalar, é só
+       me chamar novamente que retomamos."
+  [ENCERRA]
+
+IF Sim:
+  IA: "Iniciando instalação... ⏳"
+
+  [EXECUTA: remoteSoftwareInstall(userId, softwareId)]
+
+  [MONITORA STATUS A CADA 30 SEGUNDOS]
+
+  WHILE status == 'installing':
+    [AGUARDA]
+
+  IF status == 'success':
+    IA: "Instalação concluída! 🎉
+
+         {SOFTWARE} está pronto para usar.
+
+         Para abrir:
+         • Pressione Win + S
+         • Digite '{SOFTWARE}'
+         • Clique no ícone
+
+         Ou acesse: Iniciar → {SOFTWARE}
+
+         Conseguiu abrir?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Perfeito! Tudo funcionando? ✅"
+
+      User: [Sim]
+
+      IA: "Ótimo! Seu chamado está resolvido.
+           Mais alguma coisa?"
+
+      [SUCESSO]
+
+    IF Não:
+      IA: "Que estranho. Vamos tentar algumas coisas:
+
+           1. Reinicie o explorador de arquivos:
+              • Ctrl + Shift + Esc
+              • Procure 'Explorador Windows'
+              • Clique direito → 'Reiniciar'
+
+           2. Tente procurar novamente
+
+           Funcionou?"
+
+      User: [Sim/Não]
+
+      IF Não:
+        [ESCALA - MOTIVO: "Instalado mas não aparece"]
+
+  ELSE IF status == 'failed':
+    IA: "A instalação falhou. 😔
+
+         Erro: {ERROR_MESSAGE}
+
+         Vou transferir para um técnico instalar
+         manualmente. Ele entrará em contato em breve."
+
+    [ESCALA - MOTIVO: "Falha instalação - {ERROR}"]
+
+  ELSE IF status == 'pending_reboot':
+    IA: "Instalação concluída, mas precisa reiniciar
+         o computador para finalizar.
+
+         Pode reiniciar agora?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Salve tudo e reinicie.
+           Depois me confirme se o {SOFTWARE} está
+           funcionando."
+
+      [AGUARDA CONFIRMAÇÃO POSTERIOR]
+
+    IF Não:
+      IA: "Sem problema. Reinicie quando puder.
+           O software só ficará disponível após
+           reinicialização.
+
+           Avise quando reiniciar e confirme se
+           está funcionando."
+Catálogo de Software Aprovado
+Categoria: Navegadores
+- Google Chrome: Automático, todos usuários
+- Mozilla Firefox: Automático, todos usuários
+- Microsoft Edge: Já vem instalado
+
+Categoria: Comunicação
+- Microsoft Teams: Automático, todos usuários
+- Zoom: Automático, todos usuários
+- Slack: Requer aprovação gestor
+
+Categoria: Produtividade
+- Adobe Acrobat Reader: Automático, todos usuários
+- 7-Zip: Automático, todos usuários
+- Notepad++: Automático, área TI
+
+Categoria: Desenvolvimento
+- Visual Studio Code: Automático, área TI
+- Git: Automático, área TI
+- Python: Requer aprovação TI
+- Node.js: Requer aprovação TI
+
+Categoria: Design
+- Adobe Photoshop: Licença limitada (10), requer aprovação
+- Adobe Illustrator: Licença limitada (5), requer aprovação
+- Figma Desktop: Automático, área Design/Marketing
+
+Categoria: Análise
+- Power BI Desktop: Automático, cargos Analista+
+- Tableau: Licença limitada (20), requer aprovação
+- Excel Avançado (plugins): Automático, área Financeiro
+
+Categoria: Outros
+- VPN Client: Automático, todos usuários
+- Antivírus: Já vem instalado (gerenciado)
+- WinRAR: Substituído por 7-Zip
+Variações de Problemas
+Variação 1: Computador Não Conectado
+[TENTA INSTALAÇÃO REMOTA]
+
+IF computador offline:
+  IA: "Seu computador precisa estar ligado e conectado
+       à rede para instalação remota.
+
+       Você está no computador agora?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    IA: "Estranho, não estou conseguindo conectar.
+
+         Você está:
+         1️⃣ Na rede da empresa (presencial)
+         2️⃣ Conectado via VPN
+         3️⃣ Em outra rede (casa sem VPN)"
+
+    User: [Escolhe]
+
+    IF 3:
+      IA: "Esse é o problema! Para instalação remota,
+           precisa estar na VPN.
+
+           Você tem a VPN configurada?"
+
+      [ORIENTA CONFIGURAÇÃO VPN OU ESCALA]
+
+  IF Não:
+    IA: "Por favor, ligue o computador, conecte na
+         rede (ou VPN se estiver remoto) e me avise.
+
+         Aí eu consigo instalar remotamente."
+
+    [AGUARDA RETORNO]
+Variação 2: Software Bloqueado por Política
+[TENTA INSTALAÇÃO]
+
+IF bloqueado por GPO:
+  IA: "Seu computador está bloqueado para instalações
+       por política de segurança.
+
+       Isso acontece em equipamentos com perfil
+       restrito (ex: usuário temporário, terceiro).
+
+       Vou transferir para um técnico que vai
+       ajustar as permissões e instalar."
+
+  [ESCALA - MOTIVO: "Bloqueio GPO"]
+Variação 3: Versão Específica Necessária
+User: "Preciso do Adobe Reader, mas versão 10.0"
+
+IA: "A versão padrão que temos é a {VERSÃO_ATUAL}.
+
+     Por que precisa especificamente da versão 10.0?"
+
+User: [Explica - ex: "compatibilidade com sistema legado"]
+
+IA: "Entendo. Versões antigas podem ter
+     vulnerabilidades de segurança.
+
+     Vou precisar de aprovação do gestor de TI
+     para instalar versão fora do padrão.
+
+     Vou abrir a solicitação. Ok?"
+
+[ESCALA - MOTIVO: "Versão específica antiga"]
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+50.	❌ Software não está no catálogo aprovado
+51.	❌ Falha na instalação remota (erro técnico)
+52.	❌ Computador não acessível remotamente
+53.	❌ Bloqueio por GPO/política de segurança
+54.	❌ Requisição de versão específica/antiga
+55.	❌ Software instalado mas não funciona
+56.	❌ Conflito com outro software
+57.	❌ Necessário configuração avançada pós-instalação
+58.	❌ Licença requer processo manual de ativação
+APIs e Comandos
+# Verificar se software está instalado
+checkInstalledSoftware(
+  userId: string,
+  softwareId: string
+) -> {
+  installed: boolean,
+  version: string,
+  installDate: datetime
+}
+
+# Consultar política de software
+checkSoftwarePolicy(
+  userId: string,
+  softwareId: string
+) -> {
+  allowed: boolean,
+  requiresApproval: boolean,
+  approver: string,
+  licenseAvailable: boolean
+}
+
+# Instalação remota
+remoteSoftwareInstall(
+  userId: string,
+  softwareId: string,
+  version: string = 'latest'
+) -> {
+  jobId: string,
+  status: 'queued' | 'installing' | 'success' | 'failed',
+  estimatedTime: number
+}
+
+# Monitorar status instalação
+getInstallStatus(
+  jobId: string
+) -> {
+  status: string,
+  progress: number,
+  error: string
+}
+
+# Verificar licenças disponíveis
+checkLicenseAvailability(
+  softwareId: string
+) -> {
+  total: number,
+  used: number,
+  available: number,
+  waitlist: number
+}
+Exemplos de Diálogos
+Exemplo 1: Instalação Automática (Sucesso)
+User: "Preciso instalar o Zoom"
+
+IA: "Vou instalar o Zoom para você.
+     Verifiquei que seu cargo tem direito a esse software. ✅
+
+     Salve tudo que estiver aberto.
+     A instalação leva 3-5 minutos.
+
+     Posso iniciar?"
+
+User: "Sim"
+
+IA: "Instalando... ⏳"
+
+[3 minutos depois]
+
+IA: "Instalação concluída! 🎉
+
+     O Zoom está pronto.
+     Acesse: Iniciar → Digite 'Zoom'
+
+     Conseguiu abrir?"
+
+User: "Sim, obrigado!"
+
+IA: "Perfeito! Mais alguma coisa?"
+
+[SUCESSO - TEMPO: 4 minutos]
+Exemplo 2: Requer Aprovação
+User: "Quero instalar o Photoshop"
+
+IA: "O Adobe Photoshop tem licenças limitadas e
+     requer aprovação do gestor.
+
+     Quem é seu gestor direto?"
+
+User: "Maria Silva"
+
+IA: "Perfeito! Enviei solicitação para Maria Silva.
+
+     Se aprovado, o software será instalado
+     automaticamente no seu computador.
+
+     Você receberá email com a resposta em até
+     1 dia útil.
+
+     Chamado #78901 aberto."
+
+[APROVAÇÃO PENDENTE]
+________________________________________________________________________________
+CATEGORIA 5: VPN
+Volume: 1.234 chamados/ano (6.2% do TI)
+Potencial de Automação: 70%
+Média de Mensagens: 3.4
+Complexidade: ⭐⭐⭐ Média-Alta
+Economia Estimada: 432 horas/ano
+Identificadores
+Keywords principais:
+•	vpn, acesso remoto, trabalhar de casa
+•	não conecta, não consigo acessar de casa
+•	home office, fora da empresa, externo
+•	conexão, tunnel, remote access
+Patterns:
+/(vpn|acesso.*remoto|remote|home.*office)/i
+/(não.*conecta.*vpn|vpn.*não.*funciona)/i
+Fluxo Completo
+PASSO 1: Identificar Problema VPN
+IA: "Entendi que você está com problema na VPN.
+
+     Qual situação descreve melhor?
+
+     1️⃣ Não tenho VPN instalada
+     2️⃣ VPN não conecta
+     3️⃣ Conecta mas não acessa sistemas internos
+     4️⃣ VPN fica caindo/desconectando
+     5️⃣ Preciso de acesso VPN (primeira vez)"
+
+User: [Escolhe opção]
+
+[SEGUE FLUXO ESPECÍFICO]
+FLUXO A: Não Tem VPN Instalada
+IA: "Você já teve acesso VPN antes ou é primeira vez?"
+
+User: [Primeira vez / Já tive]
+
+IF primeira vez:
+  IA: "Para ter acesso VPN, preciso verificar se
+       seu cargo permite trabalho remoto.
+
+       Qual seu cargo/função?"
+
+  User: [Cargo]
+
+  [CONSULTA POLÍTICA DE TRABALHO REMOTO]
+
+  IF cargo permite:
+    IA: "Seu cargo tem direito a VPN. ✅
+
+         Preciso da aprovação do seu gestor para
+         habilitar o acesso.
+
+         Quem é seu gestor?"
+
+    User: [Nome gestor]
+
+    IA: "Enviei solicitação para {GESTOR}.
+
+         Quando aprovado, você receberá email com:
+         • Link para download da VPN
+         • Credenciais de acesso
+         • Tutorial de instalação
+
+         Geralmente leva até 1 dia útil.
+         Chamado #{TICKET_ID} aberto."
+
+    [CRIA WORKFLOW APROVAÇÃO]
+
+  ELSE:
+    IA: "Seu cargo não tem política de trabalho remoto
+         configurada.
+
+         Vou transferir para um analista verificar
+         com RH se é possível liberar acesso VPN."
+
+    [ESCALA - MOTIVO: "Cargo sem política remote"]
+
+IF já teve:
+  IA: "O que aconteceu com a VPN anterior?
+       1️⃣ Formatou o computador
+       2️⃣ Computador novo
+       3️⃣ Desinstalou sem querer
+       4️⃣ Não lembro"
+
+  User: [Escolhe]
+
+  IA: "Sem problema! Vou enviar o link para
+       reinstalar a VPN.
+
+       Seu email é: {USER_EMAIL}
+       Está correto?"
+
+  User: [Sim]
+
+  [ENVIA EMAIL COM INSTALADOR + CREDENCIAIS]
+
+  IA: "Email enviado! ✉️
+
+       No email você encontrará:
+       1. Link de download do cliente VPN
+       2. Suas credenciais
+       3. Tutorial passo a passo
+
+       Siga as instruções e me avise quando
+       terminar a instalação."
+
+  [AGUARDA CONFIRMAÇÃO]
+
+  User: "Instalei"
+
+  IA: "Conseguiu conectar?"
+
+  [CONTINUA TROUBLESHOOTING SE NECESSÁRIO]
+FLUXO B: VPN Não Conecta
+IA: "Quando você tenta conectar, o que acontece?
+
+     1️⃣ Aparece mensagem de erro
+     2️⃣ Fica tentando conectar e não consegue
+     3️⃣ Pede usuário/senha e não aceita
+     4️⃣ Outro"
+
+User: [Escolhe]
+
+CASE 1 (Mensagem de erro):
+  IA: "Qual mensagem de erro aparece?
+       Pode copiar e colar ou descrever?"
+
+  User: [Descreve erro]
+
+  ERROS COMUNS:
+
+  - "Authentication failed" / "Senha incorreta":
+    IA: "Parece problema de credenciais.
+
+         Você está usando:
+         • Usuário: seu login Windows
+         • Senha: sua senha do Windows
+
+         É isso?"
+
+    User: [Sim/Não]
+
+    IF Não:
+      IA: "As credenciais da VPN são as mesmas
+           do Windows.
+
+           Tente com:
+           • Usuário: {DOMAIN}\\{USERNAME}
+           • Senha: sua senha do Windows
+
+           Funcionou?"
+
+    IF Sim mas não funciona:
+      IA: "Sua senha do Windows pode ter expirado.
+           Quando foi a última vez que trocou?"
+
+      [VERIFICA NO AD]
+
+      IF senha expirada:
+        IA: "Sua senha expirou! Por isso não conecta.
+             Vou resetar sua senha.
+
+             Você tem acesso ao email corporativo?"
+
+        [VAI PARA FLUXO RESET SENHA]
+
+  - "Connection timeout" / "Não conecta ao servidor":
+    IA: "Pode ser problema de rede ou firewall.
+
+         Você está conectado à internet?"
+
+    User: [Sim]
+
+    IA: "Você está usando:
+         1️⃣ Rede da sua casa (Wi-Fi/cabo)
+         2️⃣ Rede pública (hotel, café)
+         3️⃣ Celular (hotspot/dados)"
+
+    User: [Escolhe]
+
+    IF 2 ou 3:
+      IA: "Algumas redes públicas bloqueiam VPN.
+
+           Tente conectar em uma rede privada
+           (sua casa) e me avise se funcionou."
+
+    IF 1:
+      IA: "Vamos testar a conectividade.
+
+           Abra o Prompt de Comando:
+           • Win + R
+           • Digite 'cmd'
+           • Enter
+
+           Digite: ping vpn.raiz.com
+
+           O que aparece?"
+
+      User: [Resultado]
+
+      IF "Tempo limite excedido" / "Request timed out":
+        IA: "Seu computador não está alcançando
+             nosso servidor VPN.
+
+             Pode ser firewall do seu roteador
+             bloqueando.
+
+             Vou transferir para um técnico que
+             vai ajudar a configurar."
+
+        [ESCALA - MOTIVO: "Firewall bloqueando VPN"]
+
+      IF "Resposta de ...":
+        IA: "A conectividade está OK.
+             O problema pode ser no certificado.
+
+             Vou reenviar um novo certificado.
+             Aguarde..."
+
+        [REGENERA CERTIFICADO VPN]
+        [ENVIA PARA USUÁRIO]
+
+  - "Certificate error" / "Erro de certificado":
+    IA: "O certificado da VPN expirou ou está
+         inválido.
+
+         Vou gerar um novo certificado e enviar
+         para você. Aguarde... ⏳"
+
+    [EXECUTA: regenerateVPNCertificate(userId)]
+
+    IA: "Novo certificado enviado para seu email!
+
+         Siga as instruções do email para instalar.
+         Me avise quando terminar."
+
+    [AGUARDA CONFIRMAÇÃO]
+
+CASE 2 (Fica tentando e não conecta):
+  IA: "Quanto tempo fica tentando?
+       1-2 minutos ou mais?"
+
+  User: [Responde]
+
+  IA: "Vamos verificar se suas credenciais estão
+       ativas.
+
+       Aguarde... ⏳"
+
+  [EXECUTA: checkVPNAccount(userId)]
+
+  IF conta desativada:
+    IA: "Identifiquei que sua conta VPN foi desativada.
+
+         Isso pode acontecer por:
+         • Mais de 90 dias sem usar
+         • Mudança de cargo/área
+
+         Vou reativar agora..."
+
+    [EXECUTA: enableVPNAccount(userId)]
+
+    IA: "Conta reativada! ✅
+         Tente conectar novamente agora."
+
+  IF conta ativa:
+    IA: "Sua conta está ativa.
+         O problema pode ser no firewall local.
+
+         Vou enviar um script de diagnóstico.
+         Pode executar e me enviar o resultado?"
+
+    [ENVIA DIAGNOSTIC SCRIPT]
+    [OU ESCALA]
+
+CASE 3 (Não aceita senha):
+  [SIMILAR AO CASE 1 - Authentication]
+
+CASE 4:
+  IA: "Descreva com mais detalhes o que acontece:"
+  [ANALISA E DECIDE]
+FLUXO C: Conecta Mas Não Acessa Sistemas
+IA: "Você consegue ver o ícone da VPN como conectada?"
+
+User: [Sim]
+
+IA: "Perfeito. A VPN está conectada, mas você não
+     consegue acessar os sistemas internos.
+
+     Qual sistema está tentando acessar?"
+
+User: [Nome do sistema - ex: "SAP", "Intranet"]
+
+IA: "Deixa eu testar a conectividade... ⏳"
+
+[EXECUTA: testVPNRouting(userId)]
+
+IF rotas OK:
+  IA: "A VPN está funcionando corretamente.
+
+       O problema pode ser:
+       1️⃣ Você não tem acesso ao sistema
+       2️⃣ Sistema está fora do ar
+       3️⃣ Link/endereço incorreto
+
+       Qual endereço você está tentando acessar?"
+
+  User: [URL]
+
+  [VALIDA URL]
+
+  IF URL errada:
+    IA: "O endereço correto é: {CORRECT_URL}
+
+         Tente acessar esse link.
+         Funcionou?"
+
+  IF URL correta:
+    [VERIFICA ACESSO DO USUÁRIO AO SISTEMA]
+    [OU VERIFICA STATUS DO SISTEMA]
+
+ELSE (rotas com problema):
+  IA: "Identifiquei que algumas rotas não estão
+       configuradas corretamente.
+
+       Vou reconfigurar sua VPN. Aguarde... ⏳"
+
+  [EXECUTA: resetVPNRoutes(userId)]
+
+  IA: "Rotas reconfiguradas! ✅
+
+       Desconecte e reconecte a VPN.
+       Depois tente acessar novamente."
+
+  [AGUARDA CONFIRMAÇÃO]
+FLUXO D: VPN Cai/Desconecta
+IA: "Com que frequência a VPN desconecta?
+
+     1️⃣ A cada poucos minutos
+     2️⃣ Depois de 1-2 horas
+     3️⃣ Aleatoriamente
+     4️⃣ Quando o computador entra em suspensão"
+
+User: [Escolhe]
+
+CASE 1 (A cada poucos minutos):
+  IA: "Isso indica problema de rede ou sinal.
+
+       Você está em Wi-Fi ou cabo de rede?"
+
+  User: [Wi-Fi/Cabo]
+
+  IF Wi-Fi:
+    IA: "O sinal do Wi-Fi está forte?
+         Você está perto do roteador?"
+
+    User: [Sim/Não]
+
+    IF Não:
+      IA: "Sinal fraco pode derrubar a VPN.
+
+           Tente:
+           1. Aproximar do roteador
+           2. Usar cabo de rede se possível
+           3. Reiniciar o roteador
+
+           Se o problema persistir, pode ser
+           necessário técnico verificar sua rede."
+
+    IF Sim:
+      IA: "Vamos ajustar configurações de timeout
+           da VPN para conexões mais estáveis.
+
+           Vou enviar um script de configuração.
+           Pode executar?"
+
+      [ENVIA SCRIPT DE AJUSTE]
+
+  IF Cabo:
+    IA: "Em cabo não deveria cair tanto.
+         Vou transferir para análise técnica."
+
+    [ESCALA - MOTIVO: "VPN caindo em rede cabeada"]
+
+CASE 2 (Depois de 1-2 horas):
+  IA: "Esse é o timeout de inatividade configurado.
+
+       Se você ficar inativo por muito tempo, a VPN
+       desconecta automaticamente por segurança.
+
+       Isso é esperado. Basta reconectar quando
+       precisar novamente.
+
+       Seu problema está resolvido?"
+
+CASE 3 (Aleatório):
+  [SIMILAR CASE 1 - INVESTIGA REDE]
+
+CASE 4 (Ao suspender):
+  IA: "Esse é comportamento normal. Quando o
+       computador suspende, a VPN desconecta.
+
+       Quando acordar, basta reconectar.
+
+       Se quiser, posso orientar a desativar
+       suspensão automática. Deseja?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    [ENVIA TUTORIAL DESATIVAR SUSPENSÃO]
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+59.	❌ Cargo sem política de trabalho remoto (validar com RH)
+60.	❌ Firewall/ISP bloqueando VPN
+61.	❌ Problema de certificado não resolvido
+62.	❌ Rotas VPN não funcionam após reconfiguração
+63.	❌ Problema de conectividade complexo
+64.	❌ VPN cai constantemente em rede boa
+65.	❌ Necessário configurar split tunneling customizado
+66.	❌ Problema em múltiplos usuários (pode ser servidor)
+67.	❌ Requisição de acesso VPN para terceiro/externo
+APIs e Comandos
+# Verificar conta VPN
+checkVPNAccount(
+  userId: string
+) -> {
+  enabled: boolean,
+  lastConnection: datetime,
+  certificateExpiry: datetime,
+  ipAssigned: string
+}
+
+# Regenerar certificado
+regenerateVPNCertificate(
+  userId: string
+) -> {
+  certificate: string,
+  privateKey: string,
+  expiresAt: datetime
+}
+
+# Testar rotas VPN
+testVPNRouting(
+  userId: string
+) -> {
+  connected: boolean,
+  routes: [{network: string, accessible: boolean}],
+  latency: number
+}
+
+# Reativar conta VPN
+enableVPNAccount(
+  userId: string,
+  approver: string
+) -> {success: boolean}
+

@@ -1,0 +1,1171 @@
+# Reset rotas
+resetVPNRoutes(
+  userId: string
+) -> {success: boolean}
+
+# Enviar credenciais VPN
+sendVPNCredentials(
+  userId: string,
+  email: string
+) -> {success: boolean, messageId: string}
+Exemplos de Diálogos
+Exemplo: VPN Não Conecta - Senha Expirada
+User: "VPN não conecta, dá erro de senha"
+
+IA: "Vou verificar suas credenciais... ⏳
+
+     Identifiquei que sua senha do Windows expirou
+     há 3 dias. Por isso a VPN não aceita.
+
+     Vou resetar sua senha agora.
+     Você tem acesso ao email corporativo?"
+
+User: "Sim"
+
+IA: "Perfeito! Enviando código de validação..."
+
+[FLUXO DE RESET SENHA]
+
+IA: "Senha resetada! ✅
+     Nova senha enviada por email.
+
+     Agora use essa nova senha para conectar na VPN.
+     Tente e me avise se funcionou."
+
+User: "Funcionou! Obrigado"
+
+IA: "Ótimo! 🎉 Mais alguma coisa?"
+
+[SUCESSO]
+________________________________________________________________________________
+CATEGORIA 6: REDE/CONECTIVIDADE
+Volume: 891 chamados/ano (4.5% do TI)
+Potencial de Automação: 55%
+Média de Mensagens: 3.8
+Complexidade: ⭐⭐⭐⭐ Alta
+Economia Estimada: 246 horas/ano
+Identificadores
+Keywords principais:
+•	internet, rede, conexão, wi-fi, wifi
+•	sem internet, não conecta, offline
+•	lento, lentidão, velocidade, devagar
+•	cabo, ethernet, wireless
+Patterns:
+/(sem.*internet|internet.*não.*funciona|sem.*rede)/i
+/(lent|devagar|velocidade|connection|conectividade)/i
+Fluxo Completo
+PASSO 1: Identificar Tipo de Problema
+IA: "Entendi que você está com problema de rede/internet.
+
+     Qual situação você está enfrentando?
+
+     1️⃣ Sem internet (totalmente sem conexão)
+     2️⃣ Internet muito lenta
+     3️⃣ Conecta e desconecta
+     4️⃣ Wi-Fi não aparece/não conecta
+     5️⃣ Cabo de rede não funciona"
+
+User: [Escolhe]
+
+[SEGUE FLUXO ESPECÍFICO]
+FLUXO A: Sem Internet
+IA: "Você está no escritório ou trabalhando remotamente?"
+
+User: [Escritório / Remoto]
+
+IF Escritório:
+  IA: "Vou fazer alguns testes... ⏳"
+
+  [EXECUTA: pingDevice(userDeviceId)]
+
+  IF dispositivo responde ping:
+    IA: "Seu computador está na rede! ✅
+
+         O problema pode ser de DNS ou proxy.
+
+         Você consegue acessar:
+         https://8.8.8.8
+
+         (Digite esse endereço no navegador)"
+
+    User: [Sim/Não]
+
+    IF Sim (acessa IP mas não sites):
+      IA: "Problema de DNS identificado!
+
+           Vou reconfigurar o DNS... ⏳"
+
+      [EXECUTA: resetDNS(userDeviceId)]
+
+      IA: "DNS reconfigurado! ✅
+
+           Tente acessar um site agora.
+           Exemplo: www.google.com
+
+           Funcionou?"
+
+      [CONFIRMAÇÃO]
+
+    IF Não (nem IP acessa):
+      IA: "O computador está na rede mas sem acesso
+           externo.
+
+           Vou verificar o gateway... ⏳"
+
+      [VERIFICA GATEWAY/FIREWALL]
+
+      [ESCALA SE COMPLEXO - MOTIVO: "Sem acesso externo"]
+
+  ELSE (não responde ping):
+    IA: "Não estou conseguindo alcançar seu computador.
+
+         Você está conectado por:
+         1️⃣ Wi-Fi
+         2️⃣ Cabo de rede"
+
+    User: [Escolhe]
+
+    IF Wi-Fi:
+      IA: "O ícone do Wi-Fi está conectado?
+           Veja no canto inferior direito da tela."
+
+      User: [Sim/Não/Não tenho ícone]
+
+      IF Não ou Não tenho:
+        IA: "Vamos reconectar ao Wi-Fi:
+
+             1. Clique no ícone de rede (canto inferior direito)
+             2. Procure a rede: Raiz-Wifi
+             3. Clique em 'Conectar'
+             4. Senha: {WIFI_PASSWORD}
+
+             Conseguiu conectar?"
+
+        [AGUARDA CONFIRMAÇÃO]
+
+      IF Sim (conectado mas sem acesso):
+        IA: "Qual andar/sala você está?"
+
+        User: [Localização]
+
+        [VERIFICA PROBLEMAS CONHECIDOS NA REGIÃO]
+
+        IF problema conhecido:
+          IA: "Há um problema conhecido no {ANDAR/SALA}.
+               A equipe de rede já está trabalhando
+               no reparo.
+
+               Previsão de normalização: {TEMPO}
+
+               Enquanto isso, você pode:
+               • Usar cabo de rede
+               • Ir para outro andar
+               • Usar seu celular (hotspot)"
+
+        ELSE:
+          IA: "Vou verificar o access point da sua região..."
+
+          [VERIFICA AP STATUS]
+          [PODE REINICIAR AP REMOTAMENTE]
+
+    IF Cabo:
+      IA: "O cabo está conectado firmemente no
+           computador E na tomada de rede na parede?"
+
+      User: [Sim/Não]
+
+      IF Não:
+        IA: "Conecte bem em ambas as pontas e me avise."
+        [AGUARDA]
+
+      IF Sim:
+        IA: "Qual a cor da luzinha na entrada do
+             cabo no computador?
+
+             1️⃣ Verde piscando
+             2️⃣ Laranja
+             3️⃣ Sem luz"
+
+        User: [Escolhe]
+
+        CASE "Sem luz":
+          IA: "Sem luz indica que não há sinal.
+
+               Pode ser:
+               • Cabo com defeito
+               • Tomada de rede inativa
+
+               Tente trocar para outra tomada de rede
+               próxima.
+
+               Funcionou?"
+
+          User: [Sim/Não]
+
+          IF Não:
+            IA: "Vou abrir chamado para o time de
+                 infraestrutura verificar fisicamente.
+
+                 Enquanto isso, consegue usar Wi-Fi?"
+
+            [ESCALA - MOTIVO: "Tomada rede inativa"]
+
+        CASE "Verde piscando":
+          IA: "Verde piscando é bom sinal! Há atividade.
+
+               Mesmo assim não tem internet?"
+
+          [CONTINUA TROUBLESHOOTING - SIMILAR Wi-Fi]
+
+        CASE "Laranja":
+          IA: "Laranja pode indicar velocidade reduzida.
+
+               Vamos tentar reconfigurar a placa de rede..."
+
+          [RESET NETWORK ADAPTER]
+
+IF Remoto:
+  IA: "Você está em casa ou outro local?"
+
+  User: [Local]
+
+  IA: "Outros dispositivos na mesma rede estão
+       funcionando? (celular, TV, etc)"
+
+  User: [Sim/Não]
+
+  IF Não:
+    IA: "O problema é na sua internet doméstica.
+
+         Tente:
+         1. Reiniciar o roteador (desligar 30 seg e ligar)
+         2. Verificar se a conta está ativa
+         3. Ligar para sua operadora de internet
+
+         Consigo ajudar com problemas da rede da Raiz,
+         mas sua internet residencial precisa do
+         suporte da sua operadora.
+
+         Quando sua internet normalizar, me avise se
+         ainda tiver problema para acessar nossos sistemas."
+
+  IF Sim (outros funcionam, só PC não):
+    IA: "Vou fazer testes remotos... ⏳"
+
+    [TENTA PING]
+
+    IF alcança:
+      [TROUBLESHOOTING NORMAL]
+
+    ELSE:
+      IA: "Você está conectado à VPN?"
+
+      [INVESTIGA VPN OU CONFIGURAÇÃO LOCAL]
+FLUXO B: Internet Lenta
+IA: "Vou fazer um teste de velocidade... ⏳"
+
+[EXECUTA: testBandwidth(userDeviceId)]
+
+[RETORNA: download: 15Mbps, upload: 8Mbps, latency: 45ms]
+
+IA: "Medi sua conexão:
+     • Download: 15 Mbps
+     • Upload: 8 Mbps
+     • Latência: 45 ms
+
+     Isso está {ABAIXO/DENTRO/ACIMA} do esperado para
+     sua localização.
+
+     O que especificamente está lento?
+     1️⃣ Navegação web (sites)
+     2️⃣ Download de arquivos
+     3️⃣ Videoconferência (Teams, Zoom)
+     4️⃣ Acessar sistemas internos
+     5️⃣ Tudo"
+
+User: [Escolhe]
+
+CASE 1 (Navegação web):
+  IA: "Pode ser cache do navegador.
+       Qual navegador você usa?"
+
+  User: [Chrome/Edge/Firefox]
+
+  IA: "Vamos limpar o cache do {BROWSER}:
+
+       1. Pressione Ctrl + Shift + Del
+       2. Marque 'Cookies' e 'Cache'
+       3. Clique em 'Limpar dados'
+       4. Reinicie o navegador
+
+       Melhorou?"
+
+  [AGUARDA CONFIRMAÇÃO]
+
+CASE 2 (Download):
+  IA: "Downloads de onde estão lentos?
+       Sites externos ou servidor interno?"
+
+  User: [Externo/Interno]
+
+  IF Interno:
+    [VERIFICA PERFORMANCE SERVIDOR DE ARQUIVOS]
+
+    IF servidor lento:
+      IA: "Identifiquei lentidão no servidor de
+           arquivos. Vários usuários reportando.
+
+           O time de infraestrutura já está ciente.
+           Deve normalizar em breve."
+
+    ELSE:
+      [TROUBLESHOOT ESPECÍFICO]
+
+  IF Externo:
+    IA: "Sua velocidade de 15 Mbps é adequada para
+         downloads normais.
+
+         Se está muito lento, pode ser o site de
+         origem com problema."
+
+CASE 3 (Videoconferência):
+  IA: "Videoconferência precisa de conexão estável.
+
+       Você está em:
+       1️⃣ Wi-Fi
+       2️⃣ Cabo"
+
+  User: [Escolhe]
+
+  IF Wi-Fi:
+    IA: "Para videoconferências, cabo é mais estável.
+
+         Se possível, conecte por cabo de rede.
+
+         Se só tiver Wi-Fi, tente:
+         • Ficar perto do roteador
+         • Fechar outros programas
+         • Desligar câmera se não for necessária"
+
+  IF Cabo:
+    IA: "Em cabo, sua velocidade deveria ser boa.
+
+         Quantas pessoas estão na videoconferência?"
+
+    User: [Número]
+
+    IA: "Vou verificar se há congestionamento...⏳"
+
+    [VERIFICA BANDWIDTH USAGE DA REDE]
+
+CASE 4 (Sistemas internos):
+  IA: "Qual sistema está lento?"
+
+  User: [Nome sistema]
+
+  [VERIFICA STATUS DO SISTEMA]
+  [VERIFICA LATÊNCIA AO SERVIDOR]
+
+  IF problema identificado:
+    IA: "O sistema {SISTEMA} está com lentidão
+         generalizada. Vários usuários afetados.
+
+         Time responsável já está investigando."
+
+  ELSE:
+    [TROUBLESHOOTING ESPECÍFICO]
+
+CASE 5 (Tudo):
+  IF velocidade medida < 50% do esperado:
+    IA: "Sua velocidade está realmente abaixo
+         do normal.
+
+         Vou investigar com a equipe de rede."
+
+    [ESCALA - MOTIVO: "Velocidade muito abaixo"]
+
+  ELSE:
+    IA: "A velocidade medida está OK.
+
+         Pode ser:
+         • Muitos programas abertos
+         • Antivírus fazendo scan
+         • Atualizações do Windows baixando
+
+         Quantos programas você tem abertos?"
+
+    [INVESTIGA USO DE RECURSOS]
+FLUXO C: Wi-Fi Não Aparece
+IA: "O ícone do Wi-Fi aparece na barra de tarefas?"
+
+User: [Sim/Não]
+
+IF Não:
+  IA: "Parece que o Wi-Fi está desativado.
+
+       Vamos ativar:
+
+       1. Pressione Win + I (abre Configurações)
+       2. Clique em 'Rede e Internet'
+       3. Clique em 'Wi-Fi' no menu lateral
+       4. Ative o Wi-Fi
+
+       Apareceu o ícone agora?"
+
+  User: [Sim/Não]
+
+  IF Não:
+    IA: "Pode ser que o Wi-Fi esteja desabilitado
+         por hardware (botão físico).
+
+         Seu notebook tem um botão/switch de Wi-Fi?
+
+         Geralmente é:
+         • Tecla Fn + F2 (ou outra tecla F)
+         • Switch lateral do notebook"
+
+    User: [Não sei/Achei/Não tem]
+
+    IF Achei:
+      IA: "Ative o switch/pressione a tecla.
+           Apareceu agora?"
+
+    IF Não sei/Não tem:
+      IA: "Qual marca/modelo do seu notebook?"
+
+      User: [Modelo]
+
+      [CONSULTA BASE: como ativar Wi-Fi por modelo]
+
+      IA: "Para o {MODELO}, tente: {INSTRUÇÃO}"
+
+IF Sim (ícone aparece):
+  IA: "Quando clica no ícone, o que aparece?
+
+       1️⃣ Nenhuma rede disponível
+       2️⃣ Outras redes, mas não a da empresa
+       3️⃣ Rede da empresa aparece"
+
+  CASE 1 (Nenhuma rede):
+    IA: "Você está perto do escritório?
+         Qual andar/sala?"
+
+    User: [Localização]
+
+    IA: "Vou verificar o access point... ⏳"
+
+    [VERIFICA AP DA REGIÃO]
+
+    IF AP offline:
+      IA: "O access point do {LOCAL} está offline.
+           Vou notificar a equipe de rede.
+
+           Você pode:
+           • Usar cabo de rede
+           • Ir para outro andar
+
+           Previsão de reparo: {TEMPO}"
+
+      [CRIA TICKET INFRAESTRUTURA]
+
+  CASE 2 (Outras redes sim, empresa não):
+    IA: "Qual andar/sala você está?"
+
+    User: [Localização]
+
+    [VERIFICA AP + SSID]
+
+    IA: "O nome da rede da empresa pode variar:
+         • Raiz-Wifi
+         • Raiz-Corp
+         • Raiz-Guest (visitantes)
+
+         Algum desses aparece?"
+
+    User: [Sim/Não]
+
+    IF Não:
+      [ESCALA - MOTIVO: "SSID não broadcasting"]
+
+  CASE 3 (Rede aparece):
+    IA: "Quando tenta conectar, o que acontece?"
+
+    [TROUBLESHOOTING CONEXÃO]
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+68.	❌ Problema físico de infraestrutura (cabo, tomada, AP)
+69.	❌ Lentidão generalizada em vários usuários (pode ser backbone)
+70.	❌ Problema de roteamento/gateway
+71.	❌ Access Point offline ou com defeito
+72.	❌ Necessário reconfiguração de VLAN
+73.	❌ Problema de switch/rack
+74.	❌ Investigação complexa de latência
+75.	❌ Problema de firewall/segurança de rede
+76.	❌ Depois de 3 tentativas de troubleshooting sem sucesso
+APIs e Comandos
+# Ping dispositivo
+pingDevice(
+  deviceId: string
+) -> {
+  reachable: boolean,
+  latency: number,
+  packetLoss: number
+}
+
+# Teste de velocidade
+testBandwidth(
+  deviceId: string
+) -> {
+  download: number,  # Mbps
+  upload: number,
+  latency: number,
+  jitter: number
+}
+
+# Reset DNS
+resetDNS(
+  deviceId: string
+) -> {success: boolean}
+
+# Verificar AP
+checkAccessPoint(
+  location: string
+) -> {
+  apId: string,
+  status: 'online' | 'offline' | 'degraded',
+  connectedClients: number,
+  signalStrength: number
+}
+
+# Verificar switch port
+checkSwitchPort(
+  portId: string
+) -> {
+  status: 'up' | 'down',
+  speed: string,
+  vlan: string
+}
+
+# Reset network adapter
+resetNetworkAdapter(
+  deviceId: string
+) -> {success: boolean}
+Exemplos de Diálogos
+Exemplo: Problema DNS (Sucesso)
+User: "Não consigo acessar nenhum site"
+
+IA: "Vou verificar sua conexão... ⏳
+
+     Seu computador está na rede! ✅
+
+     Pode tentar acessar: http://8.8.8.8"
+
+User: "Esse abriu"
+
+IA: "Perfeito! Problema de DNS identificado.
+
+     Vou reconfigurar agora... ⏳
+
+     Pronto! ✅
+
+     Tente acessar www.google.com agora."
+
+User: "Funcionou!"
+
+IA: "Ótimo! 🎉 Seu problema está resolvido?"
+
+[SUCESSO - TEMPO: 2 minutos]
+________________________________________________________________________________
+CATEGORIA 7: IMPRESSORA
+Volume: 723 chamados/ano (3.6% do TI)
+Potencial de Automação: 50%
+Média de Mensagens: 4.1
+Complexidade: ⭐⭐⭐ Média-Alta
+Economia Estimada: 181 horas/ano
+Identificadores
+Keywords principais:
+•	impressora, imprimir, não imprime, não sai
+•	fila de impressão, travou, papel, toner
+•	scanner, digitalizar, escaneou, não funciona
+Patterns:
+/(impress|não.*imprim|fila.*impress)/i
+/(scanner|digitaliz|escanear)/i
+Fluxo Completo
+PASSO 1: Identificar Problema
+IA: "Entendi que você está com problema na impressora.
+
+     Qual situação descreve melhor?
+
+     1️⃣ Não imprime (nada sai)
+     2️⃣ Imprime mas está com defeito (borrado, cortado)
+     3️⃣ Papel preso (atolamento)
+     4️⃣ Não encontra a impressora no computador
+     5️⃣ Scanner não funciona"
+
+User: [Escolhe]
+
+[SEGUE FLUXO ESPECÍFICO]
+FLUXO A: Não Imprime
+IA: "Quando você manda imprimir, o que acontece?
+
+     1️⃣ Nada acontece (nem entra na fila)
+     2️⃣ Entra na fila mas não sai papel
+     3️⃣ Mensagem de erro aparece"
+
+User: [Escolhe]
+
+CASE 1 (Nada acontece):
+  IA: "Qual impressora você está tentando usar?"
+
+  User: [Nome da impressora]
+
+  [NORMALIZA NOME]
+  [VERIFICA SE IMPRESSORA EXISTE NO SISTEMA]
+
+  IF encontrada:
+    [VERIFICA STATUS DA IMPRESSORA]
+
+    IF offline:
+      IA: "A impressora {NOME} está offline.
+
+           Onde ela fica? (andar/sala)"
+
+      User: [Localização]
+
+      IA: "Pode verificar se:
+           • Impressora está ligada
+           • Cabo de rede está conectado
+           • Luz verde está acesa
+
+           Está tudo conectado?"
+
+      User: [Sim/Não]
+
+      IF Não:
+        IA: "Conecte os cabos e ligue a impressora.
+             Aguarde 1 minuto para ela inicializar
+             e tente imprimir novamente."
+
+        [AGUARDA CONFIRMAÇÃO]
+
+      IF Sim:
+        IA: "Vou reiniciar a impressora remotamente... ⏳"
+
+        [EXECUTA: restartPrinter(printerId)]
+
+        IF sucesso:
+          IA: "Impressora reiniciada! ✅
+               Aguarde 1 minuto e tente imprimir."
+
+        ELSE:
+          [ESCALA - MOTIVO: "Impressora offline, não reinicia"]
+
+    IF online:
+      IA: "A impressora está online.
+           Você consegue vê-la na lista de impressoras?"
+
+      [TROUBLESHOOT DRIVER/CONEXÃO]
+
+  ELSE (não encontrada):
+    IA: "Não encontrei essa impressora no sistema.
+
+         Pode me enviar uma foto ou descrição da
+         etiqueta da impressora? (modelo/número)"
+
+    [ESCALA - MOTIVO: "Impressora não cadastrada"]
+
+CASE 2 (Entra na fila mas não sai):
+  IA: "Quantos documentos tem na fila de impressão?"
+
+  User: [Número]
+
+  IF > 5:
+    IA: "A fila está cheia. Vou limpar para você... ⏳"
+
+    [EXECUTA: clearPrintQueue(userId)]
+
+    IA: "Fila limpa! ✅
+         Tente imprimir novamente agora."
+
+  ELSE:
+    IA: "Qual impressora está usando?"
+
+    User: [Nome]
+
+    [VERIFICA STATUS IMPRESSORA]
+
+    IF sem papel:
+      IA: "A impressora está sem papel!
+           Pode colocar papel na bandeja?"
+
+    IF sem toner:
+      IA: "O toner está acabando/vazio.
+           Vou abrir chamado para reposição.
+
+           Enquanto isso, tente usar outra impressora
+           próxima."
+
+      [ABRE CHAMADO SUPRIMENTOS]
+
+    IF erro:
+      IA: "A impressora está com erro: {ERRO}
+
+           [INSTRUI CONFORME ERRO ESPECÍFICO]"
+
+CASE 3 (Mensagem de erro):
+  IA: "Qual mensagem de erro aparece?"
+
+  User: [Descreve]
+
+  ERROS COMUNS:
+  - "Acesso negado" → Problema de permissão
+  - "Driver não disponível" → Reinstalar driver
+  - "Offline" → Impressora desligada/desconectada
+  - "Porta ocupada" → Outro trabalho travado
+
+  [APLICA FIX CONFORME ERRO]
+FLUXO B: Impressão com Defeito
+IA: "Que tipo de defeito está aparecendo?
+
+     1️⃣ Borrão, manchas
+     2️⃣ Linhas brancas/falhadas
+     3️⃣ Texto cortado/incompleto
+     4️⃣ Cores erradas"
+
+User: [Escolhe]
+
+CASE 1 (Borrão):
+  IA: "Isso geralmente é sujeira ou toner vazando.
+
+       Vou abrir chamado para limpeza/manutenção.
+
+       Enquanto isso, pode usar impressora:
+       [LISTA IMPRESSORAS PRÓXIMAS]"
+
+  [ESCALA - MOTIVO: "Impressora precisa limpeza"]
+
+CASE 2 (Linhas brancas):
+  IA: "Pode ser sujeira no scanner ou toner acabando.
+
+       Quantas páginas você imprimiu recentemente?"
+
+  [VERIFICA CONTADOR DE PÁGINAS]
+
+  IF alto:
+    IA: "O toner pode estar no fim.
+         Vou solicitar troca."
+
+    [ABRE CHAMADO SUPRIMENTOS]
+
+CASE 3 (Texto cortado):
+  IA: "Pode ser configuração de margem.
+
+       No programa que vai imprimir:
+       1. Arquivo → Configurar Página
+       2. Verifique as margens
+       3. Tente 'Ajustar à página'
+
+       Funcionou?"
+
+  [TROUBLESHOOT CONFIGURAÇÃO]
+
+CASE 4 (Cores erradas):
+  IA: "Impressora colorida ou preto e branco?"
+
+  User: [Colorida]
+
+  IA: "Pode ser cartucho de cor vazio.
+       Vou verificar os níveis... ⏳"
+
+  [VERIFICA NÍVEIS DE TONER]
+
+  IA: "Cyan: {%}, Magenta: {%}, Yellow: {%}, Black: {%}
+
+       O cartucho {COR} está em {%}.
+       Vou solicitar reposição."
+
+  [ABRE CHAMADO SUPRIMENTOS]
+FLUXO C: Não Encontra Impressora
+IA: "Quando você vai em 'Imprimir', a impressora
+     não aparece na lista?"
+
+User: [Sim]
+
+IA: "Qual impressora você precisa usar?"
+
+User: [Nome]
+
+IA: "Vou instalar o driver da impressora para você... ⏳"
+
+[EXECUTA: installPrinterDriver(userId, printerId)]
+
+IF sucesso:
+  IA: "Driver instalado! ✅
+
+       Agora vá em qualquer programa:
+       • Arquivo → Imprimir
+       • Selecione '{IMPRESSORA}'
+       • Tente imprimir
+
+       Apareceu na lista?"
+
+  [CONFIRMAÇÃO]
+
+ELSE:
+  IA: "Erro ao instalar driver.
+       Vou transferir para um técnico."
+
+  [ESCALA - MOTIVO: "Falha instalação driver impressora"]
+FLUXO D: Scanner Não Funciona
+IA: "Você está tentando escanear de:
+     1️⃣ Computador
+     2️⃣ Direto na impressora (visor)"
+
+User: [Escolhe]
+
+IF Computador:
+  IA: "Qual programa está usando para escanear?"
+
+  User: [Nome programa]
+
+  IA: "A impressora aparece como disponível no programa?"
+
+  User: [Sim/Não]
+
+  IF Não:
+    IA: "Vou reinstalar o driver do scanner... ⏳"
+
+    [INSTALA DRIVER SCANNER]
+
+  IF Sim:
+    IA: "Quando clica em 'Digitalizar', o que acontece?"
+
+    [TROUBLESHOOT ESPECÍFICO]
+
+IF Direto na impressora:
+  IA: "Qual mensagem aparece no visor da impressora?"
+
+  User: [Descreve]
+
+  [ANALISA ERRO]
+
+  SE não consegue resolver:
+    IA: "Esse problema precisa de verificação física.
+         Vou abrir chamado para técnico ir até lá."
+
+    [ESCALA - MOTIVO: "Scanner com erro físico"]
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+77.	❌ Impressora offline e não reinicia remotamente
+78.	❌ Problema físico (papel preso, erro mecânico)
+79.	❌ Necessário troca de peças/suprimentos
+80.	❌ Qualidade de impressão ruim (manutenção)
+81.	❌ Impressora não cadastrada no sistema
+82.	❌ Erro desconhecido no driver
+83.	❌ Scanner com problema físico
+84.	❌ Rede da impressora com problema
+85.	❌ Depois de 2 tentativas sem sucesso
+APIs e Comandos
+# Verificar status impressora
+checkPrinterStatus(
+  printerId: string
+) -> {
+  online: boolean,
+  status: 'ready' | 'printing' | 'error' | 'offline',
+  jobsInQueue: number,
+  errorMessage: string,
+  supplies: {
+    paper: number,
+    tonerBlack: number,
+    tonerCyan: number,
+    tonerMagenta: number,
+    tonerYellow: number
+  }
+}
+
+# Limpar fila de impressão
+clearPrintQueue(
+  userId: string,
+  printerId: string = 'all'
+) -> {success: boolean, jobsCleared: number}
+
+# Reiniciar impressora
+restartPrinter(
+  printerId: string
+) -> {success: boolean}
+
+# Instalar driver
+installPrinterDriver(
+  userId: string,
+  printerId: string
+) -> {success: boolean}
+
+# Abrir chamado suprimentos
+createSupplyRequest(
+  printerId: string,
+  supplyType: 'paper' | 'toner' | 'maintenance'
+) -> {ticketId: string}
+Exemplos de Diálogos
+Exemplo: Fila Travada (Sucesso)
+User: "Mandei imprimir mas não sai"
+
+IA: "Deixa eu verificar a fila de impressão... ⏳
+
+     Você tem 12 documentos na fila!
+     Um deles pode estar travado.
+
+     Vou limpar a fila e você tenta de novo. Ok?"
+
+User: "Ok"
+
+IA: "Fila limpa! ✅
+
+     Tente imprimir novamente agora."
+
+User: "Saiu! Obrigado"
+
+IA: "Ótimo! 🎉 Mais alguma coisa?"
+
+[SUCESSO - TEMPO: 1 minuto]
+________________________________________________________________________________
+CATEGORIA 8: SISTEMA LENTO
+Volume: 654 chamados/ano (3.3% do TI)
+Potencial de Automação: 40%
+Média de Mensagens: 4.5
+Complexidade: ⭐⭐⭐⭐ Alta
+Economia Estimada: 131 horas/ano
+Identificadores
+Keywords principais:
+•	lento, devagar, travando, congelando
+•	lentidão, performance, demorado
+•	não responde, travou, tela branca
+Patterns:
+/(lent|devagar|trav|congel|freez)/i
+/(performance|demorad|não.*respond)/i
+Fluxo Completo
+PASSO 1: Identificar Contexto
+IA: "Entendi que o sistema está lento.
+
+     O que especificamente está lento?
+
+     1️⃣ Computador inteiro (tudo)
+     2️⃣ Um programa específico
+     3️⃣ Internet/navegação
+     4️⃣ Sistema interno da empresa"
+
+User: [Escolhe]
+
+[SEGUE FLUXO ESPECÍFICO]
+FLUXO A: Computador Inteiro Lento
+IA: "Há quanto tempo está lento?
+
+     1️⃣ Hoje/agora
+     2️⃣ Alguns dias
+     3️⃣ Sempre foi assim"
+
+User: [Escolhe]
+
+CASE 1 (Hoje/agora):
+  IA: "Vou verificar o uso de recursos... ⏳"
+
+  [EXECUTA: checkSystemResources(userDeviceId)]
+
+  [RETORNA:
+    cpu: 92%,
+    memory: 87%,
+    disk: 15%,
+    topProcesses: ["chrome.exe (45%)", "outlook.exe (28%)"]
+  ]
+
+  IA: "Encontrei o problema!
+
+       Seu computador está usando 92% do processador
+       e 87% da memória.
+
+       Programas consumindo mais recursos:
+       • Chrome (45%)
+       • Outlook (28%)
+
+       Quantas abas você tem abertas no Chrome?"
+
+  User: [Número]
+
+  IF > 10:
+    IA: "Muitas abas abertas deixam o PC lento.
+
+         Tente:
+         1. Fechar abas que não está usando
+         2. Usar favoritos para sites importantes
+         3. Reiniciar o Chrome
+
+         Feche algumas abas e me avise se melhorou."
+
+    [AGUARDA CONFIRMAÇÃO]
+
+  IA: "Vou fechar processos desnecessários... ⏳"
+
+  [EXECUTA: killUnnecessaryProcesses(userDeviceId)]
+
+  IA: "Pronto! ✅
+       Melhorou?"
+
+  [CONFIRMAÇÃO]
+
+CASE 2 (Alguns dias):
+  IA: "Vou verificar alguns itens... ⏳"
+
+  [VERIFICA:
+    - Atualizações Windows pendentes
+    - Antivírus fazendo scan
+    - Disco cheio
+    - Malware
+  ]
+
+  IF atualizações pendentes:
+    IA: "Há atualizações do Windows pendentes.
+         Isso pode deixar o PC lento.
+
+         Posso instalar agora? Vai reiniciar
+         o computador (leva 10-15 min)."
+
+    User: [Sim/Não]
+
+    IF Sim:
+      [AGENDA INSTALAÇÃO]
+
+  IF disco > 90% cheio:
+    IA: "Seu disco está {%}% cheio!
+         Isso deixa tudo lento.
+
+         Vou orientar você a liberar espaço."
+
+    [ENVIA TUTORIAL LIMPEZA DISCO]
+
+  IF antivírus scanning:
+    IA: "O antivírus está fazendo varredura completa.
+         Por isso está lento.
+
+         Deve terminar em {TEMPO}.
+         É normal e vai normalizar sozinho."
+
+CASE 3 (Sempre foi):
+  IA: "Seu computador pode ter configuração
+       insuficiente.
+
+       Vou verificar as especificações... ⏳"
+
+  [EXECUTA: getDeviceSpecs(userDeviceId)]
+
+  [RETORNA: RAM: 4GB, CPU: Intel i3, Disk: HDD]
+
+  IF specs abaixo do recomendado:
+    IA: "Seu computador tem configuração antiga:
+         • RAM: 4GB (recomendado: 8GB+)
+         • Disco: HD (recomendado: SSD)
+
+         Vou verificar se você está elegível
+         para upgrade."
+
+    [CONSULTA POLÍTICA DE UPGRADE]
+
+    IF elegível:
+      IA: "Você está elegível para upgrade!
+           Vou abrir solicitação."
+
+      [CRIA TICKET UPGRADE]
+
+    ELSE:
+      IA: "No momento não há previsão de upgrade.
+
+           Enquanto isso, recomendo:
+           • Fechar programas não usados
+           • Não abrir muitas abas
+           • Limpar arquivos temporários
+
+           Quer que eu faça limpeza agora?"
+
+      [OFERECER OTIMIZAÇÃO]
+FLUXO B: Programa Específico Lento
+IA: "Qual programa está lento?"
+
+User: [Nome - ex: "Excel", "Totvs", "SAP"]
+
+IA: "Quando ele fica lento?
+
+     1️⃣ Ao abrir
+     2️⃣ Ao usar (durante o trabalho)
+     3️⃣ Com arquivos grandes
+     4️⃣ Sempre"
+
+User: [Escolhe]
+
+CASE "Ao abrir":
+  IA: "Quanto tempo leva para abrir?"
+
+  User: [Tempo]
+
+  IF > 2 minutos:
+    IA: "Muito tempo mesmo.
+
+         Para {PROGRAMA}, o normal é {TEMPO_NORMAL}.
+
+         Vou tentar algumas otimizações... ⏳"
+
+    [LIMPA CACHE DO PROGRAMA]
+    [REPARA INSTALAÇÃO SE NECESSÁRIO]
+
+CASE "Ao usar":
+  IA: "Que tipo de operação fica lenta?
+       (ex: salvar, copiar, calcular)"
+
+  User: [Descreve]
+
+  IF problema conhecido:
+    [APLICA FIX]
+
+  ELSE:
+    [ESCALA - MOTIVO: "Lentidão específica em {PROGRAMA}"]
+
+CASE "Com arquivos grandes":
+  IA: "Qual tamanho do arquivo?"
+
+  User: [Tamanho]
+
+  IF muito grande:
+    IA: "Arquivo de {TAMANHO} realmente deixa lento.
+
+         Isso é normal para arquivos grandes.
+
+         Recomendo:
+         • Dividir em arquivos menores
+         • Fechar outros programas ao trabalhar
+         • Aumentar memória do PC (se possível)"
+
+CASE "Sempre":
+  IA: "Vou reinstalar o {PROGRAMA}... ⏳"
+
+  [EXECUTA: reinstallSoftware(softwareId)]
+
+  IA: "Reinstalado! ✅
+       Abra e me diga se melhorou."
+FLUXO C: Sistema Interno Lento
+IA: "Qual sistema interno está lento?"
+
+User: [Nome - ex: "Totvs", "SAP", "Intranet"]
+
+IA: "Outros colegas também estão com lentidão
+     no mesmo sistema?"
+
+User: [Sim/Não/Não sei]
+
+IF Sim ou Não sei:
+  IA: "Vou verificar se há problema generalizado... ⏳"
+
+  [VERIFICA MONITORAMENTO DO SISTEMA]
+
+  IF problema conhecido:
+    IA: "Sim, o {SISTEMA} está com lentidão para
+         todos os usuários.
+
+         A equipe responsável já está trabalhando.
+         Previsão de normalização: {TEMPO}

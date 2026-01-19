@@ -1,0 +1,792 @@
+SUBCATEGORIA D: Erros Técnicos (14.7%)
+Erros Mais Comuns:
+Erro: "Erro ao conectar com o banco de dados"
+Código: DB-CONNECTION-001
+Causa: VPN desconectada ou timeout
+Solução:
+  1. Verificar se VPN está conectada
+  2. Testar conectividade: ping server-totvs.raiz.local
+  3. Reiniciar cliente Totvs
+  4. Se persistir: reiniciar serviço Totvs (requer admin)
+Automação: Parcial
+
+Erro: "Timeout na consulta"
+Código: DB-TIMEOUT-002
+Causa: Consulta pesada ou banco sobrecarregado
+Solução:
+  1. Reduzir período do filtro (ex: 1 ano → 1 mês)
+  2. Tentar em horário de menor uso
+  3. Se persistir: analisar query (DBA)
+Automação: Orientação automática
+
+Erro: "Usuário sem permissão para executar esta função"
+Código: AUTH-001
+Causa: Perfil não tem privilégio necessário
+Solução:
+  1. Verificar perfil do usuário
+  2. Adicionar permissão ou mudar perfil
+Automação: Alta (se dentro da política)
+
+Erro: "Registro bloqueado por outro usuário"
+Código: LOCK-001
+Causa: Outro usuário editando o mesmo registro
+Solução:
+  1. Identificar quem está usando: [CONSULTA]
+  2. Aguardar usuário terminar
+  3. Se usuário não existe mais (travado): liberar lock
+Automação: Média (identificação automática)
+
+Erro: "Valor inválido para o campo X"
+Código: VALIDATION-XXX
+Causa: Regra de validação do campo
+Solução:
+  1. Verificar formato esperado
+  2. Exemplos comuns: data, CPF, CNPJ, valor
+  3. Se dúvida sobre regra: consultar documentação
+Automação: Alta (para campos comuns)
+
+Erro: "Falha na integração com {Sistema}"
+Código: INTEGRATION-XXX
+Causa: Serviço de integração parado ou erro na API
+Solução:
+  1. Verificar status do serviço de integração
+  2. Ver logs de erro
+  3. Reprocessar manualmente se necessário
+Automação: Baixa (requer análise técnica)
+Fluxo Erro Técnico:
+IA: "Apareceu mensagem de erro no Totvs?
+
+     Por favor, envie:
+     • Print da tela com o erro, OU
+     • Texto completo do erro (copiar e colar)"
+
+User: [Envia print ou texto]
+
+[SE PRINT: EXTRAI TEXTO COM OCR]
+
+[NORMALIZA MENSAGEM DE ERRO]
+[IDENTIFICA CÓDIGO SE HOUVER]
+
+[CONSULTA: searchTotvErrorDB(errorMessage, errorCode)]
+
+IF erro conhecido:
+  IA: "Identifiquei o erro! ✅
+
+       Erro: {NOME_ERRO}
+       Causa: {CAUSA}
+
+       {SOLUÇÃO}"
+
+  EXEMPLOS:
+
+  - "Erro de conexão" →
+    IA: "Seu Totvs perdeu conexão com o servidor.
+
+         Vamos resolver:
+
+         1️⃣ Você está usando VPN? Está conectada?"
+
+    User: [Responde]
+
+    [TROUBLESHOOT CONECTIVIDADE]
+
+  - "Usuário sem permissão" →
+    IA: "Você não tem permissão para essa função.
+
+         Vou verificar seu perfil... ⏳"
+
+    [VERIFICA PERFIL]
+
+    IA: "Seu perfil é: {PERFIL}
+
+         Para essa função, precisa do perfil: {PERFIL_NECESSÁRIO}
+
+         Vou solicitar upgrade de permissão."
+
+    [INICIA FLUXO PERMISSÃO]
+
+  - "Registro bloqueado" →
+    IA: "Alguém está editando esse registro agora.
+
+         Vou identificar quem... ⏳"
+
+    [CONSULTA: SELECT LockUser FROM Locks WHERE RecordId = X]
+
+    IA: "O registro está sendo editado por: {USUÁRIO}
+
+         Você pode:
+         1️⃣ Aguardar (usuário termina logo)
+         2️⃣ Contatar o usuário: {EMAIL}
+         3️⃣ Pedir para liberar o bloqueio (se trava antiga)"
+
+    User: [Escolhe]
+
+    IF "Pedir para liberar":
+      IA: "Vou abrir chamado para especialista verificar
+           e liberar o bloqueio se necessário.
+
+           Chamado #{TICKET_ID}."
+
+      [ESCALA]
+
+  - "Valor inválido" →
+    IA: "O campo {CAMPO} não aceitou o valor que você
+         digitou.
+
+         Qual valor você tentou colocar?"
+
+    User: [Valor]
+
+    IA: "O formato esperado para {CAMPO} é: {FORMATO}
+
+         Exemplos:
+         {EXEMPLOS}
+
+         Tente novamente com o formato correto."
+
+    [ORIENTAÇÃO]
+
+ELSE (erro desconhecido):
+  IA: "Este erro não está na minha base.
+
+       Para ajudar o especialista Totvs, preciso de:
+
+       1. Em qual módulo você estava?
+       2. Que operação estava fazendo?
+       3. Já aconteceu antes ou é primeira vez?"
+
+  [COLETA CONTEXTO]
+
+  IA: "Informações coletadas! ✅
+
+       Transferindo para especialista Totvs.
+
+       Dados enviados:
+       • Erro: {MENSAGEM}
+       • Módulo: {MÓDULO}
+       • Operação: {OPERAÇÃO}
+       • Print anexado
+
+       Retorno em até 4 horas úteis.
+       Chamado #{TICKET_ID}."
+
+  [ESCALA PARA N2 TOTVS]
+SUBCATEGORIA E: Integração (6.0%)
+Integrações Comuns:
+•	**Totvs ↔ Portal de Matrículas** (28 casos)
+•	**Totvs ↔ ISAAC** (Sistema financeiro)
+•	**Totvs ↔ Fluig** (Workflow)
+•	**Totvs ↔ Worknow** (Pagamentos)
+•	**Totvs ↔ Portal do Colaborador**
+Fluxo Integração:
+IA: "Qual sistema não está sincronizando com o Totvs?
+
+     • Portal de Matrículas
+     • ISAAC (Financeiro)
+     • Fluig
+     • Worknow
+     • Portal do Colaborador
+     • Outro"
+
+User: [Sistema]
+
+IA: "O que deveria estar sincronizado mas não está?
+
+     Exemplo:
+     • Pagamento feito no Portal mas não aparece no Totvs
+     • Dados cadastrados no Totvs não aparecem no Portal
+     • Status diferente entre os sistemas"
+
+User: [Descreve problema]
+
+IA: "Vou coletar dados para o especialista de Integração:
+
+     1. Quando você fez a operação?
+        Data e hora aproximada"
+
+User: [Data/hora]
+
+IA: "2. Você tem ID/número de referência?
+        (Ex: número da parcela, ID do cadastro)"
+
+User: [ID ou "Não tenho"]
+
+IA: "3. O dado aparece no Totvs?"
+
+User: [Sim/Não]
+
+IA: "4. O dado aparece no {SISTEMA}?"
+
+User: [Sim/Não]
+
+[ANALISA RESPOSTAS]
+
+CENÁRIOS:
+
+- Aparece em ambos mas status diferente:
+  IA: "Os sistemas estão dessincronizados.
+
+       Status Totvs: {STATUS_TOTVS}
+       Status {SISTEMA}: {STATUS_SISTEMA}
+
+       Isso requer reprocessamento manual da integração.
+
+       Transferindo para especialista de Integração.
+       Chamado #{TICKET_ID}."
+
+- Aparece só no Totvs:
+  IA: "O dado existe no Totvs mas não foi para {SISTEMA}.
+
+       Possíveis causas:
+       • Integração não processou ainda (aguardar 15min)
+       • Erro no envio (necessário reprocessar)
+       • Campo obrigatório faltando
+
+       Vou abrir chamado para análise e reprocessamento.
+       Chamado #{TICKET_ID}."
+
+- Aparece só no outro sistema:
+  IA: "O dado existe em {SISTEMA} mas não veio para Totvs.
+
+       Integração pode ter falhado na importação.
+
+       Especialista vai:
+       • Ver logs da integração
+       • Identificar erro
+       • Reprocessar
+
+       Chamado #{TICKET_ID}."
+
+- Não aparece em nenhum:
+  IA: "Dados não aparecem em nenhum sistema.
+
+       Pode não ter sido criado corretamente.
+
+       Você tem certeza que finalizou o cadastro/operação?"
+
+  User: [Sim/Não]
+
+  [INVESTIGA OU ESCALA]
+
+[TODOS OS CASOS DE INTEGRAÇÃO ESCALAM PARA N2 INTEGRAÇÃO]
+SUBCATEGORIA F: Treinamento (4.6%)
+Tipos de Treinamento:
+•	Treinamento básico (novo usuário)
+•	Treinamento em módulo específico
+•	Treinamento em processo (ex: fechamento mensal)
+•	Reciclagem/atualização
+Fluxo:
+IA: "Você precisa de treinamento no Totvs!
+
+     Que tipo de treinamento você precisa?
+
+     1️⃣ Básico (nunca usei)
+     2️⃣ Módulo específico (já uso, quero aprender mais)
+     3️⃣ Processo específico (como fazer X)
+     4️⃣ Atualização (mudanças recentes)"
+
+User: [Escolhe]
+
+IA: "Sobre qual módulo?
+
+     • Financeiro
+     • RH
+     • Compras
+     • Geral (vários módulos)"
+
+User: [Módulo]
+
+IA: "Temos as seguintes opções:
+
+     **TREINAMENTOS ONLINE** (imediatos):
+     • Vídeos tutoriais: {LINK}
+     • Documentação passo a passo: {LINK}
+     • FAQs: {LINK}
+
+     **TREINAMENTO PRESENCIAL/AO VIVO**:
+     • Sessão individual (1-2h)
+     • Turma (próxima turma: {DATA})
+
+     Qual você prefere?"
+
+User: [Online / Presencial]
+
+IF Online:
+  IA: "Perfeito! Enviando links por email...
+
+       Você receberá:
+       • Acesso à plataforma de treinamento
+       • Vídeos do módulo {MÓDULO}
+       • Exercícios práticos
+       • Certificado ao concluir
+
+       Email enviado para: {EMAIL}
+
+       Se tiver dúvidas durante o treinamento,
+       pode me chamar!
+
+       Mais alguma coisa?"
+
+  [ENVIA MATERIAL]
+  [SUCESSO]
+
+IF Presencial:
+  IA: "Vou agendar treinamento presencial.
+
+       Preferência:
+       • Individual (mais personalizado, agenda conforme sua disponibilidade)
+       • Em turma (próxima turma: {DATA} às {HORA})"
+
+  User: [Individual / Turma]
+
+  IF Individual:
+    IA: "Qual sua disponibilidade?
+
+         Opções:
+         • Manhã (9h-12h)
+         • Tarde (14h-17h)
+         • Dias da semana preferenciais"
+
+    User: [Disponibilidade]
+
+    IA: "Perfeito! Solicitação de treinamento criada.
+
+         RH/Treinamento entrará em contato para
+         confirmar data e horário.
+
+         Você receberá:
+         • Convite de calendário
+         • Material didático
+         • Link (se for online)
+
+         Chamado #{TICKET_ID} aberto.
+
+         Alguma outra dúvida?"
+
+    [CRIA SOLICITAÇÃO PARA RH/TREINAMENTO]
+
+  IF Turma:
+    IA: "Próxima turma de {MÓDULO}:
+
+         • Data: {DATA}
+         • Horário: {HORA_INICIO} às {HORA_FIM}
+         • Local: {LOCAL ou "Online"}
+         • Vagas: {VAGAS_DISPONIVEIS}
+
+         Confirma inscrição?"
+
+    User: [Sim]
+
+    IA: "Inscrição confirmada! ✅
+
+         Você receberá:
+         • Convite de calendário
+         • Material pré-treinamento (ler antes)
+         • Link de acesso (se online)
+
+         Email enviado para: {EMAIL}
+
+         Chamado #{TICKET_ID}."
+
+    [INSCREVE EM TURMA]
+Matriz de Permissões Totvs (Exemplo)
+Módulo: Financeiro
+Perfis:
+  - Analista Financeiro:
+      Permissões:
+        - Visualizar lançamentos
+        - Lançar contas a pagar/receber
+        - Dar baixa em pagamentos
+      Restrições:
+        - Não pode excluir lançamentos
+        - Não pode estornar baixas
+
+  - Coordenador Financeiro:
+      Permissões:
+        - Todas do Analista +
+        - Estornar baixas
+        - Excluir lançamentos (com justificativa)
+        - Aprovar pagamentos
+      Restrições:
+        - Valores até R$ 50.000
+
+  - Gerente Financeiro:
+      Permissões:
+        - Acesso completo ao módulo
+      Restrições:
+        - Nenhuma
+
+Módulo: RH
+Perfis:
+  - Analista DP:
+      Permissões:
+        - Visualizar dados dos colaboradores
+        - Lançar ponto
+        - Gerar relatórios básicos
+      Restrições:
+        - Não pode alterar salários
+        - Não pode demitir
+
+  - Coordenador RH:
+      Permissões:
+        - Todas do Analista +
+        - Alterar dados cadastrais
+        - Processar férias
+        - Visualizar salários
+      Restrições:
+        - Não pode processar folha
+
+  - Gerente RH:
+      Permissões:
+        - Acesso completo ao módulo
+Critérios de Escalação
+ESCALAR PARA N2 TOTVS SE:
+138.	❌ Erro desconhecido/não documentado
+139.	❌ Problema de integração entre sistemas
+140.	❌ Corrupção de dados
+141.	❌ Permissão fora da matriz padrão (requer aprovação especial)
+142.	❌ Problema de performance/lentidão no sistema
+143.	❌ Necessário configuração avançada (parâmetros, customizações)
+144.	❌ Erro em processo crítico de negócio (folha, fechamento)
+145.	❌ Múltiplos usuários com mesmo problema (pode ser servidor)
+146.	❌ Necessário intervenção direta no banco de dados
+147.	❌ Após 2 tentativas de resolução sem sucesso
+SEMPRE PRIORIZAR chamados Totvs - sistema crítico para operação
+APIs e Comandos
+# Verificar permissões usuário
+checkTotvPermissions(
+  userId: string,
+  module: string
+) -> {
+  profile: string,
+  permissions: [string],
+  canView: boolean,
+  canEdit: boolean,
+  canDelete: boolean,
+  canApprove: boolean
+}
+
+# Conceder acesso Totvs
+grantTotvAccess(
+  userId: string,
+  module: string,
+  permissions: [string],
+  approver: string = 'auto'
+) -> {
+  success: boolean,
+  effectiveAt: datetime,
+  requiresApproval: boolean
+}
+
+# Consultar registro bloqueado
+checkRecordLock(
+  recordId: string,
+  tableName: string
+) -> {
+  locked: boolean,
+  lockedBy: string,
+  lockTime: datetime,
+  canForceUnlock: boolean
+}
+
+# Buscar erro na base Totvs
+searchTotvErrorDB(
+  errorMessage: string,
+  errorCode: string = null,
+  module: string = null
+) -> {
+  found: boolean,
+  errorId: string,
+  name: string,
+  cause: string,
+  solution: string,
+  autoFixAvailable: boolean
+}
+
+# Verificar status integração
+checkIntegrationStatus(
+  system1: 'totvs',
+  system2: string,
+  recordId: string
+) -> {
+  synchronized: boolean,
+  lastSyncTime: datetime,
+  status1: string,
+  status2: string,
+  errorLog: string
+}
+
+# Consultar dados Totvs (genérico)
+queryTotvRecord(
+  table: string,
+  filters: object,
+  fields: [string]
+) -> {
+  found: boolean,
+  records: [object],
+  count: number
+}
+
+# Criar solicitação treinamento
+createTrainingRequest(
+  userId: string,
+  module: string,
+  type: 'basic' | 'advanced' | 'process',
+  preferredFormat: 'online' | 'individual' | 'group'
+) -> {
+  requestId: string,
+  materialsLink: string
+}
+Base de Conhecimento Totvs - Links Úteis
+### Documentação Oficial:
+- Portal TDN: https://tdn.totvs.com/display/public/LRM/
+- Módulo Financeiro: https://tdn.totvs.com/pages/releaseview.action?pageId=...
+- Módulo RH: https://tdn.totvs.com/pages/releaseview.action?pageId=...
+- Módulo Compras: https://tdn.totvs.com/pages/releaseview.action?pageId=...
+
+### Tutoriais Internos Raiz:
+- Totvs Básico: {LINK_INTRANET}/totvs/basico
+- Baixa de Pagamentos: {LINK_INTRANET}/totvs/baixa-pagamentos
+- Cadastro de Clientes: {LINK_INTRANET}/totvs/cadastro-clientes
+- FAQs Totvs: {LINK_INTRANET}/totvs/faqs
+
+### Contatos:
+- Especialista Totvs Financeiro: totvs-fin@raiz.com
+- Especialista Totvs RH: totvs-rh@raiz.com
+- Especialista Integrações: integracao@raiz.com
+- Suporte Totvs Geral: suporte-totvs@raiz.com
+Exemplos de Diálogos
+Exemplo 1: Acesso a Módulo (Sucesso - Automático)
+User: "Preciso de acesso ao módulo financeiro do Totvs para dar baixa em pagamentos"
+
+IA: "Vou verificar suas permissões... ⏳
+
+     Você é Analista Financeiro da área de
+     Contas a Pagar, correto?"
+
+User: "Sim"
+
+IA: "Perfeito! Seu cargo tem direito a essas permissões. ✅
+
+     Concedendo acesso... ⏳
+
+     Pronto! ✅
+
+     Permissões liberadas:
+     • Visualizar lançamentos financeiros
+     • Lançar contas a pagar/receber
+     • Dar baixa em pagamentos
+
+     O acesso estará disponível em até 15 minutos.
+
+     Faça logout e login novamente no Totvs.
+
+     Funcionou?"
+
+User: "Sim! Obrigado!"
+
+[SUCESSO - TEMPO: 2 minutos]
+Exemplo 2: Erro de Baixa (Escalação)
+User: "Não consigo dar baixa no Totvs, não aparece erro, só não baixa"
+
+IA: "Vou coletar informações para ajudar.
+
+     Qual o número da parcela ou contrato?"
+
+User: "Parcela 12345-3, cliente João Silva"
+
+IA: "Você está tentando dar baixa:
+     • Manual
+     • Automática
+     • Via integração"
+
+User: "Manual"
+
+IA: "Quando você tenta, aparece alguma mensagem ou simplesmente nada acontece?"
+
+User: "Nada acontece, clico em salvar e não baixa"
+
+IA: "Entendi. Isso pode ser erro silencioso ou regra bloqueando.
+
+     Transferindo para especialista Totvs Financeiro.
+
+     Dados coletados:
+     • Parcela: 12345-3
+     • Cliente: João Silva
+     • Método: Baixa manual
+     • Comportamento: Sem mensagem, não efetua
+     • Hora da tentativa: 19/01/2026 15:23
+
+     Especialista responderá em até 4h úteis.
+
+     Chamado #78945 aberto."
+
+[ESCALADO COM CONTEXTO COMPLETO - TEMPO: 3 minutos]
+Exemplo 3: Integração (Escalação Rápida)
+User: "Baixa feita no Portal não apareceu no Totvs"
+
+IA: "Problemas de integração requerem análise técnica.
+
+     Para agilizar, me diga:
+
+     1. Quando foi feita a baixa no Portal?"
+
+User: "Hoje às 14h"
+
+IA: "2. Número da parcela ou ID?"
+
+User: "Parcela 98765-1"
+
+IA: "3. A baixa aparece no Portal como concluída?"
+
+User: "Sim"
+
+IA: "4. Você verificou no Totvs e não aparece?"
+
+User: "Correto, não aparece"
+
+IA: "Perfeito! Dados coletados. ✅
+
+     Transferindo para especialista de Integração.
+
+     Resumo:
+     • Sistema: Portal → Totvs
+     • Operação: Baixa de pagamento
+     • Parcela: 98765-1
+     • Data/hora: 19/01/2026 14:00
+     • Status Portal: Concluído
+     • Status Totvs: Não sincronizou
+
+     Especialista vai:
+     • Verificar logs de integração
+     • Reprocessar se necessário
+
+     Retorno em até 6h úteis.
+     Chamado #45679."
+
+[ESCALADO COM DADOS COMPLETOS - TEMPO: 2 minutos]
+________________________________________________________________________________
+BASE DE CONHECIMENTO
+FAQs Gerais
+Q: Como resetar minha senha?
+A: Fale com a assistente virtual e diga "preciso resetar minha senha"
+Q: Como solicitar acesso a um sistema?
+A: Informe à IA qual sistema precisa acessar
+Q: Meu Outlook está lento, o que fazer?
+A: [TUTORIAL COMPLETO]
+Tutoriais
+Como Arquivar Emails no Outlook
+Como Usar OneDrive
+Como Configurar VPN
+Como Mapear Pasta de Rede
+________________________________________________________________________________
+PROTOCOLOS ESPECIAIS
+Casos Urgentes/Críticos
+Se usuário mencionar:
+•	"urgente", "crítico", "produção parada", "sistema fora"
+Ação:
+IA: "Entendo que é urgente. Vou priorizar seu atendimento.
+
+     [Marca ticket como PRIORIDADE ALTA]
+
+     Se eu não conseguir resolver imediatamente,
+     transferirei para um especialista em tempo real."
+Usuários VIP
+Se userId está na lista VIP:
+[Marca ticket como VIP]
+[Reduz tentativas antes de escalar: 1 em vez de 3]
+[Notifica N2 imediatamente]
+Fora do Horário
+Se horário < 8h ou > 18h ou fim de semana:
+IA: "Oi! Estamos fora do horário comercial.
+
+     Posso tentar resolver seu problema agora, mas
+     se precisar de um analista humano, ele só
+     estará disponível no próximo dia útil às 9h.
+
+     Quer que eu tente resolver ou prefere aguardar?"
+Problemas de Segurança
+Se usuário menciona:
+•	"hack", "invasão", "vírus", "malware", "phishing"
+Ação:
+[ALERTA MÁXIMO]
+[NOTIFICA SEGURANÇA IMEDIATAMENTE]
+
+IA: "Esse é um caso de segurança.
+     Transferindo para a equipe especializada AGORA.
+     Aguarde na linha."
+
+[ESCALA IMEDIATO PARA SEGURANÇA]
+________________________________________________________________________________
+MÉTRICAS E LOGS
+O Que Logar
+Para cada atendimento, registrar:
+{
+  "ticketId": "string",
+  "userId": "string",
+  "category": "string",
+  "startTime": "datetime",
+  "endTime": "datetime",
+  "duration": "seconds",
+  "resolved": "boolean",
+  "escalated": "boolean",
+  "escalationReason": "string",
+  "steps": [
+    {
+      "stepNumber": "number",
+      "action": "string",
+      "result": "success|failure|partial"
+    }
+  ],
+  "userSatisfaction": "number (1-5)",
+  "apiCallsMade": ["array of API calls"],
+  "errors": ["array of errors"]
+}
+KPIs a Monitorar
+•	**Taxa de Resolução:** % resolvido sem escalar
+•	**Tempo Médio de Atendimento:** Minutos por ticket
+•	**Satisfação do Usuário:** NPS médio
+•	**Categorias Mais Comuns:** Top 10
+•	**Taxa de Escalação:** % escalado para N2
+•	**Motivos de Escalação:** Top 10 razões
+•	**Horários de Pico:** Distribuição por hora
+•	**APIs com Mais Erros:** Identificar problemas técnicos
+Feedback do Usuário
+Sempre perguntar no final:
+IA: "De 1 a 5 estrelas, como foi meu atendimento? ⭐"
+
+[REGISTRA FEEDBACK]
+
+Se nota baixa (≤3):
+  IA: "Sinto muito não ter atendido suas expectativas.
+       Pode me dizer o que posso melhorar?"
+
+  [REGISTRA COMENTÁRIO]
+________________________________________________________________________________
+APÊNDICES
+A. Glossário
+•	**AD/Azure AD:** Active Directory, sistema de gerenciamento de usuários
+•	**2FA:** Autenticação de dois fatores
+•	**VPN:** Virtual Private Network, acesso remoto seguro
+•	**SMTP:** Protocolo de envio de email
+•	**PST/OST:** Arquivos de dados do Outlook
+•	**Exchange:** Servidor de email da Microsoft
+•	**SharePoint:** Plataforma de compartilhamento de arquivos
+•	**SCCM/Intune:** Sistemas de gerenciamento de dispositivos
+B. Softwares Aprovados
+[LISTA COMPLETA DE SOFTWARES QUE PODEM SER INSTALADOS]
+C. Matriz de Permissões
+[TABELA COMPLETA: CARGO + ÁREA → SISTEMAS/ACESSOS PERMITIDOS]
+D. Escalation Matrix
+Categoria	Tenta Resolver (min)	Escala Após	Destino
+Reset Senha	5	3 falhas 2FA	N2 Geral
+Acesso	10	Fora matriz	N2 Geral
+Email	15	Erro Exchange	N2 Email
+Hardware	2	Sempre escala	N2 Field
+Segurança	0	Imediato	Segurança
+________________________________________________________________________________
+FIM DO MANUAL
+________________________________________________________________________________
+Última atualização: 19/01/2026
+Próxima revisão: Trimestral
+Responsável: Equipe de IA/Automação - Raiz

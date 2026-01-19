@@ -1,0 +1,977 @@
+CATEGORIA 11: OUTROS TI
+Volume: 10.515 chamados/ano (52.8% do TI - "Catch-all")
+Potencial de Automação: 25%
+Média de Mensagens: 3.7
+Complexidade: ⭐⭐⭐ Variável
+Economia Estimada: 1.314 horas/ano
+Nota Importante
+⚠️ Esta é a categoria "guarda-chuva" que agrupa todos os chamados que não se encaixam nas categorias 1-10.
+Estratégia:
+117.	**Tentar recategorizar** para uma das categorias específicas
+118.	**Orientar sobre processos** (como fazer X)
+119.	**Direcionar para recursos** corretos (tutoriais, manuais)
+120.	**Escalar** quando necessário
+Tipos Comuns Nesta Categoria
+Tipo 1: Dúvidas de Uso
+•	"Como faço para X no sistema Y?"
+•	"Onde encontro a função Z?"
+•	"Como usar o recurso W?"
+Tipo 2: Solicitações Diversas
+•	"Preciso de autorização para..."
+•	"Quero solicitar..."
+•	"Como faço para pedir..."
+Tipo 3: Novos Usuários
+•	"Primeiro dia, preciso de orientação"
+•	"Quais sistemas devo ter acesso?"
+•	"Como configuro meu computador?"
+Tipo 4: Feedback/Sugestões
+•	"Tenho uma sugestão de melhoria"
+•	"Sistema X poderia ter funcionalidade Y"
+Tipo 5: Não Categorizado
+•	Problemas muito específicos
+•	Casos únicos/raros
+Fluxo Completo
+PASSO 1: Entender a Necessidade
+IA: "Olá! Como posso ajudar você hoje?"
+
+User: [Descreve necessidade]
+
+[ANALISA DESCRIÇÃO]
+[TENTA IDENTIFICAR CATEGORIA]
+
+IF identifica categoria conhecida (1-10):
+  IA: "Entendi que você precisa de [CATEGORIA].
+       É isso mesmo?"
+
+  User: [Sim]
+
+  [REDIRECIONA PARA CATEGORIA CORRETA]
+
+ELSE (não identifica):
+  IA: "Vou fazer algumas perguntas para entender melhor.
+
+       Seu problema/necessidade é sobre:
+
+       1️⃣ Dúvida de como usar um sistema
+       2️⃣ Solicitar algo (acesso, recurso, etc)
+       3️⃣ Primeiro dia/configuração inicial
+       4️⃣ Sugestão ou feedback
+       5️⃣ Outro"
+
+  User: [Escolhe]
+
+  [SEGUE FLUXO ESPECÍFICO]
+FLUXO A: Dúvidas de Uso
+IA: "Sobre qual sistema/programa é sua dúvida?"
+
+User: [Nome do sistema]
+
+IA: "O que você está tentando fazer?"
+
+User: [Descreve tarefa]
+
+[BUSCA NA BASE DE CONHECIMENTO]
+
+[EXECUTA: searchFAQ(system, task)]
+
+IF encontra FAQ/tutorial:
+  IA: "Encontrei um tutorial sobre isso! ✅
+
+       [LINK PARA TUTORIAL]
+
+       Também posso te explicar resumidamente:
+
+       [RESUMO DO PASSO A PASSO]
+
+       Isso responde sua dúvida?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    IA: "Ótimo! Alguma outra dúvida?"
+    [SUCESSO]
+
+  IF Não:
+    IA: "Você pode me explicar qual parte não ficou clara?"
+
+    [TENTA ESCLARECER MAIS]
+
+    SE ainda não resolve:
+      IA: "Vou transferir você para um especialista
+           em {SISTEMA} que vai ajudar pessoalmente."
+
+      [ESCALA - MOTIVO: "Dúvida complexa sobre {SISTEMA}"]
+
+ELSE (não encontra):
+  IA: "Não encontrei tutorial sobre isso.
+
+       Você pode descrever melhor o que precisa fazer?"
+
+  User: [Descreve detalhadamente]
+
+  [ANALISA]
+
+  SE consegue orientar:
+    [ORIENTA PASSO A PASSO]
+
+  SE não consegue:
+    IA: "Essa é uma dúvida específica que requer
+         conhecimento especializado em {SISTEMA}.
+
+         Vou transferir para um especialista."
+
+    [ESCALA - MOTIVO: "Dúvida específica - {DESCRIÇÃO}"]
+FLUXO B: Solicitações Diversas
+IA: "O que você precisa solicitar?"
+
+User: [Descreve solicitação]
+
+[IDENTIFICA TIPO DE SOLICITAÇÃO]
+
+CASOS COMUNS:
+
+1. Solicitação de Acesso:
+   [REDIRECIONA PARA CATEGORIA 2 - ACESSO]
+
+2. Solicitação de Software:
+   [REDIRECIONA PARA CATEGORIA 4 - SOFTWARE]
+
+3. Solicitação de Equipamento:
+   [REDIRECIONA PARA CATEGORIA 10 - HARDWARE]
+
+4. Solicitação de Criação (email, usuário, etc):
+   IA: "Você precisa de:
+        • Criação de email
+        • Criação de usuário em sistema
+        • Criação de grupo/lista
+        • Outro"
+
+   User: [Escolhe]
+
+   [COLETA DADOS NECESSÁRIOS]
+
+   IA: "Perfeito! Para criar {RECURSO}, preciso de
+        aprovação do seu gestor.
+
+        Quem é seu gestor?"
+
+   User: [Nome]
+
+   IA: "Vou enviar solicitação de aprovação.
+        Se aprovado, {RECURSO} será criado em até
+        {PRAZO}.
+
+        Chamado #{TICKET_ID} aberto."
+
+   [CRIA WORKFLOW DE APROVAÇÃO]
+
+5. Solicitação de Treinamento:
+   IA: "Sobre qual sistema/ferramenta você quer
+        treinamento?"
+
+   User: [Sistema]
+
+   IA: "Temos:
+        • Tutoriais online: {LINKS}
+        • Treinamento presencial (agendar)
+
+        Qual prefere?"
+
+   User: [Escolhe]
+
+   IF Online:
+     [ENVIA LINKS DE TREINAMENTO]
+
+   IF Presencial:
+     IA: "Vou criar solicitação de treinamento.
+          RH entrará em contato para agendar.
+
+          Chamado #{TICKET_ID} aberto."
+
+     [CRIA CHAMADO PARA RH/TREINAMENTO]
+
+6. Outro tipo de solicitação:
+   IA: "Para processar sua solicitação corretamente,
+        vou transferir para a área responsável.
+
+        Solicitação: {DESCRIÇÃO}
+        Chamado #{TICKET_ID} aberto."
+
+   [ESCALA PARA ÁREA APROPRIADA]
+FLUXO C: Primeiro Dia / Novo Usuário
+IA: "Bem-vindo à Raiz! 🎉
+
+     Vou ajudar você a configurar tudo.
+
+     Você já recebeu:
+     1️⃣ Computador
+     2️⃣ Email de boas-vindas com credenciais
+     3️⃣ Acesso aos sistemas
+
+     Confirma?"
+
+User: [Responde]
+
+IA: "Vou te orientar passo a passo:
+
+     **1. LOGIN NO COMPUTADOR**
+     • Usuário: {DOMINIO}\\{USERNAME}
+     • Senha: (recebida por email)
+
+     **2. EMAIL**
+     • Acesse: outlook.office.com
+     • Login: {EMAIL}@raiz.com
+     • Senha: (mesma do Windows)
+
+     **3. SISTEMAS PRINCIPAIS**
+     • Totvs: {URL}
+     • Intranet: {URL}
+     • BI: {URL}
+
+     **4. VPN (se trabalhar remoto)**
+     • Download: {LINK}
+     • Tutorial: {LINK}
+
+     Qual desses você quer que eu ajude primeiro?"
+
+User: [Escolhe]
+
+[ORIENTA PASSO A PASSO CONFORME ESCOLHA]
+
+IA: "Conseguiu configurar tudo?"
+
+User: [Sim/Não]
+
+IF Sim:
+  IA: "Perfeito! Bem-vindo ao time! 🎉
+
+       Se tiver qualquer dúvida, é só me chamar.
+
+       Quer que eu envie um guia completo por email?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    [ENVIA GUIA DO COLABORADOR]
+
+IF Não:
+  IA: "Sem problema. Qual parte não deu certo?"
+
+  [TROUBLESHOOT ESPECÍFICO]
+
+  SE muito complexo:
+    IA: "Vou transferir para um técnico que vai
+         configurar tudo pessoalmente com você."
+
+    [ESCALA - MOTIVO: "Onboarding - configuração inicial"]
+FLUXO D: Feedback/Sugestões
+IA: "Obrigada por compartilhar sua sugestão!
+
+     Sobre qual sistema/processo é sua sugestão?"
+
+User: [Sistema/Processo]
+
+IA: "Pode descrever sua ideia?"
+
+User: [Descreve sugestão]
+
+IA: "Entendi! Muito boa sua sugestão.
+
+     Vou encaminhar para a equipe responsável
+     por {SISTEMA/PROCESSO}.
+
+     Eles vão avaliar e você receberá retorno
+     sobre a viabilidade.
+
+     Ticket de sugestão #{TICKET_ID} criado.
+
+     Obrigada por contribuir para melhorias! 💡"
+
+[REGISTRA SUGESTÃO]
+[ENVIA PARA EQUIPE RESPONSÁVEL]
+Base de Conhecimento - FAQs Comuns
+Pergunta: "Como solicito férias?"
+Resposta: "Férias são solicitadas pelo sistema de RH, não por TI. Acesse {LINK_RH} ou contate rh@raiz.com"
+Categoria: Redirecionar
+
+Pergunta: "Como faço para imprimir frente e verso?"
+Resposta: "No programa: Arquivo → Imprimir → Propriedades → Frente e Verso"
+Categoria: Tutorial
+
+Pergunta: "Posso instalar software pessoal?"
+Resposta: "Não. Por política de segurança, apenas softwares aprovados podem ser instalados."
+Categoria: Política
+
+Pergunta: "Como acesso a rede Wi-Fi de visitantes?"
+Resposta: "Rede: Raiz-Guest | Senha: {SENHA} | Sem acesso a recursos internos"
+Categoria: Informação
+
+Pergunta: "Posso usar meu computador pessoal?"
+Resposta: "Apenas com autorização. Precisa instalar certificados de segurança. Contate seguranca@raiz.com"
+Categoria: Política/Redirecionar
+Critérios de Escalação
+ESCALAR PARA N2 SE:
+121.	❌ Não consegue identificar a categoria após perguntas
+122.	❌ Dúvida muito específica sobre sistema complexo
+123.	❌ Solicitação fora do padrão
+124.	❌ Requer conhecimento especializado
+125.	❌ Múltiplos problemas simultâneos
+126.	❌ Caso único/raro sem precedente
+127.	❌ Questões de segurança/compliance
+128.	❌ Necessário decisão gerencial
+129.	❌ Depois de 3 tentativas de categorização sem sucesso
+APIs e Comandos
+# Buscar FAQ
+searchFAQ(
+  system: string,
+  keywords: string,
+  userQuestion: string
+) -> {
+  found: boolean,
+  faqId: string,
+  question: string,
+  answer: string,
+  tutorialLink: string,
+  relevanceScore: number
+}
+
+# Criar solicitação genérica
+createGenericRequest(
+  userId: string,
+  requestType: string,
+  description: string,
+  priority: string
+) -> {
+  ticketId: string,
+  assignedTo: string,
+  eta: datetime
+}
+
+# Enviar guia onboarding
+sendOnboardingGuide(
+  userId: string,
+  email: string
+) -> {success: boolean}
+
+# Registrar sugestão
+registerSuggestion(
+  userId: string,
+  systemName: string,
+  suggestion: string,
+  impactArea: string
+) -> {suggestionId: string}
+Exemplos de Diálogos
+Exemplo 1: Dúvida Respondida (Sucesso)
+User: "Como faço para baixar relatório do BI?"
+
+IA: "Vou te explicar! 📊
+
+     No BI:
+     1. Abra o relatório desejado
+     2. Clique em 'Exportar' (canto superior direito)
+     3. Escolha o formato (Excel, PDF, CSV)
+     4. Clique em 'Download'
+
+     Também enviei um tutorial completo: {LINK}
+
+     Conseguiu baixar?"
+
+User: "Sim, obrigado!"
+
+IA: "Ótimo! 🎉 Mais alguma dúvida?"
+
+[SUCESSO - TEMPO: 1 minuto]
+Exemplo 2: Primeiro Dia (Sucesso Parcial)
+User: "Primeiro dia, não consigo acessar nada"
+
+IA: "Bem-vindo! 🎉 Vou ajudar.
+
+     Você recebeu email com suas credenciais?"
+
+User: "Sim"
+
+IA: "Perfeito! Vamos começar pelo email.
+
+     Acesse: outlook.office.com
+     Login: {EMAIL}@raiz.com
+     Senha: (a que recebeu no email)
+
+     Conseguiu entrar?"
+
+User: "Deu erro de senha"
+
+IA: "Vou resetar sua senha... ⏳"
+
+[RESET DE SENHA]
+
+IA: "Nova senha enviada para seu email pessoal.
+     Tente agora."
+
+User: "Entrei!"
+
+IA: "Ótimo! Agora vamos configurar o restante...
+     [CONTINUA ONBOARDING]"
+
+[SUCESSO - TEMPO: 8 minutos]
+________________________________________________________________________________
+CATEGORIA 12: TOTVS RM
+Volume: 1.395 chamados/ano (7.0% do total geral, 100% relacionados ao Totvs)
+Potencial de Automação: 70%
+Média de Mensagens: 4.8
+Complexidade: ⭐⭐⭐⭐ Alta
+Economia Estimada: 698 horas/ano
+Tempo Médio Atual: 13.3 dias → Meta: 2.5 dias
+Sobre o Totvs RM
+O Totvs RM é o ERP principal da Raiz, usado para gestão de:
+•	Financeiro (21.4% das menções)
+•	RH/Folha (6.7% das menções)
+•	Compras (4.7% das menções)
+•	Fiscal, Jurídico, CRM, Vendas, Contábil, Estoque
+Documentação oficial: https://tdn.totvs.com/display/public/LRM/
+Identificadores
+Keywords principais:
+•	totvs, rm, erp
+•	módulo financeiro, rh, compras, fiscal
+•	lançamento, baixa, parcela, contrato
+•	rm fluig, portal totvs
+Patterns:
+/(totvs|rm|erp)/i
+/(lançamento|baixa|parcela).*totvs/i
+/(módulo|sistema).*(financeiro|rh|compras)/i
+Distribuição de Problemas
+Top 5 Categorias:
+130.	**Acesso e Permissões** - 496 chamados (35.6%)
+131.	**Operações Financeiras** - 180 chamados (12.9%)
+132.	**Cadastro e Atualização** - 214 chamados (15.3%)
+133.	**Erros Técnicos** - 205 chamados (14.7%)
+134.	**Integração de Sistemas** - 84 chamados (6.0%)
+Fluxo Completo
+PASSO 1: Identificar Módulo/Problema
+IA: "Entendi que você precisa de ajuda com o Totvs.
+
+     Em qual módulo você está trabalhando?
+
+     1️⃣ Financeiro
+     2️⃣ RH/Folha
+     3️⃣ Compras
+     4️⃣ Fiscal
+     5️⃣ Outro / Não sei"
+
+User: [Escolhe]
+
+IA: "Qual tipo de problema/necessidade?
+
+     1️⃣ Preciso de acesso/permissão
+     2️⃣ Erro no sistema
+     3️⃣ Dúvida de como fazer algo
+     4️⃣ Problema com integração
+     5️⃣ Cadastro/atualização de dados
+     6️⃣ Treinamento"
+
+User: [Escolhe]
+
+[SEGUE FLUXO ESPECÍFICO]
+SUBCATEGORIA A: Acesso e Permissões (35.6%)
+Tipos Comuns:
+•	Acesso a módulo específico
+•	Permissão para aprovar/lançar
+•	Acesso gerencial (visualizar dados de outras áreas)
+•	Primeiro acesso (novo usuário)
+Fluxo:
+IA: "Você precisa de acesso ao Totvs ou a um módulo específico?"
+
+User: [Acesso completo / Módulo específico]
+
+IF Acesso completo (novo usuário):
+  IA: "Você é novo colaborador ou mudou de área?"
+
+  User: [Novo / Mudou]
+
+  IA: "Para configurar seu acesso, preciso de:
+       • Seu cargo/função
+       • Área/departamento
+       • Quem é seu gestor
+       • Quais módulos precisa usar"
+
+  User: [Fornece informações]
+
+  IA: "Perfeito! Vou criar solicitação de provisionamento.
+
+       Você receberá:
+       • Usuário e senha por email
+       • Tutorial de primeiro acesso
+       • Treinamento básico (opcional)
+
+       O acesso é liberado em até 1 dia útil após
+       aprovação do gestor.
+
+       Vou enviar solicitação para {GESTOR}.
+       Chamado #{TICKET_ID} aberto."
+
+  [CRIA WORKFLOW APROVAÇÃO]
+  [NOTIFICA GESTOR]
+  [ENCERRA]
+
+IF Módulo específico:
+  IA: "Qual módulo do Totvs você precisa acessar?
+
+       1️⃣ Financeiro (baixas, lançamentos, NFs)
+       2️⃣ RH (férias, ponto, folha)
+       3️⃣ Compras (pedidos, aprovações)
+       4️⃣ Fiscal (emissão NF, impostos)
+       5️⃣ Outro"
+
+  User: [Escolhe módulo]
+
+  IA: "Que tipo de operação você precisa fazer nesse módulo?
+
+       Exemplos:
+       • Apenas visualizar
+       • Lançar/cadastrar
+       • Aprovar
+       • Alterar/excluir"
+
+  User: [Descreve operações]
+
+  [CONSULTA MATRIZ DE PERMISSÕES TOTVS]
+
+  IF permissão dentro da política:
+    IA: "Seu cargo tem direito a essas permissões. ✅
+
+         Vou configurar seu acesso... ⏳"
+
+    [EXECUTA: grantTotvAccess(userId, moduleName, permissions)]
+
+    IF sucesso:
+      IA: "Acesso concedido! ✅
+
+           • Módulo: {MÓDULO}
+           • Permissões: {LISTA}
+
+           O acesso estará disponível em até 15 minutos.
+
+           Faça logout e login novamente no Totvs
+           para atualizar as permissões.
+
+           Funcionou?"
+
+      [AGUARDA CONFIRMAÇÃO]
+
+    ELSE:
+      IA: "Erro ao conceder permissão automaticamente.
+
+           Vou abrir chamado para especialista Totvs."
+
+      [ESCALA - MOTIVO: "Erro ao provisionar acesso Totvs"]
+
+  ELSE (fora da política):
+    IA: "Esse tipo de acesso requer aprovação especial.
+
+         Vou criar solicitação para:
+         • Seu gestor: {GESTOR}
+         • Administrador Totvs
+
+         Justificativa: {JUSTIFICATIVA_USUÁRIO}
+
+         Se aprovado, o acesso será liberado em até
+         2 dias úteis.
+
+         Chamado #{TICKET_ID} aberto."
+
+    [CRIA WORKFLOW DUPLA APROVAÇÃO]
+Perguntas Frequentes - Acesso:
+Q: "Tenho acesso mas não vejo o menu X"
+A: Você tem permissão apenas para funções específicas.
+   Para ter acesso ao menu completo, precisa solicitar
+   expansão de permissões.
+
+Q: "Conseguia fazer X ontem, hoje não consigo"
+A: Pode ter havido atualização de permissões ou seu
+   perfil foi alterado. Vou verificar o histórico...
+   [VERIFICA LOG DE ALTERAÇÕES]
+
+Q: "Preciso do mesmo acesso que o colega Y"
+A: Vou copiar as permissões de {COLEGA}.
+   Confirma que ele faz a mesma função que você?
+SUBCATEGORIA B: Operações Financeiras (12.9%)
+Problemas Mais Comuns:
+135.	**Baixa de Pagamento** (9.2%)
+136.	**Correção de Lançamento** (8.7%)
+137.	**Cancelamento de Parcela** (3.4%)
+Fluxo Baixa de Pagamento:
+IA: "Qual o problema com a baixa de pagamento?
+
+     1️⃣ Não consegui dar baixa
+     2️⃣ Baixa com data errada
+     3️⃣ Preciso cancelar/estornar baixa
+     4️⃣ Baixa não sincronizou com outro sistema"
+
+User: [Escolhe]
+
+CASE 1 (Não consegui dar baixa):
+  IA: "Qual mensagem de erro aparece?"
+
+  User: [Descreve erro ou "Não dá erro, só não baixa"]
+
+  ERROS COMUNS TOTVS FINANCEIRO:
+
+  - "Parcela já baixada":
+    IA: "Esta parcela já foi baixada anteriormente.
+
+         Vou verificar quando e por quem... ⏳"
+
+    [CONSULTA: SELECT * FROM FLAN WHERE ParcelaId = X]
+
+    IA: "A parcela foi baixada em {DATA} por {USUÁRIO}.
+
+         Você precisa:
+         1️⃣ Ver detalhes dessa baixa
+         2️⃣ Estornar e baixar novamente"
+
+    [USUÁRIO DECIDE]
+
+  - "Usuário sem permissão":
+    IA: "Você não tem permissão para dar baixa.
+
+         Vou verificar seu perfil... ⏳"
+
+    [VERIFICA PERMISSÕES]
+
+    IA: "Seu perfil não inclui permissão de baixa
+         no módulo Financeiro.
+
+         Vou solicitar essa permissão para você.
+         [CONTINUA FLUXO PERMISSÃO]"
+
+  - "Valor incompatível":
+    IA: "O valor que você está tentando baixar está
+         diferente do valor da parcela.
+
+         Valor da parcela: R$ {VALOR_PARCELA}
+         Valor informado: R$ {VALOR_TENTADO}
+
+         Qual o correto?"
+
+    [ORIENTA CORREÇÃO]
+
+  - "Sem mensagem, só não baixa":
+    IA: "Vou coletar informações para especialista:
+
+         1. Qual o número da parcela/contrato?
+         2. CPF/Nome do cliente
+         3. Você está tentando dar baixa:
+            • Manual
+            • Automática
+            • Via integração"
+
+    [COLETA DADOS]
+
+    IA: "Transferindo para especialista Totvs Financeiro.
+
+         Dados coletados:
+         • Parcela: {ID}
+         • Cliente: {NOME}
+         • Método: {MÉTODO}
+         • Hora da tentativa: {TIMESTAMP}
+
+         Retorno em até 4 horas úteis.
+         Chamado #{TICKET_ID}."
+
+    [ESCALA PARA N2 TOTVS FINANCEIRO]
+
+CASE 2 (Data errada):
+  IA: "A baixa já foi realizada ou você quer fazer?"
+
+  User: [Já foi / Quero fazer]
+
+  IF Já foi:
+    IA: "Precisa estornar a baixa e refazer.
+
+         Você tem permissão para estornar?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Para estornar no Totvs:
+
+           1. Módulo Financeiro
+           2. Movimentos → Baixas
+           3. Localize a baixa pela data/parcela
+           4. Clique em 'Estornar'
+           5. Confirme
+
+           Depois refaça a baixa com data correta.
+
+           Conseguiu?"
+
+      [ORIENTAÇÃO PASSO A PASSO]
+
+    IF Não:
+      IA: "Vou abrir chamado para que alguém com
+           permissão faça o estorno.
+
+           Informações:
+           • Parcela: {ID}
+           • Data incorreta: {DATA_ERRADA}
+           • Data correta: {DATA_CERTA}
+
+           Chamado #{TICKET_ID} para especialista."
+
+      [ESCALA]
+
+  IF Quero fazer:
+    IA: "Atenção à data!
+
+         Ao dar baixa, verifique:
+         • Campo 'Data da Baixa' (não 'Data do Movimento')
+         • Formato: DD/MM/AAAA
+
+         Qual a data correta da baixa?"
+
+    [ORIENTA CORRETAMENTE]
+
+CASE 3 (Cancelar/estornar):
+  IA: "Por que precisa cancelar a baixa?
+
+       1️⃣ Erro na data
+       2️⃣ Valor incorreto
+       3️⃣ Baixa duplicada
+       4️⃣ Cliente pediu estorno"
+
+  User: [Escolhe + Descreve]
+
+  IA: "Para cancelar baixa no Totvs:
+
+       IMPORTANTE: Estorno é irreversível!
+
+       1. Financeiro → Movimentos → Baixas
+       2. Filtro: localize a baixa
+       3. Selecione a baixa
+       4. Botão 'Estornar'
+       5. Motivo: {MOTIVO}
+       6. Confirme
+
+       Você tem certeza?"
+
+  User: [Sim/Não]
+
+  IF Sim:
+    [ORIENTA PASSO A PASSO]
+    [OU ESCALA SE SEM PERMISSÃO]
+
+CASE 4 (Não sincronizou):
+  IA: "Com qual sistema não sincronizou?
+
+       • Portal de Matrículas
+       • ISAAC
+       • Fluig
+       • Outro"
+
+  User: [Sistema]
+
+  IA: "Problemas de integração Totvs ↔ {SISTEMA}
+       requerem verificação técnica.
+
+       Vou coletar dados para agilizar:
+
+       • Data/hora da baixa no Totvs
+       • Número da parcela
+       • Aparece no {SISTEMA}? (Sim/Não)
+
+       [COLETA DADOS]
+
+       Transferindo para especialista de Integração.
+
+       Chamado #{TICKET_ID}.
+       Retorno em até 6 horas úteis."
+
+  [ESCALA - MOTIVO: "Falha integração Totvs-{SISTEMA}"]
+Fluxo Correção de Lançamento:
+IA: "O que precisa corrigir no lançamento?
+
+     1️⃣ Valor errado
+     2️⃣ Data errada
+     3️⃣ Cliente/conta errada
+     4️⃣ Excluir lançamento
+     5️⃣ Outro"
+
+User: [Escolhe]
+
+[PARA CADA CASO]
+
+IA: "Você tem permissão para alterar lançamentos?"
+
+User: [Sim/Não]
+
+IF Sim:
+  IA: "Para corrigir no Totvs:
+
+       1. Módulo Financeiro
+       2. Lançamentos
+       3. Localize o lançamento (por data/valor/cliente)
+       4. Duplo clique para editar
+       5. Altere o campo {CAMPO}
+       6. Salve
+
+       ⚠️ Se o lançamento já foi baixado, precisa
+       estornar a baixa primeiro!
+
+       Conseguiu corrigir?"
+
+  [ORIENTAÇÃO]
+
+IF Não:
+  IA: "Vou abrir chamado para correção.
+
+       Dados do lançamento:
+       • ID/Número: {ID}
+       • Valor atual: R$ {VALOR_ATUAL}
+       • Valor correto: R$ {VALOR_CORRETO}
+       • Motivo da correção: {MOTIVO}
+
+       Especialista fará a correção em até 4h úteis.
+
+       Chamado #{TICKET_ID}."
+
+  [ESCALA PARA N2 TOTVS FINANCEIRO]
+SUBCATEGORIA C: Cadastro e Atualização (15.3%)
+Tipos Comuns:
+•	Cadastrar novo cliente/fornecedor
+•	Atualizar dados cadastrais
+•	Cadastrar novo colaborador (RH)
+•	Vincular colaborador a equipe/centro de custo
+Fluxo:
+IA: "O que você precisa cadastrar/atualizar no Totvs?
+
+     1️⃣ Cliente/Aluno
+     2️⃣ Fornecedor
+     3️⃣ Colaborador (RH)
+     4️⃣ Produto/Serviço
+     5️⃣ Centro de Custo/Projeto
+     6️⃣ Outro"
+
+User: [Escolhe]
+
+CASE "Cliente/Aluno":
+  IA: "Você precisa:
+       • Cadastrar novo cliente
+       • Atualizar dados de cliente existente"
+
+  User: [Novo / Atualizar]
+
+  IF Novo:
+    IA: "Para cadastrar cliente no Totvs:
+
+         1. Módulo CRM ou Financeiro
+         2. Cadastros → Clientes → Novo
+         3. Preencha:
+            • Tipo: Pessoa Física / Jurídica
+            • CPF/CNPJ
+            • Nome/Razão Social
+            • Endereço
+            • Contatos
+         4. Salve
+
+         Você tem permissão para cadastrar?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      [ORIENTA PASSO A PASSO]
+
+      IA: "Conseguiu cadastrar?"
+
+      User: [Sim/Não/Deu erro]
+
+      IF Deu erro:
+        IA: "Qual erro apareceu?"
+
+        [TROUBLESHOOT ERRO]
+
+    IF Não:
+      IA: "Vou abrir solicitação de cadastro.
+
+           Me passe os dados do cliente:
+           • Nome completo
+           • CPF/CNPJ
+           • Email
+           • Telefone
+           • Endereço completo"
+
+      [COLETA DADOS]
+
+      IA: "Dados recebidos! ✅
+
+           Chamado #{TICKET_ID} para cadastro.
+           Cliente será cadastrado em até 2h úteis.
+
+           Você receberá email com código do cliente."
+
+      [CRIA CHAMADO PARA N2 TOTVS]
+
+  IF Atualizar:
+    IA: "Qual informação precisa atualizar?
+
+         • Endereço
+         • Telefone/Email
+         • Dados financeiros (banco, conta)
+         • Outro"
+
+    [SIMILAR AO FLUXO NOVO]
+
+CASE "Colaborador (RH)":
+  IA: "Cadastro de colaborador no Totvs envolve
+       vários dados e integrações.
+
+       É novo colaborador ou atualização de dados?"
+
+  User: [Novo / Atualização]
+
+  IF Novo:
+    IA: "Cadastro de novo colaborador deve ser feito
+         pelo RH após processo de admissão.
+
+         O colaborador já passou por toda admissão?"
+
+    User: [Sim/Não]
+
+    IF Sim:
+      IA: "Vou transferir para equipe de RH/DP que
+           faz o cadastro completo no Totvs:
+
+           • Dados pessoais
+           • Cargo, salário, centro de custo
+           • Benefícios
+           • Integrações (ponto, folha, etc)
+
+           Chamado #{TICKET_ID} para RH.
+
+           Dados necessários (se tiver):
+           • Nome completo
+           • CPF
+           • Data de admissão
+           • Cargo
+           • Gestor direto"
+
+      [ESCALA PARA RH/DP]
+
+    IF Não:
+      IA: "O cadastro no Totvs é feito após processo
+           completo de admissão com RH.
+
+           Oriente o gestor a iniciar processo de
+           admissão com rh@raiz.com"
+
+      [ORIENTA PROCESSO CORRETO]
+
+  IF Atualização:
+    IA: "Qual dado do colaborador precisa atualizar?
+
+         • Cargo/função
+         • Centro de custo/equipe
+         • Dados pessoais
+         • Permissões de acesso"
+
+    User: [Escolhe]
+
+    [BASEADO NA ESCOLHA, ORIENTA OU ESCALA]
