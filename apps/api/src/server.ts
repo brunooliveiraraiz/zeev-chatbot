@@ -12,12 +12,23 @@ import routeRoutes from './routes/route.js';
 const app = express();
 
 // CORS
-const corsOrigins = env.CORS_ORIGINS === '*' 
-  ? '*' 
+const corsOrigins = env.CORS_ORIGINS === '*'
+  ? '*'
   : env.CORS_ORIGINS.split(',').map((origin) => origin.trim());
 
 app.use(cors({
-  origin: corsOrigins,
+  origin: (origin, callback) => {
+    // Em desenvolvimento, permite qualquer localhost
+    if (!origin || origin.startsWith('http://localhost:')) {
+      callback(null, true);
+    } else if (corsOrigins === '*') {
+      callback(null, true);
+    } else if (Array.isArray(corsOrigins) && corsOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
