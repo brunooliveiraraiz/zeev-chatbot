@@ -292,10 +292,10 @@ export class RoutingService {
   }
 
   private buildLink(item: ZeevRequestCatalogItem, stage: 'hml' | 'prod'): { label: string; url: string } {
-    const url = stage === 'prod' ? item.url_prod ?? item.url_hml : item.url_hml;
+    const url = stage === 'prod' ? (item.url_prod ?? item.url_hml) : (item.url_hml ?? item.url_prod);
     return {
       label: 'Abrir solicitação',
-      url,
+      url: url || '', // fallback para evitar undefined
     };
   }
 
