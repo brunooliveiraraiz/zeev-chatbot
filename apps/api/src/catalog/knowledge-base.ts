@@ -195,7 +195,7 @@ export const KNOWLEDGE_BASE: KnowledgeItem[] = [
   {
     id: 'sistemas_nao_abre',
     category: 'ti_sistemas',
-    keywords: ['sistema nao abre', 'sistema nao carrega', 'sistema nao entra', 'nao consigo acessar sistema', 'sistema travado', 'totvs', 'rm'],
+    keywords: ['sistema nao abre', 'sistema nao carrega', 'sistema nao entra', 'nao consigo acessar sistema', 'sistema travado', 'totvs', 'rm', 'totvs rm', 'sistema rm', 'erp', 'nao abre totvs', 'nao abre rm'],
     troubleshooting: [
       {
         question: 'Vamos resolver! Qual sistema você está tentando acessar? (Totvs, RM, outro)',
@@ -1076,7 +1076,7 @@ export const KNOWLEDGE_BASE: KnowledgeItem[] = [
   {
     id: 'sistemas_lento',
     category: 'ti_sistemas',
-    keywords: ['sistema lento', 'travando', 'demora carregar', 'sistema pesado', 'lentidao sistema'],
+    keywords: ['sistema lento', 'travando', 'demora carregar', 'sistema pesado', 'lentidao sistema', 'rm lento', 'totvs lento', 'totvs travando', 'rm travando', 'rm demora'],
     troubleshooting: [
       {
         question: 'Vamos resolver! Qual sistema está lento? (Totvs, RM, outro)',
@@ -1135,7 +1135,7 @@ export const KNOWLEDGE_BASE: KnowledgeItem[] = [
   {
     id: 'sistemas_nao_loga',
     category: 'ti_sistemas',
-    keywords: ['nao consigo logar', 'login falhou', 'senha incorreta sistema', 'usuario invalido', 'erro login', 'falha login', 'login nao funciona', 'senha nao aceita'],
+    keywords: ['nao consigo logar', 'login falhou', 'senha incorreta sistema', 'usuario invalido', 'erro login', 'falha login', 'login nao funciona', 'senha nao aceita', 'login rm', 'login totvs', 'nao loga rm', 'nao entra rm', 'acesso negado rm'],
     troubleshooting: [
       {
         question: 'Qual mensagem aparece quando você tenta fazer login?',

@@ -120,6 +120,12 @@ export class AITroubleshootingService {
 - Categoria: ${knowledge.category}
 - Keywords relacionadas: ${knowledge.keywords.join(', ')}
 
+**IMPORTANTE - Contexto da empresa:**
+- **RM** refere-se ao sistema TOTVS RM (ERP corporativo), NÃO razão médica
+- **TOTVS** é o conjunto de sistemas corporativos usados pela empresa
+- Quando o usuário mencionar "RM", "sistema RM" ou "TOTVS RM", está falando do sistema de gestão empresarial
+- Outros sistemas comuns: Power BI (dashboards), portal interno, sistemas integrados
+
 **Diretrizes importantes:**
 
 1. **Tom e Linguagem:**

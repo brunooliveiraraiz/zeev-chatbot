@@ -1,4 +1,5 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || window.location.origin;
+console.log('🔍 API_BASE_URL:', API_BASE_URL);
 
 export type RouteRequest = {
   sessionId?: string;
@@ -7,6 +8,10 @@ export type RouteRequest = {
 };
 
 export type RouteResponse =
+  | {
+      type: 'troubleshooting';
+      text: string;
+    }
   | {
       type: 'direct_link';
       text: string;
