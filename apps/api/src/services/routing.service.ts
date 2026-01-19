@@ -124,6 +124,21 @@ export class RoutingService {
       }
     }
 
+    // Detectar cumprimentos quando NÃO está em troubleshooting - responder cordialmente
+    if (this.troubleshootingService.isGreeting(request.message)) {
+      const greetingResponses = [
+        'Olá! Como posso te ajudar com suas solicitações hoje?',
+        'Oi! Estou aqui para te ajudar. Qual solicitação você precisa fazer?',
+        'Olá! Sou o assistente de solicitações Zeev. No que posso te ajudar?',
+      ];
+
+      const response: RouteResponse = {
+        type: 'clarify',
+        text: greetingResponses[Math.floor(Math.random() * greetingResponses.length)],
+      };
+      return { response, topMatches: [], normalized, stage: resolvedStage };
+    }
+
     // Short-circuit: exact id selection
     const directById = REQUESTS_CATALOG.find((item) => item.id.toLowerCase() === request.message.trim().toLowerCase());
     if (directById) {

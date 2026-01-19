@@ -150,14 +150,31 @@ export class TroubleshootingService {
   }
 
   /**
-   * Detecta se a mensagem é irrelevante (cumprimentos, off-topic, etc.)
+   * Detecta se é cumprimento (para responder cordialmente quando não está em troubleshooting)
+   */
+  isGreeting(userMessage: string): boolean {
+    const normalized = userMessage.toLowerCase().trim();
+
+    const greetingPatterns = [
+      /^(oi|olá|ola|hey|opa|eai|e ai)$/,
+      /^(bom dia|boa tarde|boa noite)$/,
+      /^(tudo bem|como vai|tudo bom|beleza)\??$/,
+      /^(olá|oi|opa),?\s*(bom dia|boa tarde|boa noite)$/,
+    ];
+
+    return greetingPatterns.some(pattern => pattern.test(normalized));
+  }
+
+  /**
+   * Detecta se a mensagem é irrelevante durante troubleshooting
+   * (cumprimentos, despedidas, off-topic, etc.)
    */
   isIrrelevantMessage(userMessage: string): boolean {
     const normalized = userMessage.toLowerCase().trim();
 
     // Lista de padrões irrelevantes
     const irrelevantPatterns = [
-      // Cumprimentos básicos
+      // Cumprimentos básicos (só irrelevante se JÁ está em troubleshooting)
       /^(oi|olá|ola|hey|opa|eai|e ai)$/,
       /^(bom dia|boa tarde|boa noite)$/,
       /^(tudo bem|como vai|tudo bom|beleza)\??$/,

@@ -539,7 +539,7 @@ export const KNOWLEDGE_BASE: KnowledgeItem[] = [
   {
     id: 'infra_pc_nao_liga',
     category: 'ti_infraestrutura',
-    keywords: ['nao liga', 'não liga', 'nao inicia', 'não inicia', 'nao acende', 'pc morto', 'computador morto'],
+    keywords: ['nao liga', 'não liga', 'nao inicia', 'não inicia', 'nao acende', 'pc morto', 'computador morto', 'notebook', 'nao ligando', 'ta ligando', 'nao ta ligando', 'maquina nao liga'],
     troubleshooting: [
       {
         question: 'Vamos resolver! O LED frontal do computador acende quando você aperta o botão de ligar?',
