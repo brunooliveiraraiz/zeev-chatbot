@@ -41,7 +41,7 @@ export class RoutingService {
     this.troubleshootingService = new TroubleshootingService();
   }
 
-  route(request: RouteRequest): { response: RouteResponse; topMatches: MatchResult[]; normalized: string; stage: 'hml' | 'prod' } {
+  async route(request: RouteRequest): Promise<{ response: RouteResponse; topMatches: MatchResult[]; normalized: string; stage: 'hml' | 'prod' }> {
     const normalized = normalizeText(request.message);
     const resolvedStage = request.stage ?? env.STAGE_DEFAULT;
 
@@ -50,7 +50,7 @@ export class RoutingService {
 
     // Primeiro, tentar troubleshooting se tiver sessionId
     if (request.sessionId) {
-      const troubleshootingResult = this.troubleshootingService.processMessage(
+      const troubleshootingResult = await this.troubleshootingService.processMessage(
         request.sessionId,
         request.message
       );

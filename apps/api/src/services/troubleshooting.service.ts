@@ -1,5 +1,6 @@
 import { KNOWLEDGE_BASE, type KnowledgeItem } from '../catalog/knowledge-base.js';
 import { logger } from '../utils/logger.js';
+import { AITroubleshootingService } from './ai-troubleshooting.service.js';
 
 export type TroubleshootingMessage = {
   role: 'user' | 'bot';
@@ -35,6 +36,11 @@ setInterval(() => {
 
 export class TroubleshootingService {
   private readonly MAX_ATTEMPTS = 10;
+  private aiService: AITroubleshootingService;
+
+  constructor() {
+    this.aiService = new AITroubleshootingService();
+  }
 
   getOrCreateSession(sessionId: string): TroubleshootingSession {
     let session = sessions.get(sessionId);
@@ -224,13 +230,13 @@ export class TroubleshootingService {
     return false;
   }
 
-  processMessage(sessionId: string, userMessage: string, category?: string): {
+  async processMessage(sessionId: string, userMessage: string, category?: string): Promise<{
     response: string;
     shouldEscalate: boolean;
     solved: boolean;
     contextChanged?: boolean;
     isIrrelevant?: boolean;
-  } {
+  }> {
     const session = this.getOrCreateSession(sessionId);
 
     // Adicionar mensagem do usuário
@@ -296,11 +302,35 @@ export class TroubleshootingService {
         session.category = result.knowledge.category;
         session.currentStep = 0;
 
-        // Fazer a primeira pergunta do troubleshooting
+        logger.info(`Troubleshooting started: ${result.knowledge.id} (score: ${result.score})`);
+
+        // ** NOVO: Usar IA se estiver habilitado **
+        if (this.aiService.isEnabled()) {
+          try {
+            const aiResult = await this.aiService.generateTroubleshootingResponse(
+              sessionId,
+              userMessage,
+              result.knowledge,
+              session.attemptCount
+            );
+
+            const cleanedResponse = this.aiService.cleanResponse(aiResult.response);
+            this.addMessage(sessionId, 'bot', cleanedResponse);
+
+            return {
+              response: cleanedResponse,
+              shouldEscalate: aiResult.shouldEscalate,
+              solved: aiResult.solved,
+            };
+          } catch (error) {
+            logger.error('AI troubleshooting failed on first message, falling back to static:', error);
+            // Fallback para troubleshooting estático abaixo
+          }
+        }
+
+        // ** FALLBACK: Troubleshooting estático (código original) **
         const firstQuestion = result.knowledge.troubleshooting[0].question;
         this.addMessage(sessionId, 'bot', firstQuestion);
-
-        logger.info(`Troubleshooting started: ${result.knowledge.id} (score: ${result.score})`);
 
         return {
           response: firstQuestion,
@@ -329,6 +359,54 @@ export class TroubleshootingService {
         solved: false,
       };
     }
+
+    // ** NOVO: Usar IA se estiver habilitado **
+    if (this.aiService.isEnabled()) {
+      try {
+        const aiResult = await this.aiService.generateTroubleshootingResponse(
+          sessionId,
+          userMessage,
+          knowledge,
+          session.attemptCount
+        );
+
+        // Limpar marcadores da resposta
+        const cleanedResponse = this.aiService.cleanResponse(aiResult.response);
+
+        this.addMessage(sessionId, 'bot', cleanedResponse);
+
+        // Se resolveu o problema
+        if (aiResult.solved) {
+          session.solved = true;
+          return {
+            response: cleanedResponse,
+            shouldEscalate: false,
+            solved: true,
+          };
+        }
+
+        // Se deve escalar
+        if (aiResult.shouldEscalate) {
+          return {
+            response: cleanedResponse,
+            shouldEscalate: true,
+            solved: false,
+          };
+        }
+
+        // Continuar troubleshooting
+        return {
+          response: cleanedResponse,
+          shouldEscalate: false,
+          solved: false,
+        };
+      } catch (error) {
+        logger.error('AI troubleshooting failed, falling back to static troubleshooting:', error);
+        // Se a IA falhar, continuar com o troubleshooting estático abaixo
+      }
+    }
+
+    // ** FALLBACK: Troubleshooting estático (código original) **
 
     const currentTroubleshootingStep = knowledge.troubleshooting[session.currentStep];
 
@@ -426,6 +504,7 @@ export class TroubleshootingService {
 
   resetSession(sessionId: string): void {
     sessions.delete(sessionId);
+    this.aiService.clearHistory(sessionId);
     logger.info(`Troubleshooting session reset: ${sessionId}`);
   }
 

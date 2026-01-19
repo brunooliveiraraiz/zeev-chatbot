@@ -4,14 +4,14 @@ import { RoutingService } from '../services/routing.service.js';
 const router = Router();
 const routingService = new RoutingService();
 
-router.post('/route', (req: Request, res: Response) => {
+router.post('/route', async (req: Request, res: Response) => {
   const { sessionId, message, stage } = req.body ?? {};
 
   if (!message || typeof message !== 'string') {
     return res.status(400).json({ error: 'message is required' });
   }
 
-  const { response } = routingService.route({
+  const { response } = await routingService.route({
     sessionId: typeof sessionId === 'string' ? sessionId : undefined,
     message,
     stage: stage === 'prod' ? 'prod' : stage === 'hml' ? 'hml' : undefined,

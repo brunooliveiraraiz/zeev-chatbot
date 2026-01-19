@@ -1,4 +1,8 @@
 import { z } from 'zod';
+import { config } from 'dotenv';
+
+// Load .env file
+config();
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
@@ -36,7 +40,11 @@ const envSchema = z.object({
   USE_LLM: z.coerce.boolean().default(false),
   LLM_API_URL: z.string().optional(),
   LLM_API_KEY: z.string().optional(),
-  
+
+  // AI Troubleshooting
+  ANTHROPIC_API_KEY: z.string().optional(),
+  AI_TROUBLESHOOTING_ENABLED: z.coerce.boolean().default(false),
+
   // Logging
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 });
