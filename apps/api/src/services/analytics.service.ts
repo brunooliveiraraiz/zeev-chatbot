@@ -137,12 +137,12 @@ export class AnalyticsService {
       ]);
 
       const total = resolutions.length;
-      const resolved = resolutions.filter(r => r.resolved && r.resolvedBy !== 'escalated').length;
-      const escalated = resolutions.filter(r => r.resolvedBy === 'escalated').length;
+      const resolved = resolutions.filter((r: any) => r.resolved && r.resolvedBy !== 'escalated').length;
+      const escalated = resolutions.filter((r: any) => r.resolvedBy === 'escalated').length;
 
-      const ratingsWithValue = ratings.filter(r => r.rating > 0);
+      const ratingsWithValue = ratings.filter((r: any) => r.rating > 0);
       const avgRating = ratingsWithValue.length > 0
-        ? ratingsWithValue.reduce((sum, r) => sum + r.rating, 0) / ratingsWithValue.length
+        ? ratingsWithValue.reduce((sum: number, r: any) => sum + r.rating, 0) / ratingsWithValue.length
         : null;
 
       return {
@@ -177,7 +177,7 @@ export class AnalyticsService {
       // Agrupar por data
       const dailyMap = new Map<string, DailyStats>();
 
-      resolutions.forEach(resolution => {
+      resolutions.forEach((resolution: any) => {
         const date = resolution.createdAt.toISOString().split('T')[0];
 
         if (!dailyMap.has(date)) {
@@ -227,7 +227,7 @@ export class AnalyticsService {
       // Agrupar por mês
       const monthlyMap = new Map<string, MonthlyStats>();
 
-      resolutions.forEach(resolution => {
+      resolutions.forEach((resolution: any) => {
         const date = new Date(resolution.createdAt);
         const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 
@@ -320,7 +320,7 @@ export class AnalyticsService {
 
       // Contar por categoria
       const categoryCount = new Map<string, number>();
-      resolutions.forEach(r => {
+      resolutions.forEach((r: any) => {
         if (r.category) {
           categoryCount.set(r.category, (categoryCount.get(r.category) || 0) + 1);
         }
