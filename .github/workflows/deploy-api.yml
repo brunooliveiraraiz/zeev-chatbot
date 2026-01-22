@@ -1,0 +1,129 @@
+name: Deploy API to HML
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/api/**'
+      - '.github/workflows/deploy-api.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          cd apps/api
+          npm install
+
+      - name: Run Prisma migrations
+        working-directory: apps/api
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Build API
+        working-directory: apps/api
+        run: npm run build
+
+      - name: Create .env file from secrets
+        working-directory: apps/api
+        run: |
+          cat > .env << EOF
+          # API Configuration
+          PORT=${{ secrets.PORT }}
+          NODE_ENV=production
+          STAGE_DEFAULT=${{ secrets.STAGE_DEFAULT }}
+
+          # Authentication
+          AUTH_MODE=${{ secrets.AUTH_MODE }}
+          CONTEXT_SIGNING_SECRET=${{ secrets.CONTEXT_SIGNING_SECRET }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+          JWT_ISSUER=${{ secrets.JWT_ISSUER }}
+          JWT_AUDIENCE=${{ secrets.JWT_AUDIENCE }}
+          CHAT_SESSION_SECRET=${{ secrets.CHAT_SESSION_SECRET }}
+          CHAT_SESSION_EXPIRES_IN=${{ secrets.CHAT_SESSION_EXPIRES_IN }}
+
+          # Zeev Integration
+          MOCK_MODE=${{ secrets.MOCK_MODE }}
+          ZEEV_BASE_URL=${{ secrets.ZEEV_BASE_URL }}
+          ZEEV_TOKEN=${{ secrets.ZEEV_TOKEN }}
+          ZEEV_ENDPOINT_CREATE_INSTANCE=${{ secrets.ZEEV_ENDPOINT_CREATE_INSTANCE }}
+          ZEEV_PROCESS_ID=${{ secrets.ZEEV_PROCESS_ID }}
+          ZEEV_TIMEOUT_MS=${{ secrets.ZEEV_TIMEOUT_MS }}
+
+          # Database
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+
+          # CORS
+          CORS_ORIGINS=${{ secrets.CORS_ORIGINS }}
+
+          # Rate Limiting
+          RATE_LIMIT_WINDOW_MS=${{ secrets.RATE_LIMIT_WINDOW_MS }}
+          RATE_LIMIT_MAX_REQUESTS=${{ secrets.RATE_LIMIT_MAX_REQUESTS }}
+
+          # AI Troubleshooting
+          ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
+          AI_TROUBLESHOOTING_ENABLED=${{ secrets.AI_TROUBLESHOOTING_ENABLED }}
+
+          # Logging
+          LOG_LEVEL=${{ secrets.LOG_LEVEL }}
+          EOF
+
+      # EXEMPLO: Deploy via SSH
+      # Descomente e configure se for usar SSH para deploy
+      # - name: Deploy to server via SSH
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USER }}
+      #     key: ${{ secrets.SERVER_SSH_KEY }}
+      #     port: ${{ secrets.SERVER_PORT }}
+      #     script: |
+      #       cd /path/to/app
+      #       git pull
+      #       npm install
+      #       npm run build
+      #       pm2 restart chatbot-api
+
+      # EXEMPLO: Deploy para Azure
+      # Descomente e configure se for usar Azure
+      # - name: Deploy to Azure Web App
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+      #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      #     package: ./apps/api
+
+      # EXEMPLO: Build Docker e push para registry
+      # Descomente e configure se for usar Docker
+      # - name: Build and push Docker image
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     file: ./apps/api/Dockerfile
+      #     push: true
+      #     tags: ${{ secrets.DOCKER_REGISTRY }}/chatbot-api:latest
+
+      - name: Deployment status
+        run: |
+          echo "✅ Build concluído com sucesso!"
+          echo "📦 Artefatos prontos para deploy"
+          echo ""
+          echo "⚠️  Configure o método de deploy descomentando uma das opções acima:"
+          echo "   - SSH (servidor próprio)"
+          echo "   - Azure Web App"
+          echo "   - Docker Registry"
