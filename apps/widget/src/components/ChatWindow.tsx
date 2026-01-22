@@ -2,17 +2,22 @@ import { useEffect, useState } from 'react';
 import { MessageList, type Message } from './MessageList';
 import { Composer } from './Composer';
 import { StatusBadge } from './StatusBadge';
+import { RatingWidget } from './RatingWidget';
 import { routeMessage } from '../lib/api';
 import './ChatWindow.css';
+import zeevLogo from '../assets/zeev-chatbot-logo.png';
 
 interface ChatWindowProps {
   sessionId: string;
   stage?: 'hml' | 'prod';
+  onClose?: () => void;
 }
 
-export function ChatWindow({ sessionId, stage }: ChatWindowProps) {
+export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [status, setStatus] = useState<'idle' | 'typing' | 'error'>('idle');
+  const [showRating, setShowRating] = useState(false);
+  const [ratingSubmitted, setRatingSubmitted] = useState(false);
 
   useEffect(() => {
     setMessages([
@@ -23,6 +28,18 @@ export function ChatWindow({ sessionId, stage }: ChatWindowProps) {
       },
     ]);
   }, [sessionId]);
+
+  // Mostrar widget de avaliação após um link ser enviado
+  useEffect(() => {
+    const hasLink = messages.some(msg => msg.link !== undefined);
+    if (hasLink && !showRating && !ratingSubmitted) {
+      // Aguardar 5 segundos após o link aparecer para mostrar o widget
+      const timer = setTimeout(() => {
+        setShowRating(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [messages, showRating, ratingSubmitted]);
 
   const handleSend = async (message: string) => {
     const trimmed = message.trim();
@@ -83,11 +100,13 @@ export function ChatWindow({ sessionId, stage }: ChatWindowProps) {
     content += `${'='.repeat(60)}\n\n`;
 
     messages.forEach((msg) => {
-      const timestamp = new Date(msg.timestamp).toLocaleTimeString('pt-BR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
+      const timestamp = msg.timestamp
+        ? new Date(msg.timestamp).toLocaleTimeString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          })
+        : '--:--:--';
       const role = msg.role === 'user' ? 'VOCÊ' : 'ASSISTENTE';
 
       content += `[${timestamp}] ${role}:\n${msg.content}\n`;
@@ -129,18 +148,41 @@ export function ChatWindow({ sessionId, stage }: ChatWindowProps) {
   return (
     <div className="chat-window">
       <div className="chat-header">
-        <span className="chat-title">Chat de Atendimento</span>
-        <button
-          className="download-button"
-          onClick={handleDownloadConversation}
-          title="Baixar conversa"
-          disabled={messages.length <= 1}
-        >
-          ⬇ Baixar conversa
-        </button>
+        <div className="chat-header-left">
+          <img src={zeevLogo} alt="Zeev Logo" className="chat-logo" />
+          <span className="chat-title">Zeev Chat</span>
+        </div>
+        <div className="chat-header-right">
+          <button
+            className="download-button"
+            onClick={handleDownloadConversation}
+            title="Baixar conversa"
+            disabled={messages.length <= 1}
+          >
+            ⬇ Baixar conversa
+          </button>
+          {onClose && (
+            <button
+              className="close-chat-button"
+              onClick={onClose}
+              title="Fechar chat"
+            >
+              ✕
+            </button>
+          )}
+        </div>
       </div>
       <MessageList messages={messages} onOptionSelect={handleOptionSelect} onOpenLink={handleOpenLink} />
       <StatusBadge status={status} />
+      {showRating && !ratingSubmitted && (
+        <RatingWidget
+          sessionId={sessionId}
+          onSubmit={() => {
+            setRatingSubmitted(true);
+            setShowRating(false);
+          }}
+        />
+      )}
       <Composer onSend={handleSend} disabled={status === 'typing'} placeholder="Descreva sua necessidade..." />
     </div>
   );

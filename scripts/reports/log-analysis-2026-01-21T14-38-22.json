@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-01-21T14:38:22.907Z",
+  "summary": {
+    "totalRequests": 0,
+    "lowScoreRequests": 0,
+    "clarifyRequests": 0,
+    "categoriesUsed": 0
+  },
+  "details": {
+    "requestsByCategory": {},
+    "lowScoreRequests": [],
+    "clarifyRequests": [],
+    "messagePatterns": {}
+  },
+  "recommendations": []
+}

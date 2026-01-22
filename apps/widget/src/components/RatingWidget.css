@@ -1,0 +1,155 @@
+.rating-widget {
+  padding: 20px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+  animation: slideUp 0.3s ease-out;
+}
+
+.rating-widget-compact {
+  padding: 12px 16px;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rating-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.rating-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.star {
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #d1d5db;
+  transition: all 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.star:hover,
+.star.active {
+  color: #fbbf24;
+  transform: scale(1.1);
+}
+
+.rating-divider {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+.rating-simple {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.simple-btn {
+  flex: 1;
+  padding: 8px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.simple-btn:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.simple-btn.active {
+  border-color: #3b82f6;
+  background: #3b82f6;
+  color: white;
+}
+
+.simple-btn.helpful.active {
+  border-color: #10b981;
+  background: #10b981;
+}
+
+.simple-btn.not-helpful.active {
+  border-color: #ef4444;
+  background: #ef4444;
+}
+
+.rating-submit {
+  width: 100%;
+  padding: 10px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.rating-submit:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.rating-submit:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.rating-success {
+  text-align: center;
+  padding: 12px;
+}
+
+.success-icon {
+  font-size: 36px;
+  color: #10b981;
+  margin-bottom: 8px;
+}
+
+.success-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #10b981;
+  margin-bottom: 4px;
+}
+
+.success-subtext {
+  font-size: 12px;
+  color: #6b7280;
+}

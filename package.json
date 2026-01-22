@@ -15,7 +15,9 @@
     "build:widget": "npm run build --workspace=apps/widget",
     "test": "npm run test --workspace=apps/api",
     "lint": "npm run lint --workspace=apps/api && npm run lint --workspace=apps/widget",
-    "start": "npm run start --workspace=apps/api"
+    "start": "npm run start --workspace=apps/api",
+    "report:generate": "npx tsx scripts/generate-ppt-report.ts",
+    "report:schedule": "npx tsx scripts/schedule-reports.ts"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
@@ -24,6 +26,9 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.71.2"
+    "@anthropic-ai/sdk": "^0.71.2",
+    "@types/node-cron": "^3.0.11",
+    "node-cron": "^4.2.1",
+    "pptxgenjs": "^4.0.1"
   }
 }

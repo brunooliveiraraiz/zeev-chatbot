@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { type SignOptions } from 'jsonwebtoken';
 import { env } from '../config/env.js';
 import { SSOService } from '../services/sso.service.js';
 import { getSessionRepository } from '../repositories/session.repository.factory.js';
@@ -24,7 +24,7 @@ router.post('/exchange', async (req: Request, res: Response) => {
     const chatSessionToken = jwt.sign(
       { sessionId, userId: user.userId },
       env.CHAT_SESSION_SECRET,
-      { expiresIn: env.CHAT_SESSION_EXPIRES_IN }
+      { expiresIn: env.CHAT_SESSION_EXPIRES_IN } as any
     );
     
     // Create new session (reuse existing logic if needed, but for MVP we create new)

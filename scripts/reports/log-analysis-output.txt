@@ -1,0 +1,26 @@
+[1m[36m╔════════════════════════════════════════════╗[0m
+[1m[36m║    ANÁLISE DE LOGS DO CHATBOT ZEEV         ║[0m
+[1m[36m╚════════════════════════════════════════════╝[0m
+
+📅 Data/Hora: 21/01/2026, 14:42:49
+
+📄 Analisando: scripts\reports\scheduled-tests.log
+
+[1m[36m╔════════════════════════════════════════════╗[0m
+[1m[36m║           RELATÓRIO DE ANÁLISE             ║[0m
+[1m[36m╚════════════════════════════════════════════╝[0m
+
+[1m📊 ESTATÍSTICAS GERAIS[0m
+   Total de requisições: 0
+   Requisições com score baixo: 0
+   Requisições que pediram clarificação: 0
+
+[1m🔝 TOP 10 SOLICITAÇÕES MAIS USADAS[0m
+
+[1m💬 PADRÕES DE INÍCIO DE MENSAGEM[0m
+
+[1m[36m💡 SUGESTÕES DE MELHORIA[0m
+
+
+📄 Relatório detalhado salvo em: scripts/reports/log-analysis-2026-01-21T17-42-49.json
+

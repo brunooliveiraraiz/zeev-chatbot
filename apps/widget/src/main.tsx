@@ -5,6 +5,6 @@ import './styles.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ChatWidget />
+    <ChatWidget stage="hml" />
   </React.StrictMode>
 );

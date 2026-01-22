@@ -1,6 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { env } from '../config/env.js';
 import { logger } from '../utils/logger.js';
+import { AI_MODELS } from '../config/ai-models.js';
 import type { KnowledgeItem } from '../catalog/knowledge-base.js';
 
 type ConversationMessage = {
@@ -69,7 +70,7 @@ export class AITroubleshootingService {
 
       // Chamar API do Claude
       const response = await this.client.messages.create({
-        model: 'claude-3-haiku-20240307',
+        model: AI_MODELS.TROUBLESHOOTING,
         max_tokens: 1024,
         system: systemPrompt,
         messages,

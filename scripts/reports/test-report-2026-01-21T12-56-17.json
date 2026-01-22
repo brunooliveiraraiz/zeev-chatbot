@@ -1,0 +1,446 @@
+{
+  "timestamp": "2026-01-21T12:56:17.598Z",
+  "summary": {
+    "total": 412,
+    "passed": 378,
+    "failed": 34,
+    "warnings": 0,
+    "passRate": "91.7%"
+  },
+  "errors": [
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "meu computador não funciona",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "preciso de acesso à rede",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "problema com VPN",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "erro no sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "computador lento",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "preciso de novo equipamento",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "unknown"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "internet não funciona",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "example": "erro ao enviar documentos",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_portal_matriculas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "example": "login do portal não funciona",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_portal_matriculas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "preciso criar um usuário",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "tenho dúvida sobre sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "abrir chamado de TI",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "ti_ticket_raiz",
+      "got": "unknown"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "criar acesso para novo colaborador",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "gerar relatório do sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "como faço para abrir chamado",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[Atendimento] Cancelamento de matrícula",
+      "example": "transferência de unidade",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_cancelamento_matricula",
+      "got": "none"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "preciso de treinamento no Totvs",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "atendimento_treinamento_totvs",
+      "got": "unknown"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "aprender a usar Totvs",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_treinamento_totvs",
+      "got": "none"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "capacitação sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_treinamento_totvs",
+      "got": "none"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "pagamento não aparece no sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_baixa_pagamento",
+      "got": "none"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "criar novo plano de pagamento",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "comercial_plano_pagamento",
+      "got": "unknown"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "criar novo serviço comercial",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "comercial_plano_pagamento",
+      "got": "unknown"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "preciso criar plano de pagamento",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "comercial_plano_pagamento",
+      "got": "none"
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "example": "desconto promocional",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "comercial_promocoes",
+      "got": "none"
+    },
+    {
+      "item": "[Financeiro] Solicitação de cadastro",
+      "example": "incluir fornecedor no sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "financeiro_cadastro",
+      "got": "none"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "comprar produto",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "operacoes_compras",
+      "got": "comercial_marketplace"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "solicitar material",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "operacoes_compras",
+      "got": "none"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "solicitar material",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "operacoes_almoxarifado",
+      "got": "none"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "solicitar treinamento",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "pc_educacao_corporativa",
+      "got": "unknown"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "divulgação evento",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "pc_comunicacao_interna",
+      "got": "cmef_midia_eventos"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "acesso ao scoreplan",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "tpep_scoreplan",
+      "got": "none"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "scoreplan login",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "tpep_scoreplan",
+      "got": "none"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "acesso planejamento",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "tpep_scoreplan",
+      "got": "unknown"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "scoreplan acesso",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "tpep_scoreplan",
+      "got": "unknown"
+    }
+  ],
+  "suggestions": [
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "7 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "meu computador não funciona",
+        "preciso de acesso à rede",
+        "problema com VPN",
+        "erro no sistema",
+        "computador lento",
+        "preciso de novo equipamento",
+        "internet não funciona"
+      ]
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "2 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "erro ao enviar documentos",
+        "login do portal não funciona"
+      ]
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "6 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "preciso criar um usuário",
+        "tenho dúvida sobre sistema",
+        "abrir chamado de TI",
+        "criar acesso para novo colaborador",
+        "gerar relatório do sistema",
+        "como faço para abrir chamado"
+      ]
+    },
+    {
+      "item": "[Atendimento] Cancelamento de matrícula",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "transferência de unidade"
+      ]
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "3 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "preciso de treinamento no Totvs",
+        "aprender a usar Totvs",
+        "capacitação sistema"
+      ]
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "pagamento não aparece no sistema"
+      ]
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "3 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "criar novo plano de pagamento",
+        "criar novo serviço comercial",
+        "preciso criar plano de pagamento"
+      ]
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "desconto promocional"
+      ]
+    },
+    {
+      "item": "[Financeiro] Solicitação de cadastro",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "incluir fornecedor no sistema"
+      ]
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "2 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "comprar produto",
+        "solicitar material"
+      ]
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "solicitar material"
+      ]
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "solicitar treinamento"
+      ]
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "divulgação evento"
+      ]
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "4 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "acesso ao scoreplan",
+        "scoreplan login",
+        "acesso planejamento",
+        "scoreplan acesso"
+      ]
+    }
+  ]
+}

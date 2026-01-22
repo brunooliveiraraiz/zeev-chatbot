@@ -1,0 +1,59 @@
+{
+  "timestamp": "2026-01-21T15:14:33.466Z",
+  "summary": {
+    "total": 412,
+    "passed": 409,
+    "failed": 3,
+    "warnings": 0,
+    "passRate": "99.3%"
+  },
+  "errors": [
+    {
+      "item": "[Atendimento] Cancelamento de matrícula",
+      "example": "transferência de unidade escolar",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_cancelamento_matricula",
+      "got": "none"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "comprar produto para operação",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "operacoes_compras",
+      "got": "none"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "equipamento novo para escola",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "operacoes_compras",
+      "got": "none"
+    }
+  ],
+  "suggestions": [
+    {
+      "item": "[Atendimento] Cancelamento de matrícula",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "transferência de unidade escolar"
+      ]
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "2 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "comprar produto para operação",
+        "equipamento novo para escola"
+      ]
+    }
+  ]
+}

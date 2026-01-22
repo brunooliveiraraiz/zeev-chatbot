@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget de Avaliação - Chatbot Zeev</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f3f4f6;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .widget-container {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .widget-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+
+    .widget-subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
+
+    .rating-stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .star {
+      font-size: 36px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #d1d5db;
+    }
+
+    .star:hover,
+    .star.active {
+      color: #fbbf24;
+      transform: scale(1.1);
+    }
+
+    .simple-rating {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .simple-btn {
+      flex: 1;
+      padding: 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .simple-btn:hover {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .simple-btn.active {
+      border-color: #3b82f6;
+      background: #3b82f6;
+      color: white;
+    }
+
+    .simple-btn.helpful.active {
+      border-color: #10b981;
+      background: #10b981;
+    }
+
+    .simple-btn.not-helpful.active {
+      border-color: #ef4444;
+      background: #ef4444;
+    }
+
+    .feedback-textarea {
+      width: 100%;
+      min-height: 80px;
+      padding: 12px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: #2563eb;
+    }
+
+    .submit-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .success-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: #10b981;
+      margin-bottom: 8px;
+    }
+
+    .success-subtext {
+      font-size: 14px;
+      color: #6b7280;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: -12px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget-container">
+    <!-- Formulário de Avaliação -->
+    <div id="rating-form">
+      <h2 class="widget-title">Como foi sua experiência?</h2>
+      <p class="widget-subtitle">Sua avaliação nos ajuda a melhorar o atendimento</p>
+
+      <!-- Avaliação por Estrelas -->
+      <div class="rating-stars" id="stars-container">
+        <span class="star" data-rating="1">★</span>
+        <span class="star" data-rating="2">★</span>
+        <span class="star" data-rating="3">★</span>
+        <span class="star" data-rating="4">★</span>
+        <span class="star" data-rating="5">★</span>
+      </div>
+
+      <!-- OU -->
+      <div style="text-align: center; color: #9ca3af; margin: 24px 0; font-size: 14px;">— ou —</div>
+
+      <!-- Avaliação Simples (Útil/Não Útil) -->
+      <div class="simple-rating">
+        <button class="simple-btn helpful" data-helpful="true">
+          <span>👍</span>
+          <span>Útil</span>
+        </button>
+        <button class="simple-btn not-helpful" data-helpful="false">
+          <span>👎</span>
+          <span>Não útil</span>
+        </button>
+      </div>
+
+      <!-- Feedback Opcional -->
+      <textarea
+        class="feedback-textarea"
+        id="feedback"
+        placeholder="Deixe um comentário (opcional)"
+        maxlength="1000"
+      ></textarea>
+      <div class="char-count">
+        <span id="char-count">0</span>/1000
+      </div>
+
+      <!-- Botão Enviar -->
+      <button class="submit-btn" id="submit-btn" disabled>
+        Enviar Avaliação
+      </button>
+    </div>
+
+    <!-- Mensagem de Sucesso -->
+    <div id="success-message" class="success-message hidden">
+      <div class="success-icon">✓</div>
+      <div class="success-text">Obrigado pela sua avaliação!</div>
+      <div class="success-subtext">Seu feedback é muito importante para nós.</div>
+    </div>
+  </div>
+
+  <script>
+    // Configuração
+    const API_URL = 'http://localhost:3000'; // Trocar pela URL da API em produção
+    const SESSION_ID = 'demo-session-' + Date.now(); // Em produção, usar sessionId real
+
+    // Estado
+    let selectedRating = null;
+    let selectedHelpful = null;
+
+    // Elementos
+    const stars = document.querySelectorAll('.star');
+    const helpfulBtns = document.querySelectorAll('.simple-btn');
+    const feedbackTextarea = document.getElementById('feedback');
+    const charCount = document.getElementById('char-count');
+    const submitBtn = document.getElementById('submit-btn');
+    const ratingForm = document.getElementById('rating-form');
+    const successMessage = document.getElementById('success-message');
+
+    // Event Listeners - Estrelas
+    stars.forEach(star => {
+      star.addEventListener('click', () => {
+        selectedRating = parseInt(star.dataset.rating);
+        updateStars();
+        clearSimpleRating();
+        enableSubmit();
+      });
+
+      star.addEventListener('mouseenter', () => {
+        const rating = parseInt(star.dataset.rating);
+        stars.forEach((s, index) => {
+          if (index < rating) {
+            s.style.color = '#fbbf24';
+          } else {
+            s.style.color = selectedRating && index < selectedRating ? '#fbbf24' : '#d1d5db';
+          }
+        });
+      });
+
+      star.addEventListener('mouseleave', () => {
+        updateStars();
+      });
+    });
+
+    // Event Listeners - Útil/Não Útil
+    helpfulBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const helpful = btn.dataset.helpful === 'true';
+        selectedHelpful = helpful;
+        updateSimpleRating(btn);
+        clearStars();
+        enableSubmit();
+      });
+    });
+
+    // Event Listener - Contador de caracteres
+    feedbackTextarea.addEventListener('input', () => {
+      charCount.textContent = feedbackTextarea.value.length;
+    });
+
+    // Event Listener - Enviar
+    submitBtn.addEventListener('click', submitRating);
+
+    // Funções de Atualização
+    function updateStars() {
+      stars.forEach((star, index) => {
+        if (index < selectedRating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+    }
+
+    function clearStars() {
+      selectedRating = null;
+      stars.forEach(star => star.classList.remove('active'));
+    }
+
+    function updateSimpleRating(clickedBtn) {
+      helpfulBtns.forEach(btn => btn.classList.remove('active'));
+      clickedBtn.classList.add('active');
+    }
+
+    function clearSimpleRating() {
+      selectedHelpful = null;
+      helpfulBtns.forEach(btn => btn.classList.remove('active'));
+    }
+
+    function enableSubmit() {
+      submitBtn.disabled = selectedRating === null && selectedHelpful === null;
+    }
+
+    // Função de Envio
+    async function submitRating() {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      const data = {
+        sessionId: SESSION_ID,
+      };
+
+      if (selectedRating !== null) {
+        data.rating = selectedRating;
+      }
+
+      if (selectedHelpful !== null) {
+        data.helpful = selectedHelpful;
+      }
+
+      const feedback = feedbackTextarea.value.trim();
+      if (feedback) {
+        data.feedback = feedback;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/analytics/rating`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Mostrar mensagem de sucesso
+          ratingForm.classList.add('hidden');
+          successMessage.classList.remove('hidden');
+
+          console.log('✅ Avaliação enviada:', data);
+        } else {
+          throw new Error(result.error || 'Erro desconhecido');
+        }
+      } catch (error) {
+        console.error('❌ Erro ao enviar avaliação:', error);
+        alert('Erro ao enviar avaliação. Tente novamente.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar Avaliação';
+      }
+    }
+  </script>
+</body>
+</html>

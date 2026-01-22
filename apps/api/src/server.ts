@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.js';
 import chatRoutes from './routes/chat.js';
 import widgetRoutes from './routes/widget.js';
 import routeRoutes from './routes/route.js';
+import analyticsRoutes from './routes/analytics.js';
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRoutes);
 app.use('/chat', chatRoutes);
 app.use('/widget', widgetRoutes);
+app.use('/analytics', analyticsRoutes);
 app.use('/', routeRoutes);
 
 // Health check

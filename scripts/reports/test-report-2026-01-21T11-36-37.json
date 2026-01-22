@@ -1,0 +1,1934 @@
+{
+  "timestamp": "2026-01-21T11:36:37.486Z",
+  "summary": {
+    "total": 412,
+    "passed": 135,
+    "failed": 277,
+    "warnings": 0,
+    "passRate": "32.8%"
+  },
+  "errors": [
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "meu computador não funciona",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "preciso de acesso à rede",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "problema com VPN",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "erro no sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "computador lento",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "preciso de novo equipamento",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "unknown"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "sistema travou",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "internet não funciona",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "example": "não consigo fazer matrícula",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_portal_matriculas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "example": "problema ao matricular aluno",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_portal_matriculas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "example": "erro ao enviar documentos",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_portal_matriculas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "example": "não aparece opção de matrícula",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_portal_matriculas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "example": "login do portal não funciona",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_portal_matriculas",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "preciso criar um usuário",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "tenho dúvida sobre sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "abrir chamado de TI",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "cancelar solicitação",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "ti_ticket_raiz",
+      "got": "atendimento_cancelamento_matricula"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "criar acesso para novo colaborador",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "gerar relatório do sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "example": "como faço para abrir chamado",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "ti_ticket_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[BI] Atendimento e solicitações Business Intelligence (BI)",
+      "example": "preciso de um relatório gerencial",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "bi_atendimento",
+      "got": "none"
+    },
+    {
+      "item": "[BI] Atendimento e solicitações Business Intelligence (BI)",
+      "example": "criar painel de controle",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "bi_atendimento",
+      "got": "none"
+    },
+    {
+      "item": "[Atendimento] Cancelamento de matrícula",
+      "example": "transferência de unidade",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_cancelamento_matricula",
+      "got": "none"
+    },
+    {
+      "item": "[Atendimento] Cancelamento de parcela ou lançamento financeiro",
+      "example": "cancelar contraturno",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "atendimento_cancelamento_parcela",
+      "got": "atendimento_cancelamento_matricula"
+    },
+    {
+      "item": "[Atendimento] Cancelamento de parcela ou lançamento financeiro",
+      "example": "cancelar cobrança",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "atendimento_cancelamento_parcela",
+      "got": "atendimento_negociacao_acordos"
+    },
+    {
+      "item": "[Atendimento] Correção de lançamento / plano de pagamento",
+      "example": "aplicar desconto",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_correcao_lancamento",
+      "got": "none"
+    },
+    {
+      "item": "[Atendimento] Correção de lançamento / plano de pagamento",
+      "example": "trocar responsável financeiro",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "atendimento_correcao_lancamento",
+      "got": "none"
+    },
+    {
+      "item": "[Atendimento] Correção de lançamento / plano de pagamento",
+      "example": "corrigir desconto",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Correção de lançamento / plano de pagamento",
+      "example": "regerar parcelas",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Correção de lançamento / plano de pagamento",
+      "example": "trocar anuidade",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Correção de lançamento / plano de pagamento",
+      "example": "ajustar mensalidade",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "paguei duplicado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "preciso de estorno",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "devolução de pagamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "reembolso",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "estorno no cartão",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "paguei a mais",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "pagamento em duplicidade",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "quero meu dinheiro de volta",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "cancelei e quero estorno",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Devolução e Estorno",
+      "example": "valor pago errado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "preciso de treinamento no Totvs",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "dúvida sobre baixa de pagamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "como lançar bolsa",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "treinamento módulo financeiro",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "dúvida no portal",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "aprender a usar Totvs",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "capacitação sistema",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "como usar módulo educacional",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "treinamento relatórios",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Atendimento] Solicitação de treinamento (Totvs)",
+      "example": "dúvida lançamento material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "negociar débito",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "fazer acordo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "parcelar dívida",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "revisão de cobrança",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "tenho dívida para negociar",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "acordo financeiro",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "parcelamento de débito",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "renegociar dívida",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "quitar débito",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Cobrança] Negociação e acordos via secretaria",
+      "example": "negociar mensalidades atrasadas",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "paguei mas não foi registrado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "pagamento não computado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "boleto pago não baixado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "vincular nota de crédito",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "comprovante de pagamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "pagamento não aparece no sistema",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "baixar pagamento manualmente",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "crédito não vinculado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "pagamento não consta",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Financeiro] Baixa de pagamento e vinculação de nota de crédito",
+      "example": "já paguei mas não aparece",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "criar plano de pagamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "criar plano de pagamento personalizado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "criar novo plano de pagamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "novo plano personalizado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "cadastrar serviço",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "plano diferenciado para cliente",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "personalizar forma de pagamento do cliente",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "criar novo serviço comercial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "plano especial para aluno",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "montar plano de pagamento customizado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "quero criar um plano de pagamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Criação de plano de pagamento / serviço",
+      "example": "preciso criar plano de pagamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "desabilitar série",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "remover série da renovação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "série não disponível",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "tirar série da oferta",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "desativar série",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "série fora da renovação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "bloquear série",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "série indisponível",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "não oferecer série",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Desabilitação de série para renovação",
+      "example": "excluir série renovação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "planejar ação comercial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "estratégia de captação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "cronograma comercial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "definir metas comerciais",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "planejamento de vendas",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "ação de marketing",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "estratégia comercial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "plano de captação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "cronograma de ações",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Planejamento Comercial",
+      "example": "definir estratégias",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "solicitar desconto",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "pedir abatimento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "desconto na mensalidade",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "reduzir valor",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "aplicar desconto",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "desconto especial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "bolsa de estudos",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "desconto promocional",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "redução de preço",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de desconto",
+      "example": "desconto comercial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "example": "aplicar promoção",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "example": "campanha comercial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "example": "oferta especial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "example": "promoção de matrícula",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "example": "desconto promocional",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "comercial_promocoes",
+      "got": "comercial_desconto"
+    },
+    {
+      "item": "[Comercial] Solicitações Mais Raiz",
+      "example": "inscrever em atividade",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "comercial_mais_raiz",
+      "got": "none"
+    },
+    {
+      "item": "[Comercial] Solicitações Marketplace",
+      "example": "comprar produto",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "comercial_marketplace",
+      "got": "none"
+    },
+    {
+      "item": "[Comercial] Solicitações Marketplace",
+      "example": "produto disponível",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "comercial_marketplace",
+      "got": "none"
+    },
+    {
+      "item": "[Comercial] Solicitações Marketplace",
+      "example": "serviço da loja",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "comercial_marketplace",
+      "got": "none"
+    },
+    {
+      "item": "[CMEF] Solicitações de Mídia e Eventos",
+      "example": "divulgação evento",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "cmef_midia_eventos",
+      "got": "none"
+    },
+    {
+      "item": "[CMEF] Solicitações de Mídia e Eventos",
+      "example": "material promocional",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "cmef_midia_eventos",
+      "got": "none"
+    },
+    {
+      "item": "[DP] Solicitações",
+      "example": "comprovante de renda",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "dp_solicitacoes",
+      "got": "atendimento_baixa_pagamento"
+    },
+    {
+      "item": "[DP] Solicitações de Benefícios",
+      "example": "incluir dependente no plano",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "dp_beneficios",
+      "got": "none"
+    },
+    {
+      "item": "[DP] Solicitações de Benefícios",
+      "example": "cartão benefício",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "dp_beneficios",
+      "got": "atendimento_devolucao_estorno"
+    },
+    {
+      "item": "[DP] Solicitações de Benefícios",
+      "example": "incluir no plano odontológico",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "dp_beneficios",
+      "got": "none"
+    },
+    {
+      "item": "[DP] Solicitações de Benefícios",
+      "example": "cancelar benefício",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "dp_beneficios",
+      "got": "atendimento_cancelamento_matricula"
+    },
+    {
+      "item": "[Financeiro] Solicitação de cadastro",
+      "example": "incluir fornecedor no sistema",
+      "issue": "matching_errado",
+      "score": 0,
+      "expected": "financeiro_cadastro",
+      "got": "none"
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "example": "análise de contrato",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "juridico_solicitacoes",
+      "got": "comercial_viabilidade"
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "example": "notificação legal",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "example": "dúvida regulatória",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "example": "parecer jurídico",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "example": "análise legal",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "example": "suporte jurídico",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "example": "consultoria legal",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "solicitar veículo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "manutenção de carro",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "usar frota",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "agendar veículo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "carro da empresa",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "transporte institucional",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "reservar veículo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "manutenção frota",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "logística veículo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Gestão de frota",
+      "example": "uso de carro",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "comprar material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "solicitar compra",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "adquirir equipamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "comprar serviço",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "requisição de compra",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "pedido de compra",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "aquisição material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "comprar produto",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "solicitar material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de compras",
+      "example": "equipamento novo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "manutenção predial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "reparo na escola",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "assistência técnica",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "problema elétrico",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "vazamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "ar condicionado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "manutenção geral",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "conserto",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "infraestrutura escolar",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de facilities (Escolas)",
+      "example": "utilidades",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "solicitar frete",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "chamar motoboy",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "envio de documento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "entrega urgente",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "coleta de material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "frete para entrega",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "motoboy urgente",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "transporte de documento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "enviar material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de frete ou motoboy",
+      "example": "coleta urgente",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "solicitar Uber",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "usar Onfly",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "transporte corporativo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "deslocamento a trabalho",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "viagem corporativa",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "uber empresarial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "onfly viagem",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "transporte trabalho",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "corrida uber",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitação de Uber e Onfly",
+      "example": "passagem onfly",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "retirar material do almoxarifado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "solicitar material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "repor estoque",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "pegar material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "almoxarifado material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "requisição de material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "material de estoque",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "reposição almoxarifado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "pedir material",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Operações] Solicitações ao almoxarifado",
+      "example": "estoque almoxarifado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "suporte CRM",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "configurar HubSpot",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "ajuste no CRM",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "problema no HubSpot",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "dúvida CRM",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "usar HubSpot",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "cadastro no CRM",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "integração CRM",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "relatório HubSpot",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[Performance] CRM Solicitações",
+      "example": "pipeline CRM",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "abrir vaga",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "contratar colaborador",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "processo seletivo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "recrutar funcionário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "admissão novo colaborador",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "vaga de emprego",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "seleção de candidatos",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "contratação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "nova vaga",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Admissão, recrutamento e seleção",
+      "example": "admitir funcionário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "solicitar treinamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "capacitação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "curso corporativo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "desenvolvimento profissional",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "educação corporativa",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "treinamento equipe",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "programa de desenvolvimento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "curso para colaboradores",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "capacitação profissional",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Educação Corporativa",
+      "example": "treinamento interno",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "promover colaborador",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "transferir funcionário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "mudar função",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "alterar carga horária",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "trocar gestor",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "movimentação interna",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "mudança de área",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "promoção funcionário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "transferência unidade",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Movimentação de pessoal",
+      "example": "alterar função",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "divulgar comunicado",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "comunicação interna",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "informativo aos colaboradores",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "campanha interna",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "divulgação evento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "comunicar equipe",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "enviar informativo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "comunicação colaboradores",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "avisar funcionários",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de comunicação interna",
+      "example": "comunicado geral",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "desligar colaborador",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "demissão",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "saída de funcionário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "desligamento voluntário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "demitir funcionário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "rescisão",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "término contrato",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "colaborador saindo",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "pedido de demissão",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de desligamento de colaborador",
+      "example": "desligamento empresa",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "pagar bônus",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "premiação colaborador",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "gratificação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "pagar prêmio",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "bonificação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "prêmio desempenho",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "bônus produtividade",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "reconhecimento financeiro",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "pagar premiação",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[P&C] Solicitação de pagamento de premiação",
+      "example": "gratificação especial",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "criar usuário scoreplan",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "acesso ao scoreplan",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "alterar usuário",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "scoreplan login",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "cadastro scoreplan",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "permissão scoreplan",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "usuário scoreplan",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "acesso planejamento",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "scoreplan acesso",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    },
+    {
+      "item": "[TPEP] Solicitações Scoreplan",
+      "example": "configurar scoreplan",
+      "issue": "erro_api",
+      "error": "API retornou 429"
+    }
+  ],
+  "suggestions": [
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "8 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "meu computador não funciona",
+        "preciso de acesso à rede",
+        "problema com VPN",
+        "erro no sistema",
+        "computador lento",
+        "preciso de novo equipamento",
+        "sistema travou",
+        "internet não funciona"
+      ]
+    },
+    {
+      "item": "[TI] Suporte Portal de Matrículas",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "5 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "não consigo fazer matrícula",
+        "problema ao matricular aluno",
+        "erro ao enviar documentos",
+        "não aparece opção de matrícula",
+        "login do portal não funciona"
+      ]
+    },
+    {
+      "item": "[TI] Solicitações Ticket Raiz",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "7 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "preciso criar um usuário",
+        "tenho dúvida sobre sistema",
+        "abrir chamado de TI",
+        "cancelar solicitação",
+        "criar acesso para novo colaborador",
+        "gerar relatório do sistema",
+        "como faço para abrir chamado"
+      ]
+    },
+    {
+      "item": "[BI] Atendimento e solicitações Business Intelligence (BI)",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "2 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "preciso de um relatório gerencial",
+        "criar painel de controle"
+      ]
+    },
+    {
+      "item": "[Atendimento] Cancelamento de matrícula",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "transferência de unidade"
+      ]
+    },
+    {
+      "item": "[Atendimento] Cancelamento de parcela ou lançamento financeiro",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "2 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "cancelar contraturno",
+        "cancelar cobrança"
+      ]
+    },
+    {
+      "item": "[Atendimento] Correção de lançamento / plano de pagamento",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "2 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "aplicar desconto",
+        "trocar responsável financeiro"
+      ]
+    },
+    {
+      "item": "[Comercial] Solicitação de promoções",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "desconto promocional"
+      ]
+    },
+    {
+      "item": "[Comercial] Solicitações Mais Raiz",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "inscrever em atividade"
+      ]
+    },
+    {
+      "item": "[Comercial] Solicitações Marketplace",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "3 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "comprar produto",
+        "produto disponível",
+        "serviço da loja"
+      ]
+    },
+    {
+      "item": "[CMEF] Solicitações de Mídia e Eventos",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "2 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "divulgação evento",
+        "material promocional"
+      ]
+    },
+    {
+      "item": "[DP] Solicitações",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "comprovante de renda"
+      ]
+    },
+    {
+      "item": "[DP] Solicitações de Benefícios",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "4 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "incluir dependente no plano",
+        "cartão benefício",
+        "incluir no plano odontológico",
+        "cancelar benefício"
+      ]
+    },
+    {
+      "item": "[Financeiro] Solicitação de cadastro",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "incluir fornecedor no sistema"
+      ]
+    },
+    {
+      "item": "[Jurídico] Solicitações",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "análise de contrato"
+      ]
+    }
+  ]
+}

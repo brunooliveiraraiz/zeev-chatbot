@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-01-21T17:32:55.484Z",
+  "summary": {
+    "total": 412,
+    "passed": 410,
+    "failed": 2,
+    "warnings": 0,
+    "passRate": "99.5%"
+  },
+  "errors": [
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "example": "preciso de novo equipamento",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "ti_infraestrutura_sistemas",
+      "got": "operacoes_compras"
+    },
+    {
+      "item": "[Comercial] Solicitações Marketplace",
+      "example": "comprar produto",
+      "issue": "matching_errado",
+      "score": 1,
+      "expected": "comercial_marketplace",
+      "got": "operacoes_compras"
+    }
+  ],
+  "suggestions": [
+    {
+      "item": "[TI] Solicitações de Infraestrutura e Sistemas",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "preciso de novo equipamento"
+      ]
+    },
+    {
+      "item": "[Comercial] Solicitações Marketplace",
+      "type": "matching_error",
+      "severity": "high",
+      "message": "1 exemplo(s) sendo encaminhados para solicitação errada",
+      "recommendation": "Adicionar tags mais específicas e revisar exemplos conflitantes",
+      "examples": [
+        "comprar produto"
+      ]
+    }
+  ]
+}

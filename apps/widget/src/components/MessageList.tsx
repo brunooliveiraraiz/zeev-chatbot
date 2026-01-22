@@ -7,7 +7,7 @@ export interface Message {
   timestamp?: string;
   link?: { label: string; url: string };
   options?: Array<{ id: string; label: string; description?: string }>;
-  responseType?: 'direct_link' | 'choose_option' | 'clarify';
+  responseType?: 'direct_link' | 'choose_option' | 'clarify' | 'troubleshooting';
 }
 
 interface MessageListProps {

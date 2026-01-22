@@ -1,4 +1,5 @@
 export type ZeevRequestArea =
+  | 'Transformação'
   | 'TI'
   | 'BI'
   | 'Atendimento'
@@ -25,33 +26,93 @@ export type ZeevRequestCatalogItem = {
 };
 
 export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
-  // ==================== TECNOLOGIA DA INFORMAÇÃO (TI) ====================
+  // ==================== TRANSFORMAÇÃO ====================
   {
-    id: 'ti_infraestrutura_sistemas',
-    name: '[TI] Solicitações de Infraestrutura e Sistemas',
-    area: 'TI',
-    description: 'Processo de solicitações à equipe de TI, segmentado entre demandas de Infraestrutura (rede, equipamentos, acessos) e Sistemas (erros, melhorias e integrações).',
-    tags: ['ti', 'infraestrutura', 'sistemas', 'rede', 'equipamentos', 'hardware', 'software', 'vpn', 'servidor', 'computador', 'erro', 'melhoria', 'integração'],
+    id: 'transformacao_bi',
+    name: '[BI] Solicitações Business Intelligence',
+    area: 'Transformação',
+    description: 'Utilize este processo para solicitar análises, relatórios, dashboards, extrações de dados ou suporte em decisões baseadas em dados.',
+    tags: ['bi', 'business intelligence', 'relatório', 'dashboard', 'análise', 'dados', 'extração', 'indicadores', 'kpi', 'power bi', 'relatório gerencial', 'painel controle', 'painel', 'criar dashboard', 'criar painel', 'analise dados', 'inteligencia negocio'],
+    examples: [
+      'preciso de um relatório gerencial',
+      'quero criar um dashboard',
+      'preciso analisar dados de vendas',
+      'extrair dados para análise',
+      'relatório de indicadores',
+      'dashboard de performance',
+      'análise de dados financeiros',
+      'preciso de KPIs',
+      'suporte para decisão baseada em dados',
+      'criar painel de controle'
+    ],
+    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=ZRd9q4OeRHKvrMxWwOCZqQ7C%2FV%2Bc968%2BjWwvq2ebEXlkxSYrx0Z3vs%2FdlYXEzkBsmoGiBGzA5WHxXn2Ma7U2Ew%3D%3D'
+  },
+  {
+    id: 'transformacao_infraestrutura',
+    name: '[TI] Solicitações Infraestrutura',
+    area: 'Transformação',
+    description: 'Processo de solicitações à equipe de TI, segmentado entre demandas de Infraestrutura (rede, equipamentos, acessos).',
+    tags: ['ti', 'infraestrutura', 'rede', 'equipamentos', 'hardware', 'vpn', 'servidor', 'computador', 'problema', 'lento', 'travou', 'acesso rede', 'internet', 'novo computador', 'novo notebook', 'equipamento ti', 'preciso de novo equipamento', 'problema vpn', 'acesso vpn', 'defeito computador', 'meu computador não funciona', 'preciso de acesso à rede', 'problema com vpn', 'computador lento', 'internet não funciona', 'pc', 'notebook', 'máquina', 'wifi', 'cabo', 'conexão', 'internet lenta', 'rede caiu'],
     examples: [
       'meu computador não funciona',
       'preciso de acesso à rede',
       'problema com VPN',
       'servidor fora do ar',
-      'erro no sistema',
       'computador lento',
       'preciso de novo equipamento',
-      'sistema travou',
       'internet não funciona',
-      'preciso integrar sistemas'
+      'problema de conexão',
+      'rede caiu',
+      'notebook com defeito'
     ],
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=1qIzz%2FNOJYChsNqlp5gNKilquQ9VAozc9JJ%2FvgYGhAxTeHORLGg3kb4iVnnUw%2B%2B3Mry%2BoFVRj8%2B8GXvY34V%2BTg%3D%3D'
+    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=mBHfrUjtxaDAWwepPD90opqNK0%2FqxK6IWOSSX9Wn5K4nWa5o%2BwK0%2FEMVMLG6P9vL%2B0YsyMW0lodEqJavstj8Vw%3D%3D'
   },
   {
-    id: 'ti_portal_matriculas',
+    id: 'transformacao_ticket_raiz',
+    name: '[Processos] Solicitações Ticket Raiz',
+    area: 'Transformação',
+    description: 'Cancelamento de Tickets, Criação de usuário, Dúvidas, Relatórios, etc.',
+    tags: ['processos', 'ticket', 'chamado', 'usuário', 'relatório', 'dúvida', 'cancelamento', 'suporte', 'criar usuário', 'abrir chamado', 'gerar relatório', 'dúvida sistema', 'acesso colaborador', 'novo colaborador', 'relatório sistema', 'ticket raiz', 'criar acesso', 'como abrir', 'preciso criar um usuário', 'tenho dúvida sobre sistema', 'abrir chamado', 'cancelar solicitação', 'criar acesso para novo colaborador', 'gerar relatório do sistema', 'como faço para abrir chamado', 'cancelar ticket', 'raiz', 'usuario sistema', 'novo usuario'],
+    examples: [
+      'quero cancelar um ticket',
+      'preciso criar um usuário',
+      'tenho dúvida sobre sistema',
+      'preciso de relatório',
+      'abrir chamado',
+      'cancelar solicitação',
+      'criar acesso para novo colaborador',
+      'gerar relatório do sistema',
+      'ajuda com ticket',
+      'como faço para abrir chamado'
+    ],
+    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=nIGZbj%2BSflQVvsUdA5hVOmC4ZZr8GXW%2FThxNe7g52WrGa4yThcuEkqRqO5VT82klt906ee7Z6xOdQXtaVd20Pg%3D%3D'
+  },
+  {
+    id: 'transformacao_sistemas',
+    name: '[TI] Solicitações Sistemas',
+    area: 'Transformação',
+    description: 'Processo de solicitações à equipe de Sistemas.',
+    tags: ['ti', 'sistemas', 'software', 'erro', 'melhoria', 'integração', 'sistema', 'erro sistema', 'sistema travou', 'bug', 'funcionalidade', 'desenvolvimento', 'ajuste sistema', 'correção', 'problema sistema', 'sistema não funciona', 'erro no sistema', 'sistema lento', 'integrar sistemas', 'melhorar sistema'],
+    examples: [
+      'erro no sistema',
+      'sistema travou',
+      'preciso integrar sistemas',
+      'melhoria no sistema',
+      'bug no sistema',
+      'sistema não funciona',
+      'correção de erro',
+      'ajuste no sistema',
+      'problema com sistema',
+      'funcionalidade não funciona'
+    ],
+    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=ua49CGmhE0MmmyMoJ3bk5MI%2FrR4Q%2FfX1DSA%2F9oYCeLgz52rVUuKFB45IZNfq%2FoB1f8bGjrFiiiCQS5JZ3q3rRg%3D%3D'
+  },
+  {
+    id: 'transformacao_portal_matriculas',
     name: '[TI] Suporte Portal de Matrículas',
-    area: 'TI',
+    area: 'Transformação',
     description: 'Aplicativo de solicitações destinadas aos problemas no portal de matrículas.',
-    tags: ['ti', 'portal', 'matriculas', 'matrícula', 'acesso portal', 'erro portal', 'login portal', 'problema portal'],
+    tags: ['portal', 'matriculas', 'matrícula', 'portal de matriculas', 'portal matrículas', 'acesso portal', 'erro portal', 'login portal', 'problema portal', 'fazer matrícula', 'matricular aluno', 'enviar documentos', 'opção matrícula', 'login não funciona', 'matricular', 'não consigo fazer', 'problema ao matricular', 'documentos portal', 'erro ao enviar documentos', 'login do portal não funciona', 'portal matrícula', 'matricula online'],
     examples: [
       'não consigo acessar o portal de matrículas',
       'erro no portal',
@@ -67,46 +128,24 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=uZzpiut0XHN%2FQ0M3%2FU8UFJd9z%2Fw6Twpymf5FsII9EOKIzr%2Fp1CSSZpqHg1O73Ihb66i4yCxfi5Ou4vPVZZBAUQ%3D%3D'
   },
   {
-    id: 'ti_ticket_raiz',
-    name: '[TI] Solicitações Ticket Raiz',
-    area: 'TI',
-    description: 'Cancelamento de Tickets, Criação de usuário, Dúvidas, Relatórios, etc.',
-    tags: ['ti', 'ticket', 'chamado', 'usuário', 'relatório', 'dúvida', 'cancelamento', 'suporte'],
+    id: 'transformacao_scoreplan',
+    name: '[TPEP] Solicitações Scoreplan',
+    area: 'Transformação',
+    description: 'Criação e alteração de usuário no scoreplan.',
+    tags: ['tpep', 'scoreplan', 'usuário', 'acesso', 'planejamento', 'acesso scoreplan', 'scoreplan login', 'acesso planejamento', 'scoreplan acesso', 'acesso ao scoreplan', 'usuario scoreplan', 'criar usuario scoreplan', 'alterar scoreplan', 'permissao scoreplan'],
     examples: [
-      'quero cancelar um ticket',
-      'preciso criar um usuário',
-      'tenho dúvida sobre sistema',
-      'preciso de relatório',
-      'abrir chamado de TI',
-      'cancelar solicitação',
-      'criar acesso para novo colaborador',
-      'gerar relatório do sistema',
-      'ajuda com ticket',
-      'como faço para abrir chamado'
+      'criar usuário scoreplan',
+      'acesso ao scoreplan',
+      'alterar usuário scoreplan',
+      'scoreplan login',
+      'cadastro scoreplan',
+      'permissão scoreplan',
+      'usuário scoreplan',
+      'preciso de acesso ao scoreplan',
+      'scoreplan acesso',
+      'configurar scoreplan'
     ],
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=QBkLwnwNZV0BKeCHG3JSWW3eiXN3hQmmCDMoX%2B3aA3ddVSzgAfMhM4247hvtlXfsZsRQLvc%2BKCCMZYEL5bjReQ%3D%3D'
-  },
-
-  // ==================== BUSINESS INTELLIGENCE (BI) ====================
-  {
-    id: 'bi_atendimento',
-    name: '[BI] Atendimento e solicitações Business Intelligence (BI)',
-    area: 'BI',
-    description: 'Utilize este processo para solicitar análises, relatórios, dashboards, extrações de dados ou suporte em decisões baseadas em dados.',
-    tags: ['bi', 'business intelligence', 'relatório', 'dashboard', 'análise', 'dados', 'extração', 'indicadores', 'kpi', 'power bi'],
-    examples: [
-      'preciso de um relatório gerencial',
-      'quero criar um dashboard',
-      'preciso analisar dados de vendas',
-      'extrair dados para análise',
-      'relatório de indicadores',
-      'dashboard de performance',
-      'análise de dados financeiros',
-      'preciso de KPIs',
-      'suporte para decisão baseada em dados',
-      'criar painel de controle'
-    ],
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=MPQP%2FUC9xaPHsKn0P%2F%2FeO5VcDus57J0TrjcTJyDw%2FrJDDRH3apsSgv2TndO0xQ5Wmq1osNtJojkcJmmNgLgcbA%3D%3D'
+    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=qOv%2F5RqScTOFOFQYVqfZAS3YYdnh2DiTYnO5v4NPJKUkyGP2lDMFVVC3zu%2Fs2ooodVYK%2BrRcJ9JkjApNS%2FMx8A%3D%3D'
   },
 
   // ==================== ATENDIMENTO ÀS SECRETARIAS ====================
@@ -135,17 +174,17 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Atendimento] Cancelamento de matrícula',
     area: 'Atendimento',
     description: 'Solicitações de cancelamento de matrícula de aluno.',
-    tags: ['atendimento', 'cancelamento', 'matrícula', 'cancelar', 'desmatricular', 'saída', 'transferência'],
+    tags: ['atendimento', 'cancelamento', 'matrícula', 'cancelar', 'desmatricular', 'saída', 'transferência', 'transferência unidade', 'transferir', 'cancelar matrícula', 'transferência unidade escolar', 'transferir aluno', 'aluno sair', 'aluno saindo'],
     examples: [
       'cancelar matrícula do aluno',
       'aluno saindo da escola',
-      'transferência de unidade',
+      'transferência de unidade escolar',
       'desmatricular aluno',
       'cancelar inscrição',
       'aluno vai sair',
       'preciso cancelar matrícula',
       'saída do aluno',
-      'transferir aluno',
+      'transferir aluno para outra escola',
       'matrícula cancelamento'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=jnU0uas4SYy9C5opp83F5YQo4%2BliSoe09SZeeQ5kfvaIEJpTkCKXlmuaNX5PfIunbANj7xt1DeMnAD94tgyGkQ%3D%3D'
@@ -155,7 +194,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Atendimento] Cancelamento de parcela ou lançamento financeiro',
     area: 'Atendimento',
     description: 'Solicitações de cancelamento de parcelas ou lançamento.',
-    tags: ['atendimento', 'cancelamento', 'parcela', 'lançamento', 'financeiro', 'mensalidade', 'taxa', 'material didático'],
+    tags: ['atendimento', 'cancelamento', 'parcela', 'lançamento', 'financeiro', 'mensalidade', 'taxa', 'material didático', 'contraturno', 'cobrança', 'cancelar cobrança', 'cancelar contraturno'],
     examples: [
       'cancelar parcela',
       'cancelar mensalidade',
@@ -175,11 +214,11 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Atendimento] Correção de lançamento / plano de pagamento',
     area: 'Atendimento',
     description: 'Solicitações para reajuste de parcelas após aplicação de desconto.',
-    tags: ['atendimento', 'correção', 'lançamento', 'corrigir plano', 'ajustar plano', 'mudar plano existente', 'reajustar plano', 'desconto', 'reajuste', 'parcela', 'plano errado'],
+    tags: ['atendimento', 'correção', 'lançamento', 'corrigir plano', 'ajustar plano', 'mudar plano existente', 'reajustar plano', 'desconto', 'reajuste', 'parcela', 'plano errado', 'aplicar desconto', 'trocar responsável', 'ajustar mensalidade', 'responsável financeiro'],
     examples: [
       'corrigir lançamento',
       'ajustar plano de pagamento existente',
-      'aplicar desconto',
+      'corrigir aplicação de desconto',
       'reajustar parcelas',
       'trocar responsável financeiro',
       'mudar plano de pagamento atual',
@@ -195,7 +234,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Atendimento] Devolução e Estorno',
     area: 'Atendimento',
     description: 'Solicitações e informações relacionadas a pedidos de devolução ou estorno.',
-    tags: ['atendimento', 'devolução', 'estorno', 'reembolso', 'pagamento duplicado', 'cartão'],
+    tags: ['atendimento', 'devolução', 'estorno', 'reembolso', 'pagamento duplicado', 'cartão', 'paguei duplicado', 'duplicidade', 'em duplicidade'],
     examples: [
       'paguei duplicado',
       'preciso de estorno',
@@ -215,18 +254,18 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Atendimento] Solicitação de treinamento (Totvs)',
     area: 'Atendimento',
     description: 'Solicitações de treinamento e esclarecimento de dúvidas referentes aos procedimentos do setor e do TOTVS.',
-    tags: ['atendimento', 'treinamento', 'totvs', 'dúvida', 'capacitação', 'procedimento'],
+    tags: ['atendimento', 'treinamento', 'totvs', 'dúvida', 'capacitação', 'procedimento', 'treinamento totvs', 'dúvida baixa', 'como lançar', 'dúvida portal', 'aprender totvs', 'capacitação sistema', 'lançamento material', 'preciso de treinamento no totvs'],
     examples: [
       'preciso de treinamento no Totvs',
       'dúvida sobre baixa de pagamento',
       'como lançar bolsa',
-      'treinamento módulo financeiro',
+      'treinamento módulo financeiro Totvs',
       'dúvida no portal',
-      'aprender a usar Totvs',
-      'capacitação sistema',
+      'aprender a usar sistema Totvs',
+      'capacitação no sistema Totvs',
       'como usar módulo educacional',
-      'treinamento relatórios',
-      'dúvida lançamento material'
+      'treinamento relatórios Totvs',
+      'dúvida lançamento material Totvs'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=RzVKNj0K5DuaVtdWsVcYxar560I%2BnQ0hJPqCR14Wo1xSyiO52Xs09LNsywplq01aMsp%2B2v6%2BCFozd28%2BH%2BLdXA%3D%3D'
   },
@@ -235,7 +274,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Cobrança] Negociação e acordos via secretaria',
     area: 'Atendimento',
     description: 'Processo realizado pela secretaria para atender responsáveis financeiros que buscam negociar débitos em aberto, com possibilidade de acordos, parcelamentos ou revisões de cobrança.',
-    tags: ['atendimento', 'cobrança', 'negociação', 'acordo', 'débito', 'parcelamento'],
+    tags: ['atendimento', 'cobrança', 'negociação', 'acordo', 'débito', 'parcelamento', 'acordo financeiro'],
     examples: [
       'negociar débito',
       'fazer acordo',
@@ -254,8 +293,8 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     id: 'atendimento_baixa_pagamento',
     name: '[Financeiro] Baixa de pagamento e vinculação de nota de crédito',
     area: 'Atendimento',
-    description: 'Solicitações para casos onde o responsável realiza um pagamento que não foi registrado no sistema.',
-    tags: ['atendimento', 'financeiro', 'baixa', 'pagamento nao registrado', 'nota de credito', 'comprovante', 'paguei', 'nao consta', 'nao aparece'],
+    description: 'Solicitações para casos onde o responsável realiza um pagamento que não foi registrado no sistema. Este aplicativo é utilizado quando um responsável realiza um pagamento que não foi registrado no sistema. Para pagamentos feitos por meio de boletos que não foram baixados no TOTVS é necessário enviar o comprovante de pagamento, e nós o encaminharemos ao setor financeiro para a devida baixa. No caso de pagamentos realizados com cartão, precisamos dos dados do cartão para validação do pagamento e para efetuar a baixa. Além disso, tratamos também das notas de crédito, que são geradas quando o responsável paga em duplicidade. Nesses casos, vinculamos a nota de crédito à parcela solicitada pela unidade. Situações de uso: Pagamento realizado e não computado; Vinculação de nota de crédito.',
+    tags: ['atendimento', 'financeiro', 'baixa', 'pagamento nao registrado', 'nota de credito', 'comprovante', 'paguei', 'nao consta', 'nao aparece', 'pagamento não aparece', 'baixar pagamento', 'manualmente', 'pagamento não aparece no sistema', 'boleto não baixado', 'cartão', 'pagamento duplicado', 'totvs', 'comprovante pagamento', 'dados cartao', 'nota credito'],
     examples: [
       'paguei mas não foi registrado',
       'pagamento não computado',
@@ -266,7 +305,10 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
       'baixar pagamento manualmente',
       'crédito não vinculado',
       'pagamento não consta',
-      'já paguei mas não aparece'
+      'já paguei mas não aparece',
+      'paguei em duplicidade',
+      'boleto não baixado no TOTVS',
+      'pagamento com cartão não registrado'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=mpuQkqMF2EEdG86STj%2B3aa1shkhIdz%2Bm1aoNV%2Bm%2Fz30MSuJ6a2uZ0ekpIZEgAGgw4rkUo1cTIsEReY9j8yDIfA%3D%3D'
   },
@@ -277,7 +319,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Comercial] Criação de plano de pagamento / serviço',
     area: 'Comercial',
     description: 'Atendimento de solicitações para criação ou personalização de planos de pagamento ou serviços.',
-    tags: ['comercial', 'criar plano', 'novo plano', 'plano personalizado', 'servico', 'personalizacao', 'montar plano', 'customizar', 'criar plano de pagamento', 'montar plano pagamento', 'plano customizado', 'cadastrar plano', 'novo plano pagamento', 'criar plano novo'],
+    tags: ['comercial', 'criar plano', 'novo plano', 'plano personalizado', 'servico', 'personalizacao', 'montar plano', 'customizar', 'criar plano de pagamento', 'montar plano pagamento', 'plano customizado', 'cadastrar plano', 'novo plano pagamento', 'criar plano novo', 'criar novo plano', 'personalizar forma', 'criar serviço', 'preciso criar plano', 'criar novo plano de pagamento', 'criar novo serviço comercial', 'preciso criar plano de pagamento'],
     examples: [
       'criar plano de pagamento',
       'criar plano de pagamento personalizado',
@@ -319,7 +361,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Comercial] Planejamento Comercial',
     area: 'Comercial',
     description: 'Solicitações relacionadas à definição de estratégias de captação, cronogramas e ações comerciais.',
-    tags: ['comercial', 'planejamento', 'estratégia', 'captação', 'cronograma', 'ação comercial'],
+    tags: ['comercial', 'planejamento', 'estratégia', 'captação', 'cronograma', 'ação comercial', 'ação marketing'],
     examples: [
       'planejar ação comercial',
       'estratégia de captação',
@@ -339,7 +381,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Comercial] Solicitação de desconto',
     area: 'Comercial',
     description: 'Análise e validação de pedidos de desconto realizados por responsáveis, conforme política comercial vigente.',
-    tags: ['comercial', 'desconto', 'bolsa', 'redução', 'abatimento'],
+    tags: ['comercial', 'desconto', 'bolsa', 'redução', 'abatimento', 'aplicar desconto'],
     examples: [
       'solicitar desconto',
       'pedir abatimento',
@@ -348,7 +390,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
       'aplicar desconto',
       'desconto especial',
       'bolsa de estudos',
-      'desconto promocional',
+      'desconto permanente',
       'redução de preço',
       'desconto comercial'
     ],
@@ -359,7 +401,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Comercial] Solicitação de promoções',
     area: 'Comercial',
     description: 'Registro e validação de pedidos para aplicação de promoções comerciais, conforme regras e períodos definidos pela instituição.',
-    tags: ['comercial', 'promoção', 'campanha', 'oferta', 'promocional'],
+    tags: ['comercial', 'promoção', 'campanha', 'oferta', 'promocional', 'promoção matrícula', 'desconto promocional', 'promoção desconto', 'campanha desconto', 'oferta promocional'],
     examples: [
       'aplicar promoção',
       'campanha comercial',
@@ -379,7 +421,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Comercial] Solicitações Mais Raiz',
     area: 'Comercial',
     description: 'Solicitação de suporte as atividades extras.',
-    tags: ['comercial', 'mais raiz', 'atividades extras', 'extracurricular'],
+    tags: ['comercial', 'mais raiz', 'atividades extras', 'extracurricular', 'inscrever atividade', 'inscrever', 'inscri\u00e7\u00e3o'],
     examples: [
       'atividade extra',
       'mais raiz inscrição',
@@ -399,7 +441,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Comercial] Solicitações Marketplace',
     area: 'Comercial',
     description: 'Solicitações Marketplace.',
-    tags: ['comercial', 'marketplace', 'loja', 'produtos', 'serviços'],
+    tags: ['comercial', 'marketplace', 'loja', 'produtos marketplace', 'serviços marketplace', 'vender produto', 'produto disponível', 'serviço loja', 'catálogo', 'comprar produto'],
     examples: [
       'marketplace',
       'loja virtual',
@@ -441,7 +483,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[CMEF] Solicitações de Mídia e Eventos',
     area: 'CMEF',
     description: 'Solicitações relacionadas a mídia, eventos, materiais gráficos e ações de comunicação. A solicitação deve ser realizada com no mínimo 21 dias de antecedência.',
-    tags: ['cmef', 'comunicação', 'marketing', 'mídia', 'evento', 'material gráfico', 'campanha'],
+    tags: ['cmef', 'comunicação', 'marketing', 'mídia', 'evento', 'material gráfico', 'campanha', 'divulgação evento', 'material promocional', 'divulgação', 'divulgar'],
     examples: [
       'criar material gráfico',
       'solicitar evento',
@@ -463,7 +505,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[DP] Solicitações',
     area: 'DP',
     description: 'Utilize este processo para tratar assuntos como: folha de pagamento, benefícios, férias e documentações.',
-    tags: ['dp', 'departamento pessoal', 'folha pagamento', 'ferias', 'beneficios', 'documentacao', 'holerite', 'contracheque', 'salario'],
+    tags: ['dp', 'departamento pessoal', 'folha pagamento', 'ferias', 'beneficios', 'documentacao', 'holerite', 'contracheque', 'salario', 'comprovante renda'],
     examples: [
       'dúvida sobre folha de pagamento',
       'solicitar férias',
@@ -483,7 +525,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[DP] Solicitações de Benefícios',
     area: 'DP',
     description: 'Solicitações referentes aos processos de Benefícios.',
-    tags: ['dp', 'benefícios', 'vale', 'plano de saúde', 'vale transporte', 'vale refeição'],
+    tags: ['dp', 'benefícios', 'vale', 'plano de saúde', 'vale transporte', 'vale refeição', 'incluir dependente', 'plano odontológico', 'cartão benefício', 'cancelar benefício'],
     examples: [
       'solicitar vale transporte',
       'incluir dependente no plano',
@@ -505,7 +547,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Financeiro] Solicitação de cadastro',
     area: 'Financeiro',
     description: 'Pedido de criação ou atualização de dados cadastrais financeiros de fornecedores, unidades ou outros parceiros.',
-    tags: ['financeiro', 'cadastro', 'fornecedor', 'dados cadastrais', 'atualizacao', 'cadastrar fornecedor', 'incluir fornecedor', 'parceiro'],
+    tags: ['financeiro', 'cadastro', 'fornecedor', 'dados cadastrais', 'atualizacao', 'cadastrar fornecedor', 'incluir fornecedor', 'parceiro', 'incluir fornecedor sistema', 'incluir fornecedor no sistema'],
     examples: [
       'cadastrar fornecedor',
       'atualizar dados cadastrais',
@@ -569,7 +611,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Jurídico] Solicitações',
     area: 'Jurídico',
     description: 'Use este processo para solicitar análises contratuais, orientações legais, apoio em notificações, processos judiciais ou dúvidas regulatórias.',
-    tags: ['jurídico', 'contrato', 'legal', 'notificação', 'processo', 'regulatório'],
+    tags: ['jurídico', 'contrato', 'legal', 'notificação', 'processo', 'regulatório', 'análise contrato', 'dúvida regulatória', 'análise legal'],
     examples: [
       'análise de contrato',
       'orientação jurídica',
@@ -591,7 +633,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Operações] Gestão de frota',
     area: 'Operações',
     description: 'Solicitações relacionadas ao controle, manutenção, uso e logística dos veículos da instituição.',
-    tags: ['operações', 'frota', 'veículo', 'carro', 'manutenção', 'transporte'],
+    tags: ['operações', 'frota', 'veículo', 'carro', 'manutenção', 'transporte', 'transporte institucional'],
     examples: [
       'solicitar veículo',
       'manutenção de carro',
@@ -611,18 +653,18 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Operações] Solicitação de compras',
     area: 'Operações',
     description: 'Pedido de aquisição de materiais, serviços ou equipamentos necessários para as atividades operacionais.',
-    tags: ['operações', 'compras', 'aquisição', 'material', 'equipamento', 'serviço'],
+    tags: ['operações', 'compras', 'aquisição', 'material', 'serviço', 'comprar serviço', 'solicitar material', 'comprar', 'pedido de compra operacional', 'comprar produto para operação', 'equipamento novo para escola', 'adquirir material', 'requisitar compra', 'material operacional', 'compras operacionais'],
     examples: [
       'comprar material',
       'solicitar compra',
       'adquirir equipamento',
       'comprar serviço',
       'requisição de compra',
-      'pedido de compra',
+      'pedido de compra operacional',
       'aquisição material',
-      'comprar produto',
-      'solicitar material',
-      'equipamento novo'
+      'comprar produto para operação',
+      'solicitar material operacional',
+      'equipamento novo para escola'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=5LxGiFDCD0a%2BaDpcPmXnblXEQOIE2%2BV%2B5wX3ACHdSvQoauhq8jHLaCQOOxux%2FGoCRt%2BNVx2WfZFtDBWu0CADDA%3D%3D'
   },
@@ -631,7 +673,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Operações] Solicitação de facilities (Escolas)',
     area: 'Operações',
     description: 'Solicitações de Manutenção, Utilidades, Assistência Técnica e Contratos.',
-    tags: ['operações', 'facilities', 'manutenção', 'utilidades', 'assistência técnica', 'infraestrutura'],
+    tags: ['operações', 'facilities', 'manutenção', 'utilidades', 'assistência técnica', 'infraestrutura', 'problema elétrico', 'elétrico'],
     examples: [
       'manutenção predial',
       'reparo na escola',
@@ -651,7 +693,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Operações] Solicitação de frete ou motoboy',
     area: 'Operações',
     description: 'Pedido de envio ou coleta de itens por meio de serviço de frete ou motoboy, conforme necessidade operacional.',
-    tags: ['operações', 'frete', 'motoboy', 'entrega', 'envio', 'coleta', 'logística'],
+    tags: ['operações', 'frete', 'motoboy', 'entrega', 'envio', 'coleta', 'logística', 'transporte documento', 'enviar material', 'transporte de documento'],
     examples: [
       'solicitar frete',
       'chamar motoboy',
@@ -671,7 +713,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Operações] Solicitação de Uber e Onfly',
     area: 'Operações',
     description: 'Pedido de transporte corporativo por meio das plataformas Uber ou Onfly, conforme política interna de deslocamentos.',
-    tags: ['operações', 'uber', 'onfly', 'transporte', 'deslocamento', 'corporativo'],
+    tags: ['operações', 'uber', 'onfly', 'transporte', 'deslocamento', 'corporativo', 'viagem corporativa'],
     examples: [
       'solicitar Uber',
       'usar Onfly',
@@ -691,17 +733,17 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[Operações] Solicitações ao almoxarifado',
     area: 'Operações',
     description: 'Pedidos de retirada, reposição ou envio de materiais controlados pelo almoxarifado.',
-    tags: ['operações', 'almoxarifado', 'material', 'estoque', 'retirada', 'reposição'],
+    tags: ['operações', 'almoxarifado', 'material', 'estoque', 'retirada', 'reposição', 'solicitar material'],
     examples: [
       'retirar material do almoxarifado',
-      'solicitar material',
+      'solicitar material do estoque',
       'repor estoque',
-      'pegar material',
+      'pegar material do almoxarifado',
       'almoxarifado material',
-      'requisição de material',
+      'requisição de material do almoxarifado',
       'material de estoque',
       'reposição almoxarifado',
-      'pedir material',
+      'pedir material do estoque',
       'estoque almoxarifado'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=62fgHDFhYircCDIC9IE%2FY4tsKLyfayeasmVgoMbSZPnfNk17jEJV3P5eZ1%2FJmc14xy2BrbNZCgjRtA2glORdmQ%3D%3D'
@@ -735,7 +777,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[P&C] Admissão, recrutamento e seleção',
     area: 'P&C',
     description: 'Utilize para abertura de vagas, acompanhamento de processos seletivos e demandas relacionadas à admissão de colaboradores.',
-    tags: ['p&c', 'pessoas', 'cultura', 'admissão', 'recrutamento', 'seleção', 'vaga', 'contratação'],
+    tags: ['p&c', 'pessoas', 'cultura', 'admissão', 'recrutamento', 'seleção', 'vaga', 'contratação', 'contratar colaborador', 'processo seletivo', 'seletivo'],
     examples: [
       'abrir vaga',
       'contratar colaborador',
@@ -755,7 +797,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[P&C] Educação Corporativa',
     area: 'P&C',
     description: 'Educação Corporativa.',
-    tags: ['p&c', 'pessoas', 'cultura', 'educação', 'treinamento', 'capacitação', 'desenvolvimento'],
+    tags: ['p&c', 'pessoas', 'cultura', 'educação', 'treinamento', 'capacitação', 'desenvolvimento', 'solicitar treinamento', 'curso corporativo', 'treinamento equipe', 'curso colaboradores', 'treinamento interno', 'corporativo'],
     examples: [
       'solicitar treinamento',
       'capacitação',
@@ -775,7 +817,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[P&C] Movimentação de pessoal',
     area: 'P&C',
     description: 'Utilize para solicitações de alterações no quadro de colaboradores, como promoções, transferências, mudanças de carga horária, função ou gestor.',
-    tags: ['p&c', 'pessoas', 'cultura', 'movimentação', 'promoção', 'transferência', 'mudança'],
+    tags: ['p&c', 'pessoas', 'cultura', 'movimentação', 'promoção', 'transferência', 'mudança', 'promover colaborador', 'transferir funcionário', 'transferir colaborador', 'transferência funcionário', 'transferência unidade'],
     examples: [
       'promover colaborador',
       'transferir funcionário',
@@ -795,13 +837,13 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[P&C] Solicitação de comunicação interna',
     area: 'P&C',
     description: 'Utilize para solicitar divulgações internas, como comunicados, campanhas, informativos ou eventos.',
-    tags: ['p&c', 'pessoas', 'cultura', 'comunicação', 'interna', 'divulgação', 'comunicado'],
+    tags: ['p&c', 'pessoas', 'cultura', 'comunicação', 'interna', 'divulgação', 'comunicado', 'divulgação evento', 'divulgar', 'divulgar evento interno', 'evento interno', 'comunicação evento', 'divulgação interna', 'informar colaboradores'],
     examples: [
       'divulgar comunicado',
       'comunicação interna',
       'informativo aos colaboradores',
       'campanha interna',
-      'divulgação evento',
+      'divulgar evento interno',
       'comunicar equipe',
       'enviar informativo',
       'comunicação colaboradores',
@@ -815,7 +857,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[P&C] Solicitação de desligamento de colaborador',
     area: 'P&C',
     description: 'Utilize para comunicar pedidos de desligamento (voluntário ou involuntário).',
-    tags: ['p&c', 'pessoas', 'cultura', 'desligamento', 'demissão', 'saída'],
+    tags: ['p&c', 'pessoas', 'cultura', 'desligamento', 'demissão', 'saída', 'término contrato'],
     examples: [
       'desligar colaborador',
       'demissão',
@@ -835,7 +877,7 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
     name: '[P&C] Solicitação de pagamento de premiação',
     area: 'P&C',
     description: 'Utilize para solicitar pagamentos de bônus, prêmios ou gratificações a colaboradores e parceiros.',
-    tags: ['p&c', 'pessoas', 'cultura', 'premiação', 'bônus', 'prêmio', 'gratificação'],
+    tags: ['p&c', 'pessoas', 'cultura', 'premiação', 'bônus', 'prêmio', 'gratificação', 'reconhecimento financeiro', 'reconhecimento', 'bonificação'],
     examples: [
       'pagar bônus',
       'premiação colaborador',
@@ -849,27 +891,5 @@ export const REQUESTS_CATALOG: ZeevRequestCatalogItem[] = [
       'gratificação especial'
     ],
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=dDq6D4uPoaKDiFbkHzgxkirJy7mcZkwalncf1RXG%2Fv8pO4qV3bOcn1jy1lGHSB9FrvedAxapXJtkuZgBbSNvDQ%3D%3D'
-  },
-
-  // ==================== TRANSFORMAÇÃO, PLANEJAMENTO E PROJETOS (TPEP) ====================
-  {
-    id: 'tpep_scoreplan',
-    name: '[TPEP] Solicitações Scoreplan',
-    area: 'TPEP',
-    description: 'Criação e alteração de usuário no scoreplan.',
-    tags: ['tpep', 'scoreplan', 'usuário', 'acesso', 'planejamento'],
-    examples: [
-      'criar usuário scoreplan',
-      'acesso ao scoreplan',
-      'alterar usuário',
-      'scoreplan login',
-      'cadastro scoreplan',
-      'permissão scoreplan',
-      'usuário scoreplan',
-      'acesso planejamento',
-      'scoreplan acesso',
-      'configurar scoreplan'
-    ],
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=qOv%2F5RqScTOFOFQYVqfZAS3YYdnh2DiTYnO5v4NPJKUkyGP2lDMFVVC3zu%2Fs2ooodVYK%2BrRcJ9JkjApNS%2FMx8A%3D%3D'
   }
 ];

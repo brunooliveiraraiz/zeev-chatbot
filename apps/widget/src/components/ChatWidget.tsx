@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ChatWindow } from './ChatWindow';
 import { getSessionId, saveSessionId } from '../lib/storage';
 import './ChatWidget.css';
+import zeevLogo from '../assets/zeev-chatbot-logo.png';
 
 interface ChatWidgetProps {
   title?: string;
@@ -15,7 +16,7 @@ function generateSessionId(): string {
   return `session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
-export function ChatWidget({ title = 'Chat de Atendimento', stage }: ChatWidgetProps) {
+export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
 
@@ -43,17 +44,21 @@ export function ChatWidget({ title = 'Chat de Atendimento', stage }: ChatWidgetP
   return (
     <div className="chat-widget">
       <button className="chat-widget-button" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? '✕' : '💬'} {title}
+        {isOpen ? (
+          <>
+            <span className="close-icon">✕</span>
+            <span>{title}</span>
+          </>
+        ) : (
+          <>
+            <img src={zeevLogo} alt="Zeev" className="chat-widget-logo" />
+            <span>{title}</span>
+          </>
+        )}
       </button>
       {isOpen && (
         <div className="chat-widget-popup">
-          <div className="chat-widget-header">
-            <h3>{title}</h3>
-            <button className="chat-widget-close" onClick={() => setIsOpen(false)}>
-              ×
-            </button>
-          </div>
-          <ChatWindow sessionId={sessionId} stage={stage} />
+          <ChatWindow sessionId={sessionId} stage={stage} onClose={() => setIsOpen(false)} />
         </div>
       )}
     </div>

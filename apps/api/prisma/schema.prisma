@@ -38,3 +38,33 @@ model Message {
 
   @@index([sessionId])
 }
+
+// Tabela para rastrear resoluções de problemas (antes de escalar)
+model ConversationResolution {
+  id          String   @id @default(cuid())
+  sessionId   String   @unique
+  resolved    Boolean  @default(false)
+  resolvedBy  String?  // "troubleshooting" | "ai_routing" | "escalated" | null
+  category    String?  // Categoria da solicitação identificada
+  requestId   String?  // ID do request do catálogo (se aplicável)
+  resolvedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([resolved])
+  @@index([resolvedAt])
+  @@index([category])
+}
+
+// Tabela para avaliações dos usuários
+model ConversationRating {
+  id           String   @id @default(cuid())
+  sessionId    String   @unique
+  rating       Int      // 1-5 estrelas
+  feedback     String?  // Comentário opcional do usuário
+  helpful      Boolean? // true = útil, false = não útil (alternativa simples)
+  createdAt    DateTime @default(now())
+
+  @@index([rating])
+  @@index([createdAt])
+}
