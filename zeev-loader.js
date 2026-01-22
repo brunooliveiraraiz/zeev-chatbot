@@ -1,4 +1,3 @@
-<script>
 (function () {
   // evita duplicar se o Zeev recarregar trechos da tela
   if (document.getElementById("raiz-chatbot-root")) return;
@@ -105,4 +104,4 @@
   // injeta no body
   document.body.appendChild(root);
 })();
-</script>
+
