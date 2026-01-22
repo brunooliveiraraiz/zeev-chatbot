@@ -1,0 +1,68 @@
+name: Deploy Widget to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/widget/**'
+      - '.github/workflows/deploy-widget.yml'
+  workflow_dispatch:
+
+# Permissões necessárias para deploy no GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permite apenas um deploy por vez
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          cd apps/widget
+          npm install
+
+      - name: Build widget
+        run: |
+          cd apps/widget
+          npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './apps/widget/dist'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
