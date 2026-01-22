@@ -1,7 +1,8 @@
 (function () {
+  // evita duplicar
   if (document.getElementById("raiz-chatbot-root")) return;
 
-  // Contexto Zeev (se existir)
+  // contexto Zeev (se existir)
   var zeevCtx = window.__zeev || window._zeev || window.zeev || {};
   var ctxBase64 = "";
   try {
@@ -10,30 +11,33 @@
     ctxBase64 = "";
   }
 
+  // URLs
   var WIDGET_URL = "https://brunooliveiraraiz.github.io/zeev-chatbot/";
+  var ROBOT_IMG = "https://brunooliveiraraiz.github.io/zeev-chatbot/robot.png";
   var iframeSrc =
     WIDGET_URL + (ctxBase64 ? "?context=" + encodeURIComponent(ctxBase64) : "");
 
-  // ROOT fixo (fora do fluxo do Zeev)
+  // root fixo no viewport (não depende do layout do Zeev)
   var host = document.createElement("div");
   host.id = "raiz-chatbot-root";
   host.style.position = "fixed";
   host.style.right = "18px";
   host.style.bottom = "18px";
   host.style.zIndex = "2147483647";
-  host.style.width = "0";
-  host.style.height = "0";
+  host.style.pointerEvents = "auto";
 
-  // Shadow DOM para blindar CSS do Zeev
+  // Shadow DOM (blindagem de CSS do Zeev)
   var shadow = host.attachShadow({ mode: "open" });
 
-  // CSS interno (não sofre influência do Zeev)
+  // CSS dentro do shadow
   var style = document.createElement("style");
   style.textContent = `
     :host { all: initial; }
     * { box-sizing: border-box; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
 
-    .btn {
+    .wrap { position: relative; }
+
+    .fab {
       all: unset;
       width: 56px;
       height: 56px;
@@ -44,42 +48,23 @@
       justify-content: center;
 
       background: #fff;
-      border: 8px solid #1e88ff; /* anel azul */
+      border: 8px solid #1e88ff;
       box-shadow: 0 10px 30px rgba(0,0,0,.25);
       user-select: none;
     }
 
-    .btn img {
-      width: 28px;
-      height: 28px;
+    .fab img {
+      width: 30px;
+      height: 30px;
       border-radius: 999px;
       display: block;
     }
 
-    .btnClose {
-      all: unset;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: #1e88ff;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      color: #fff;
-      font-size: 22px;
-      line-height: 1;
-      user-select: none;
-      margin-top: 10px;
-      margin-left: auto;
-    }
-
+    /* painel SEMPRE fixed no viewport (não vai "fugir") */
     .panel {
-      position: absolute;
-      right: 0;
-      bottom: 74px;
+      position: fixed;
+      right: 18px;
+      bottom: 92px; /* acima do botão */
       width: 380px;
       height: 560px;
       border-radius: 18px;
@@ -97,21 +82,52 @@
       background: #fff;
     }
 
+    /* botão fechar (X) separado e fixo, pra não depender do iframe */
+    .close {
+      all: unset;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      cursor: pointer;
+
+      display: none;
+      align-items: center;
+      justify-content: center;
+
+      background: #1e88ff;
+      color: #fff;
+      font-size: 22px;
+      line-height: 1;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      user-select: none;
+    }
+
     @media (max-width: 480px) {
       .panel {
+        right: 12px;
+        bottom: 84px;
         width: calc(100vw - 24px);
         height: calc(100vh - 140px);
+      }
+      .close {
+        right: 12px;
+        bottom: 12px;
+      }
+      :host {
+        right: 12px !important;
+        bottom: 12px !important;
       }
     }
   `;
   shadow.appendChild(style);
 
-  // Container interno
+  // elementos
   var wrap = document.createElement("div");
-  wrap.style.position = "relative";
-  shadow.appendChild(wrap);
+  wrap.className = "wrap";
 
-  // Painel (iframe)
   var panel = document.createElement("div");
   panel.className = "panel";
 
@@ -121,46 +137,62 @@
   iframe.setAttribute("allow", "clipboard-read; clipboard-write");
   panel.appendChild(iframe);
 
-  // Botão principal (igual ao visual desejado)
-  var btn = document.createElement("button");
-  btn.className = "btn";
-  btn.setAttribute("aria-label", "Abrir chat");
+  var fab = document.createElement("button");
+  fab.className = "fab";
+  fab.setAttribute("aria-label", "Abrir chat");
 
-  // Ícone (use um asset estável)
   var icon = document.createElement("img");
-  icon.src = "https://brunooliveiraraiz.github.io/zeev-chatbot/favicon.ico";
+  icon.src = ROBOT_IMG;
   icon.alt = "Chat";
-  btn.appendChild(icon);
+  fab.appendChild(icon);
 
-  // Botão fechar (X) dentro do shadow (evita bug de estilo)
-  var btnClose = document.createElement("button");
-  btnClose.className = "btnClose";
-  btnClose.textContent = "×";
-  btnClose.style.display = "none";
+  var closeBtn = document.createElement("button");
+  closeBtn.className = "close";
+  closeBtn.setAttribute("aria-label", "Fechar chat");
+  closeBtn.textContent = "×";
 
   function openChat() {
     panel.style.display = "block";
-    btn.style.display = "none";
-    btnClose.style.display = "flex";
+    fab.style.display = "none";
+    closeBtn.style.display = "flex";
   }
 
   function closeChat() {
     panel.style.display = "none";
-    btn.style.display = "flex";
-    btnClose.style.display = "none";
+    fab.style.display = "flex";
+    closeBtn.style.display = "none";
   }
 
-  btn.addEventListener("click", openChat);
-  btnClose.addEventListener("click", closeChat);
+  fab.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    openChat();
+  });
+
+  closeBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    closeChat();
+  });
 
   // ESC fecha
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeChat();
   });
 
-  wrap.appendChild(panel);
-  wrap.appendChild(btn);
-  wrap.appendChild(btnClose);
+  // clique fora fecha (opcional, ajuda UX)
+  document.addEventListener("click", function (e) {
+    if (panel.style.display === "none") return;
+    // se clicou dentro do shadow, não fecha
+    var path = e.composedPath ? e.composedPath() : [];
+    if (path && path.indexOf(host) !== -1) return;
+    closeChat();
+  });
+
+  wrap.appendChild(fab);
+  shadow.appendChild(panel);
+  shadow.appendChild(closeBtn);
+  shadow.appendChild(wrap);
 
   document.body.appendChild(host);
 })();
