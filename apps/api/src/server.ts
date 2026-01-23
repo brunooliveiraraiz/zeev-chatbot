@@ -72,11 +72,15 @@ app.use((err: unknown, _req: express.Request, res: express.Response, _next: expr
   });
 });
 
-// Start server
-const port = env.PORT;
+// Export app for Vercel serverless
+export default app;
 
-app.listen(port, () => {
-  logger.info(`🚀 Server running on port ${port}`);
-  logger.info(`📋 Mode: ${env.MOCK_MODE ? 'MOCK' : 'PRODUCTION'}`);
-  logger.info(`🔐 Auth Mode: ${env.AUTH_MODE}`);
-});
+// Start server (only when running locally, not on Vercel)
+if (process.env.VERCEL !== '1') {
+  const port = env.PORT;
+  app.listen(port, () => {
+    logger.info(`🚀 Server running on port ${port}`);
+    logger.info(`📋 Mode: ${env.MOCK_MODE ? 'MOCK' : 'PRODUCTION'}`);
+    logger.info(`🔐 Auth Mode: ${env.AUTH_MODE}`);
+  });
+}
