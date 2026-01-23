@@ -1,13 +1,18 @@
 {
-  "buildCommand": "cd apps/api && npm install && npm run vercel-build",
-  "outputDirectory": "apps/api/dist",
-  "devCommand": "cd apps/api && npm run dev",
-  "installCommand": "npm install",
-  "framework": null,
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/api"
+      "src": "apps/api/src/server.ts",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["apps/api/**"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "apps/api/src/server.ts"
     }
   ]
 }
