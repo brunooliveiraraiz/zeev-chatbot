@@ -200,7 +200,13 @@ function detectUserComplaint(message) {
   ];
 
   const lowerMessage = message.toLowerCase();
-  return complaintPhrases.some(phrase => lowerMessage.includes(phrase));
+  const foundPhrase = complaintPhrases.find(phrase => lowerMessage.includes(phrase));
+
+  if (foundPhrase) {
+    console.log(`✋ Reclamação detectada! Frase: "${foundPhrase}" em "${message}"`);
+  }
+
+  return !!foundPhrase;
 }
 
 /**
@@ -208,7 +214,9 @@ function detectUserComplaint(message) {
  */
 async function reportError(sessionId, errorType, userMessage, botResponse, history, suggestedFormId = null) {
   try {
-    await prisma.conversationError.create({
+    console.log(`📤 Tentando salvar erro: ${errorType} | Session: ${sessionId} | Form: ${suggestedFormId}`);
+
+    const errorRecord = await prisma.conversationError.create({
       data: {
         sessionId,
         errorType,
@@ -219,9 +227,13 @@ async function reportError(sessionId, errorType, userMessage, botResponse, histo
         correctionStatus: 'pending'
       }
     });
-    console.log(`⚠️ Erro auto-detectado: ${errorType} - Session: ${sessionId}`);
+
+    console.log(`✅ Erro auto-detectado salvo: ${errorType} - Session: ${sessionId} - ID: ${errorRecord.id}`);
+    return errorRecord;
   } catch (error) {
     console.error('❌ Erro ao registrar erro automático:', error);
+    console.error('❌ Stack:', error.stack);
+    throw error;
   }
 }
 
@@ -362,10 +374,17 @@ export default async function handler(req, res) {
     session.attemptCount++;
 
     // Detectar se usuário está reclamando de erro
-    if (detectUserComplaint(message) && session.history.length > 0) {
+    const isComplaint = detectUserComplaint(message);
+    console.log(`🔍 Verificando reclamação: "${message}" -> ${isComplaint}`);
+
+    if (isComplaint && session.history.length > 0) {
       const lastBotMessage = session.history.slice().reverse().find(msg => msg.role === 'assistant');
+      console.log('📝 Última mensagem do bot:', lastBotMessage?.content.substring(0, 100));
+
       if (lastBotMessage) {
         const match = lastBotMessage.content.match(/DIRECIONAR:(\w+)/);
+        console.log(`⚠️ Reportando erro: complaint detectado | Form: ${match ? match[1] : 'nenhum'}`);
+
         await reportError(
           sessionId,
           'user_complaint',
