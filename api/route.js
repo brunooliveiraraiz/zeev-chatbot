@@ -1,61 +1,22 @@
 import Anthropic from '@anthropic-ai/sdk';
-
-// Catálogo simplificado das principais solicitações
-const REQUESTS_CATALOG = [
-  {
-    id: 'transformacao_infraestrutura',
-    name: '[TI] Solicitações Infraestrutura',
-    area: 'Transformação',
-    description: 'HARDWARE e EQUIPAMENTOS: problemas físicos com computadores, notebooks, rede, internet, VPN, equipamentos',
-    tags: ['ti', 'infraestrutura', 'rede', 'computador', 'vpn', 'equipamento', 'hardware', 'internet', 'notebook', 'travou', 'lento', 'não liga', 'defeito'],
-    examples: ['meu notebook não liga', 'computador travou', 'internet não funciona', 'problema com VPN', 'equipamento com defeito', 'computador lento'],
-    url_hml: 'https://raizeducacao.zeev.it/2.0/request?c=mBHfrUjtxaDAWwepPD90opqNK0%2FqxK6IWOSSX9Wn5K4nWa5o%2BwK0%2FEMVMLG6P9vL%2B0YsyMW0lodEqJavstj8Vw%3D%3D',
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=mBHfrUjtxaDAWwepPD90opqNK0%2FqxK6IWOSSX9Wn5K4nWa5o%2BwK0%2FEMVMLG6P9vL%2B0YsyMW0lodEqJavstj8Vw%3D%3D'
-  },
-  {
-    id: 'transformacao_sistemas',
-    name: '[TI] Solicitações Sistemas',
-    area: 'Transformação',
-    description: 'SOFTWARE e APLICAÇÕES: erros em sistemas, TOTVS RM, bugs, problemas de login/senha em sistemas, integrações',
-    tags: ['ti', 'sistemas', 'software', 'erro', 'bug', 'sistema', 'totvs', 'rm', 'aplicação', 'senha sistema', 'login sistema'],
-    examples: ['erro no TOTVS RM', 'sistema não carrega', 'bug no sistema', 'senha do sistema não funciona', 'erro ao acessar aplicação'],
-    url_hml: 'https://raizeducacao.zeev.it/2.0/request?c=ua49CGmhE0MmmyMoJ3bk5MI%2FrR4Q%2FfX1DSA%2F9oYCeLgz52rVUuKFB45IZNfq%2FoB1f8bGjrFiiiCQS5JZ3q3rRg%3D%3D',
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=ua49CGmhE0MmmyMoJ3bk5MI%2FrR4Q%2FfX1DSA%2F9oYCeLgz52rVUuKFB45IZNfq%2FoB1f8bGjrFiiiCQS5JZ3q3rRg%3D%3D'
-  },
-  {
-    id: 'transformacao_ticket_raiz',
-    name: '[Processos] Solicitações Ticket Raiz',
-    area: 'Transformação',
-    description: 'Solicitações gerais - criar usuário, relatórios, dúvidas, cancelamentos',
-    tags: ['processos', 'ticket', 'usuário', 'relatório', 'dúvida', 'suporte'],
-    examples: ['criar usuário', 'abrir chamado', 'dúvida sobre sistema'],
-    url_hml: 'https://raizeducacao.zeev.it/2.0/request?c=nIGZbj%2BSflQVvsUdA5hVOmC4ZZr8GXW%2FThxNe7g52WrGa4yThcuEkqRqO5VT82klt906ee7Z6xOdQXtaVd20Pg%3D%3D',
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=nIGZbj%2BSflQVvsUdA5hVOmC4ZZr8GXW%2FThxNe7g52WrGa4yThcuEkqRqO5VT82klt906ee7Z6xOdQXtaVd20Pg%3D%3D'
-  },
-  {
-    id: 'transformacao_bi',
-    name: '[BI] Solicitações Business Intelligence',
-    area: 'Transformação',
-    description: 'Análises, relatórios, dashboards, extrações de dados',
-    tags: ['bi', 'business intelligence', 'relatório', 'dashboard', 'análise', 'dados'],
-    examples: ['preciso de um relatório', 'criar dashboard', 'análise de dados'],
-    url_hml: 'https://raizeducacao.zeev.it/2.0/request?c=ZRd9q4OeRHKvrMxWwOCZqQ7C%2FV%2Bc968%2BjWwvq2ebEXlkxSYrx0Z3vs%2FdlYXEzkBsmoGiBGzA5WHxXn2Ma7U2Ew%3D%3D',
-    url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=ZRd9q4OeRHKvrMxWwOCZqQ7C%2FV%2Bc968%2BjWwvq2ebEXlkxSYrx0Z3vs%2FdlYXEzkBsmoGiBGzA5WHxXn2Ma7U2Ew%3D%3D'
-  }
-];
+import { REQUESTS_CATALOG } from './catalog.js';
 
 // Armazenamento de sessões em memória (em produção, usar Redis ou similar)
 const sessions = new Map();
 
 function buildCatalogContext() {
-  return `# CATÁLOGO DE SOLICITAÇÕES ZEEV
+  // Mostrar apenas os primeiros 20 formulários mais relevantes para não estourar o contexto
+  const topForms = REQUESTS_CATALOG.slice(0, 20);
 
-${REQUESTS_CATALOG.map((item, idx) => `${idx + 1}. ID: ${item.id}
+  return `# CATÁLOGO PRINCIPAIS SOLICITAÇÕES ZEEV (mostrando 20 de ${REQUESTS_CATALOG.length})
+
+${topForms.map((item, idx) => `${idx + 1}. ID: ${item.id}
    Nome: ${item.name}
    Área: ${item.area}
    Descrição: ${item.description}
-   Tags: ${item.tags.join(', ')}
-   Exemplos: ${item.examples.join(' | ')}`).join('\n\n')}`;
+   Exemplos: ${item.examples.slice(0, 2).join(' | ')}`).join('\n\n')}
+
+... e mais ${REQUESTS_CATALOG.length - 20} formulários disponíveis nas áreas: Atendimento, Comercial, CMEF, DP, Financeiro, Fiscal, Jurídico, Operações, Performance, P&C.`;
 }
 
 function buildSystemPrompt(attemptCount, stage) {
@@ -97,32 +58,59 @@ Se o usuário está cumprimentando (oi, olá, bom dia):
 3. Se não resolver em 2-3 tentativas → DIRECIONE
 4. Se resolver → use \`PROBLEMA_RESOLVIDO\`
 
-**3. SOLICITAÇÕES CLARAS (Direcionar)**
-Quando o usuário descreve uma necessidade clara, DIRECIONE para o formulário correto.
+**3. ESCOLHA DO FORMULÁRIO CORRETO - GUIA COMPLETO**
 
-**ATENÇÃO: ESCOLHA DO FORMULÁRIO CORRETO**
+**TI / TRANSFORMAÇÃO:**
+- **transformacao_infraestrutura**: HARDWARE - notebook não liga, computador travou, internet não funciona, VPN, rede
+- **transformacao_sistemas**: SOFTWARE - erro TOTVS RM, sistema travou, bug, senha sistema
+- **transformacao_portal_matriculas**: Portal de matrículas - erro portal, não consigo matricular
+- **transformacao_scoreplan**: Scoreplan - acesso scoreplan, usuário scoreplan
+- **transformacao_bi**: Relatórios, dashboards, análise de dados
+- **transformacao_ticket_raiz**: Criar usuário, dúvidas gerais
 
-Use **transformacao_infraestrutura** para problemas de HARDWARE/EQUIPAMENTOS:
-- Computador/notebook não liga, travou, lento, com defeito
-- Problemas de rede, internet, VPN, WiFi
-- Equipamentos físicos (teclado, mouse, monitor)
-- Acesso à rede, conexões
-- Exemplos: "meu notebook não liga", "computador travou", "internet não funciona"
+**ATENDIMENTO:**
+- **atendimento_alteracao_vencimento**: Alterar data vencimento parcela
+- **atendimento_cancelamento_matricula**: Cancelar matrícula, transferência aluno
+- **atendimento_cancelamento_parcela**: Cancelar parcela, mensalidade, taxa
+- **atendimento_correcao_lancamento**: Corrigir plano pagamento, ajustar desconto, trocar responsável
+- **atendimento_devolucao_estorno**: Estorno, reembolso, paguei duplicado
+- **atendimento_treinamento_totvs**: Treinamento Totvs, dúvida sistema Totvs
+- **atendimento_negociacao_acordos**: Negociar débito, acordo, parcelamento
+- **atendimento_baixa_pagamento**: Pagamento não registrado, boleto não baixado
 
-Use **transformacao_sistemas** para problemas de SOFTWARE/APLICAÇÕES:
-- Erros em sistemas (TOTVS RM, aplicações)
-- Bugs, falhas de software
-- Problemas de login/senha em SISTEMAS (não em equipamentos)
-- Integrações, melhorias de sistema
-- Exemplos: "erro no TOTVS RM", "sistema não carrega", "senha do sistema não funciona"
+**COMERCIAL:**
+- **comercial_plano_pagamento**: CRIAR novo plano pagamento
+- **comercial_desconto**: Solicitar desconto, bolsa
+- **comercial_promocoes**: Aplicar promoção, campanha
+- **comercial_mais_raiz**: Atividades extras, extracurricular
+- **comercial_marketplace**: Comprar produto, marketplace
 
-Use **transformacao_bi** para RELATÓRIOS/DADOS:
-- Dashboards, análises, relatórios
-- Exemplos: "preciso de relatório", "criar dashboard"
+**DP:**
+- **dp_solicitacoes**: Folha pagamento, férias, holerite
+- **dp_beneficios**: Vale transporte, plano saúde, benefícios
 
-Use **transformacao_ticket_raiz** para OUTROS:
-- Criar usuário, dúvidas gerais, suporte
-- Exemplos: "criar usuário", "dúvida sobre processo"
+**FINANCEIRO:**
+- **financeiro_cadastro**: Cadastrar fornecedor
+- **financeiro_solicitacoes**: Solicitar pagamento, reembolso, abrir solicitação financeira
+- **fiscal_nota_fiscal**: Emitir nota fiscal
+
+**OPERAÇÕES:**
+- **operacoes_compras**: Comprar material, equipamento para escola
+- **operacoes_facilities**: Manutenção predial, problema elétrico, vazamento
+- **operacoes_frota**: Solicitar veículo
+- **operacoes_frete**: Motoboy, frete, envio documento
+- **operacoes_almoxarifado**: Material almoxarifado
+
+**P&C:**
+- **pc_admissao_recrutamento**: Abrir vaga, contratar colaborador
+- **pc_educacao_corporativa**: Treinamento corporativo
+- **pc_movimentacao**: Promover, transferir funcionário
+- **pc_desligamento**: Demissão, desligamento
+
+**OUTROS:**
+- **juridico_solicitacoes**: Análise contrato, orientação jurídica
+- **cmef_midia_eventos**: Material gráfico, evento, campanha marketing
+- **performance_crm**: Suporte CRM, HubSpot
 
 → Use: \`DIRECIONAR:request_id\`
 → Explique brevemente E mencione o nome correto do formulário
@@ -155,30 +143,25 @@ ${attemptCount >= 3 ? '\n⚠️ Muitas tentativas - se não resolveu, DIRECIONE 
 
 **EXEMPLOS:**
 
-Exemplo 1 - HARDWARE defeituoso (direcionar direto, SEM troubleshooting):
-Usuário: "meu notebook não ta ligando"
-Você: "Entendo. Vou te direcionar para abrir uma solicitação de TI - Infraestrutura onde a equipe pode verificar o problema no seu notebook.
+Usuário: "meu notebook não liga"
+Você: "Vou te direcionar para TI - Infraestrutura.
 DIRECIONAR:transformacao_infraestrutura"
 
-Exemplo 2 - SOFTWARE (Sistemas):
-Usuário: "Minha senha do totvs rm não ta funcionando"
-Você: "Você já tentou usar a opção 'Esqueci minha senha' na tela de login do TOTVS RM?"
-[Se usuário diz que não funciona...]
-Você: "Entendo. Vou te direcionar para abrir uma solicitação de TI - Sistemas onde a equipe pode resetar sua senha.
+Usuário: "erro no TOTVS RM"
+Você: "Vou te direcionar para TI - Sistemas.
 DIRECIONAR:transformacao_sistemas"
 
-Exemplo 3 - HARDWARE (computador travado):
-Usuário: "computador travou"
-Você: "Vou te direcionar para TI - Infraestrutura para resolverem o problema do seu computador.
-DIRECIONAR:transformacao_infraestrutura"
+Usuário: "preciso cancelar matrícula"
+Você: "Vou te direcionar para Atendimento - Cancelamento de Matrícula.
+DIRECIONAR:atendimento_cancelamento_matricula"
 
-Exemplo 4 - SOFTWARE (erro em sistema):
-Usuário: "erro no sistema"
-Você: "Vou te direcionar para TI - Sistemas para analisarem o erro.
-DIRECIONAR:transformacao_sistemas"
+Usuário: "criar plano de pagamento"
+Você: "Vou te direcionar para Comercial - Criação de Plano de Pagamento.
+DIRECIONAR:comercial_plano_pagamento"
 
-Usuário: "Gostaria de abrir uma solicitação"
-Você: "Claro! Sobre qual assunto você precisa abrir a solicitação? Por exemplo: problema técnico, dúvida sobre sistema, relatório, etc."`;
+Usuário: "solicitar pagamento"
+Você: "Vou te direcionar para Financeiro - Solicitações Financeiras.
+DIRECIONAR:financeiro_solicitacoes"`;
 }
 
 function cleanResponse(response) {
