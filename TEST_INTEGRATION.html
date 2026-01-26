@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teste de Integração - Chatbot Zeev</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .header p {
+      font-size: 20px;
+      opacity: 0.9;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h2 {
+      font-size: 28px;
+      margin-bottom: 16px;
+      color: #1E40AF;
+    }
+
+    .card p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #6B7280;
+      margin-bottom: 20px;
+    }
+
+    .card ul {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .card ul li {
+      padding: 8px 0;
+      color: #374151;
+    }
+
+    .card ul li:before {
+      content: "✅ ";
+      margin-right: 8px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #1E40AF;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #1E3A8A;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .demo-section {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      margin-top: 40px;
+    }
+
+    .demo-section h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #1E40AF;
+    }
+
+    .code-block {
+      background: #1F2937;
+      color: #F3F4F6;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-top: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #10B981;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .alert {
+      background: #FEF3C7;
+      border-left: 4px solid #F59E0B;
+      padding: 16px;
+      margin-top: 20px;
+      border-radius: 4px;
+    }
+
+    .alert strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #92400E;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🤖 Teste de Integração</h1>
+      <p>Chatbot Zeev - Raiz Educação</p>
+    </div>
+
+    <div class="options">
+      <!-- Opção A: Iframe -->
+      <div class="card">
+        <span class="badge">OPÇÃO A</span>
+        <h2>📄 Iframe</h2>
+        <p>Incorpore o chatbot em uma página dedicada do portal Zeev.</p>
+
+        <ul>
+          <li>Implementação imediata</li>
+          <li>Não requer configurações avançadas</li>
+          <li>Página dedicada ao chatbot</li>
+        </ul>
+
+        <a href="#iframe-demo" class="btn">Ver Exemplo</a>
+      </div>
+
+      <!-- Opção B: Widget Flutuante -->
+      <div class="card">
+        <span class="badge" style="background: #8B5CF6;">OPÇÃO B - RECOMENDADO</span>
+        <h2>💬 Widget Flutuante</h2>
+        <p>Botão flutuante que aparece em todas as páginas do portal.</p>
+
+        <ul>
+          <li>Experiência moderna</li>
+          <li>Disponível em todas as páginas</li>
+          <li>Mais prático para usuários</li>
+        </ul>
+
+        <a href="#widget-demo" class="btn" style="background: #8B5CF6;">Ver Exemplo</a>
+      </div>
+    </div>
+
+    <!-- Demo Iframe -->
+    <div class="demo-section" id="iframe-demo">
+      <h2>📄 Opção A: Iframe</h2>
+      <p><strong>Veja como fica:</strong></p>
+
+      <div style="background: #F3F4F6; padding: 20px; border-radius: 12px; margin-top: 20px;">
+        <iframe
+          src="https://brunooliveiraraiz.github.io/zeev-chatbot/"
+          style="width: 100%; height: 600px; border: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);"
+          title="Chatbot Zeev - Demo Iframe"
+        ></iframe>
+      </div>
+
+      <div class="code-block">
+&lt;iframe
+  src="https://brunooliveiraraiz.github.io/zeev-chatbot/"
+  style="width: 100%; height: 600px; border: none; border-radius: 8px;"
+  title="Chatbot Zeev"
+&gt;&lt;/iframe&gt;
+      </div>
+
+      <div class="alert">
+        <strong>💡 Como usar no Zeev:</strong>
+        1. Acesse: Configurações → Portal → Páginas Customizadas<br>
+        2. Crie uma nova página: "Assistente Virtual"<br>
+        3. Cole o código HTML acima<br>
+        4. Publique e adicione ao menu
+      </div>
+    </div>
+
+    <!-- Demo Widget Flutuante -->
+    <div class="demo-section" id="widget-demo" style="margin-top: 40px;">
+      <h2>💬 Opção B: Widget Flutuante</h2>
+      <p><strong>Esta página já está usando o widget flutuante!</strong></p>
+      <p>Veja o botão azul <strong>"Ajuda"</strong> no canto inferior direito? 👉</p>
+      <p>Clique nele para ver o chatbot abrir em uma janela flutuante.</p>
+
+      <div class="code-block">
+&lt;!-- Adicione esta linha ANTES do &lt;/body&gt; no portal Zeev --&gt;
+&lt;script src="https://brunooliveiraraiz.github.io/zeev-chatbot/embed.js"&gt;&lt;/script&gt;
+      </div>
+
+      <div class="alert">
+        <strong>💡 Como usar no Zeev:</strong>
+        1. Acesse: Configurações → Portal → Customização HTML<br>
+        2. Adicione o script acima ANTES do &lt;/body&gt;<br>
+        3. Publique as alterações<br>
+        4. O botão aparecerá automaticamente em TODAS as páginas
+      </div>
+    </div>
+
+    <!-- Documentação -->
+    <div class="demo-section" style="margin-top: 40px; background: #F9FAFB;">
+      <h2>📚 Documentação Completa</h2>
+      <p>Para instruções detalhadas, consulte:</p>
+
+      <ul style="list-style: none; margin-top: 20px;">
+        <li style="padding: 12px 0; border-bottom: 1px solid #E5E7EB;">
+          <strong>INTEGRACAO_ZEEV.md</strong> - Guia completo de integração
+        </li>
+        <li style="padding: 12px 0; border-bottom: 1px solid #E5E7EB;">
+          <strong>METRICAS_E_ANALYTICS.md</strong> - Sistema de métricas e relatórios
+        </li>
+        <li style="padding: 12px 0;">
+          <strong>RELATORIOS_AUTOMATICOS.md</strong> - Relatórios semanais por email
+        </li>
+      </ul>
+
+      <p style="margin-top: 30px; color: #6B7280;">
+        <strong>Precisa de ajuda?</strong><br>
+        Contato: bruno.oliveira@raizeducacao.com.br
+      </p>
+    </div>
+  </div>
+
+  <!-- Script do Widget Flutuante -->
+  <script src="https://brunooliveiraraiz.github.io/zeev-chatbot/embed.js"></script>
+</body>
+</html>
