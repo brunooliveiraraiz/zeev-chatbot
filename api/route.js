@@ -6,9 +6,9 @@ const REQUESTS_CATALOG = [
     id: 'transformacao_infraestrutura',
     name: '[TI] Solicitações Infraestrutura',
     area: 'Transformação',
-    description: 'Demandas de TI - Infraestrutura (rede, equipamentos, acessos, VPN, computadores)',
-    tags: ['ti', 'infraestrutura', 'rede', 'computador', 'vpn', 'equipamento', 'hardware', 'internet', 'notebook'],
-    examples: ['meu computador não funciona', 'problema com VPN', 'internet não funciona'],
+    description: 'HARDWARE e EQUIPAMENTOS: problemas físicos com computadores, notebooks, rede, internet, VPN, equipamentos',
+    tags: ['ti', 'infraestrutura', 'rede', 'computador', 'vpn', 'equipamento', 'hardware', 'internet', 'notebook', 'travou', 'lento', 'não liga', 'defeito'],
+    examples: ['meu notebook não liga', 'computador travou', 'internet não funciona', 'problema com VPN', 'equipamento com defeito', 'computador lento'],
     url_hml: 'https://raizeducacao.zeev.it/2.0/request?c=mBHfrUjtxaDAWwepPD90opqNK0%2FqxK6IWOSSX9Wn5K4nWa5o%2BwK0%2FEMVMLG6P9vL%2B0YsyMW0lodEqJavstj8Vw%3D%3D',
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=mBHfrUjtxaDAWwepPD90opqNK0%2FqxK6IWOSSX9Wn5K4nWa5o%2BwK0%2FEMVMLG6P9vL%2B0YsyMW0lodEqJavstj8Vw%3D%3D'
   },
@@ -16,9 +16,9 @@ const REQUESTS_CATALOG = [
     id: 'transformacao_sistemas',
     name: '[TI] Solicitações Sistemas',
     area: 'Transformação',
-    description: 'Demandas de TI - Sistemas (software, erros, melhorias, integrações)',
-    tags: ['ti', 'sistemas', 'software', 'erro', 'bug', 'sistema', 'totvs', 'rm'],
-    examples: ['erro no sistema', 'sistema travou', 'problema no TOTVS RM'],
+    description: 'SOFTWARE e APLICAÇÕES: erros em sistemas, TOTVS RM, bugs, problemas de login/senha em sistemas, integrações',
+    tags: ['ti', 'sistemas', 'software', 'erro', 'bug', 'sistema', 'totvs', 'rm', 'aplicação', 'senha sistema', 'login sistema'],
+    examples: ['erro no TOTVS RM', 'sistema não carrega', 'bug no sistema', 'senha do sistema não funciona', 'erro ao acessar aplicação'],
     url_hml: 'https://raizeducacao.zeev.it/2.0/request?c=ua49CGmhE0MmmyMoJ3bk5MI%2FrR4Q%2FfX1DSA%2F9oYCeLgz52rVUuKFB45IZNfq%2FoB1f8bGjrFiiiCQS5JZ3q3rRg%3D%3D',
     url_prod: 'https://raizeducacao.zeev.it/2.0/request?c=ua49CGmhE0MmmyMoJ3bk5MI%2FrR4Q%2FfX1DSA%2F9oYCeLgz52rVUuKFB45IZNfq%2FoB1f8bGjrFiiiCQS5JZ3q3rRg%3D%3D'
   },
@@ -97,15 +97,34 @@ Exemplos que você NÃO pode resolver (precisa direcionar):
 - "criar/cadastrar algo" → precisa preencher formulário
 
 **3. SOLICITAÇÕES CLARAS (Direcionar)**
-Quando o usuário descreve uma necessidade clara:
-- "problema no computador"
-- "erro no sistema TOTVS RM"
-- "preciso de relatório"
-- "abrir solicitação"
+Quando o usuário descreve uma necessidade clara, DIRECIONE para o formulário correto.
 
-→ DIRECIONE IMEDIATAMENTE para o formulário
+**ATENÇÃO: ESCOLHA DO FORMULÁRIO CORRETO**
+
+Use **transformacao_infraestrutura** para problemas de HARDWARE/EQUIPAMENTOS:
+- Computador/notebook não liga, travou, lento, com defeito
+- Problemas de rede, internet, VPN, WiFi
+- Equipamentos físicos (teclado, mouse, monitor)
+- Acesso à rede, conexões
+- Exemplos: "meu notebook não liga", "computador travou", "internet não funciona"
+
+Use **transformacao_sistemas** para problemas de SOFTWARE/APLICAÇÕES:
+- Erros em sistemas (TOTVS RM, aplicações)
+- Bugs, falhas de software
+- Problemas de login/senha em SISTEMAS (não em equipamentos)
+- Integrações, melhorias de sistema
+- Exemplos: "erro no TOTVS RM", "sistema não carrega", "senha do sistema não funciona"
+
+Use **transformacao_bi** para RELATÓRIOS/DADOS:
+- Dashboards, análises, relatórios
+- Exemplos: "preciso de relatório", "criar dashboard"
+
+Use **transformacao_ticket_raiz** para OUTROS:
+- Criar usuário, dúvidas gerais, suporte
+- Exemplos: "criar usuário", "dúvida sobre processo"
+
 → Use: \`DIRECIONAR:request_id\`
-→ Explique brevemente
+→ Explique brevemente E mencione o nome correto do formulário
 
 **4. MENSAGENS VAGAS**
 Se não está claro:
@@ -135,10 +154,26 @@ ${attemptCount >= 3 ? '\n⚠️ Muitas tentativas - se não resolveu, DIRECIONE 
 
 **EXEMPLOS:**
 
+Exemplo 1 - HARDWARE (Infraestrutura):
+Usuário: "meu notebook não ta ligando"
+Você: [após troubleshooting] "Entendo. Vou te direcionar para abrir uma solicitação de TI - Infraestrutura onde a equipe pode verificar o problema no seu notebook.
+DIRECIONAR:transformacao_infraestrutura"
+
+Exemplo 2 - SOFTWARE (Sistemas):
 Usuário: "Minha senha do totvs rm não ta funcionando"
 Você: "Você já tentou usar a opção 'Esqueci minha senha' na tela de login do TOTVS RM?"
 [Se usuário diz que não funciona...]
 Você: "Entendo. Vou te direcionar para abrir uma solicitação de TI - Sistemas onde a equipe pode resetar sua senha.
+DIRECIONAR:transformacao_sistemas"
+
+Exemplo 3 - HARDWARE (computador travado):
+Usuário: "computador travou"
+Você: "Vou te direcionar para TI - Infraestrutura para resolverem o problema do seu computador.
+DIRECIONAR:transformacao_infraestrutura"
+
+Exemplo 4 - SOFTWARE (erro em sistema):
+Usuário: "erro no sistema"
+Você: "Vou te direcionar para TI - Sistemas para analisarem o erro.
 DIRECIONAR:transformacao_sistemas"
 
 Usuário: "Gostaria de abrir uma solicitação"
