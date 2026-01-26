@@ -48,18 +48,23 @@ Se o usuário está cumprimentando (oi, olá, bom dia):
 **SEMPRE tente troubleshooting PRIMEIRO para:**
 - Problemas de senha/login → orientar "esqueci senha", redefinir
 - Dúvidas sobre como acessar/usar algo → dar orientações
+- Problemas técnicos com equipamentos → investigar antes de direcionar
 - Problemas que PODEM ter solução simples
 
-**DIRECIONE IMEDIATAMENTE (sem troubleshooting) para:**
-- Equipamentos quebrados/com defeito físico (notebook não liga, tela quebrada, etc.)
-- Criação/cadastro de algo novo
-- Solicitações que exigem preenchimento de formulário
-
 **PROCESSO de troubleshooting:**
-1. Faça UMA pergunta específica
+1. Faça UMA pergunta específica para entender melhor o problema
 2. Aguarde resposta do usuário
 3. Se não resolver em 2-3 tentativas → DIRECIONE
-4. Se resolver → use \`PROBLEMA_RESOLVIDO\`
+4. Se o usuário explicitamente pedir "quero solicitar novo" ou "preciso de um novo" → DIRECIONE para operacoes_compras
+5. Se resolver → use \`PROBLEMA_RESOLVIDO\`
+
+**⚠️ IMPORTANTE - NÃO marque DIRECIONAR na primeira resposta!**
+- NUNCA use DIRECIONAR na primeira mensagem de troubleshooting
+- Faça pelo menos 1-2 perguntas para investigar
+- Só use DIRECIONAR quando:
+  a) Tentou troubleshooting e não resolveu (2-3 mensagens)
+  b) Usuário EXPLICITAMENTE pede para solicitar algo novo
+  c) Problema claramente NÃO tem solução via troubleshooting (ex: tela quebrada, equipamento perdido)
 
 **3. ESCOLHA DO FORMULÁRIO CORRETO - GUIA COMPLETO**
 
@@ -300,7 +305,9 @@ export default async function handler(req, res) {
     if (!session) {
       session = {
         attemptCount: 0,
-        history: []
+        history: [],
+        hasSentLink: false,
+        messagesSinceLinkSent: 0
       };
       sessions.set(sessionId, session);
     }
@@ -342,13 +349,35 @@ export default async function handler(req, res) {
     // Analisar resposta
     const result = analyzeResponse(aiResponse, stage);
 
-    // Se resolveu ou direcionou, salvar no banco e limpar sessão
-    if (result.type === 'direct_link' || aiResponse.includes('PROBLEMA_RESOLVIDO')) {
-      // Salvar resolução no banco de dados
-      await saveConversationResolution(sessionId, aiResponse);
+    // Gerenciar sessão baseado na resposta
+    if (result.type === 'direct_link') {
+      // Marcou que direcionou, mas mantém sessão por mais algumas mensagens
+      if (!session.hasSentLink) {
+        // Primeira vez enviando link - salvar no banco
+        await saveConversationResolution(sessionId, aiResponse);
+        session.hasSentLink = true;
+        session.messagesSinceLinkSent = 0;
+      } else {
+        // Já enviou link antes, incrementar contador
+        session.messagesSinceLinkSent++;
 
-      // Limpar sessão da memória
+        // Se já enviou link 2 vezes ou mais, deletar sessão
+        if (session.messagesSinceLinkSent >= 2) {
+          sessions.delete(sessionId);
+        }
+      }
+    } else if (aiResponse.includes('PROBLEMA_RESOLVIDO')) {
+      // Problema resolvido - salvar e deletar sessão
+      await saveConversationResolution(sessionId, aiResponse);
       sessions.delete(sessionId);
+    } else if (session.hasSentLink) {
+      // Já enviou link mas usuário continua conversando
+      session.messagesSinceLinkSent++;
+
+      // Após 3 mensagens depois do link, deletar sessão
+      if (session.messagesSinceLinkSent >= 3) {
+        sessions.delete(sessionId);
+      }
     }
 
     // Limpar sessões antigas (mais de 1 hora)
