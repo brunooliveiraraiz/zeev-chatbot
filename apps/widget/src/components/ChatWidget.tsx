@@ -19,8 +19,16 @@ function generateSessionId(): string {
 export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [isEmbedded, setIsEmbedded] = useState(false);
 
   useEffect(() => {
+    // Detectar se está dentro de iframe
+    const inIframe = window.self !== window.top;
+    setIsEmbedded(inIframe);
+    if (inIframe) {
+      setIsOpen(true); // Auto-abrir quando em iframe
+    }
+
     const existing = getSessionId();
     if (existing) {
       setSessionId(existing);
@@ -33,7 +41,7 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
 
   if (!sessionId) {
     return (
-      <div className="chat-widget">
+      <div className={`chat-widget ${isEmbedded ? 'embedded-mode' : ''}`}>
         <button className="chat-widget-button" disabled>
           Carregando...
         </button>
@@ -42,7 +50,7 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
   }
 
   return (
-    <div className="chat-widget">
+    <div className={`chat-widget ${isEmbedded ? 'embedded-mode' : ''}`}>
       <button className="chat-widget-button" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? (
           <>

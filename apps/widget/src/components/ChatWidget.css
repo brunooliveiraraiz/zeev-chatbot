@@ -7,6 +7,28 @@
     sans-serif;
 }
 
+/* Ajustes quando dentro de iframe (embed) */
+.chat-widget.embedded-mode {
+  position: static;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-widget.embedded-mode .chat-widget-button {
+  display: none;
+}
+
+.chat-widget.embedded-mode .chat-widget-popup {
+  position: static;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex !important;
+}
+
 .chat-widget-button {
   background-color: #007bff;
   color: white;
