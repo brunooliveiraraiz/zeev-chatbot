@@ -72,6 +72,21 @@ export default async function handler(req, res) {
       );
     `);
 
+    await prisma.$executeRawUnsafe(`
+      -- CreateTable ConversationState
+      CREATE TABLE IF NOT EXISTS "ConversationState" (
+          "id" TEXT NOT NULL PRIMARY KEY,
+          "sessionId" TEXT NOT NULL UNIQUE,
+          "attemptCount" INTEGER NOT NULL DEFAULT 0,
+          "history" TEXT NOT NULL,
+          "hasSentLink" BOOLEAN NOT NULL DEFAULT false,
+          "messagesSinceLinkSent" INTEGER NOT NULL DEFAULT 0,
+          "lastActivity" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     // Criar índices
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Session_userId_idx" ON "Session"("userId");`);
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Session_chatSessionToken_idx" ON "Session"("chatSessionToken");`);
@@ -81,11 +96,13 @@ export default async function handler(req, res) {
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationResolution_category_idx" ON "ConversationResolution"("category");`);
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationRating_rating_idx" ON "ConversationRating"("rating");`);
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationRating_createdAt_idx" ON "ConversationRating"("createdAt");`);
+    await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationState_sessionId_idx" ON "ConversationState"("sessionId");`);
+    await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationState_lastActivity_idx" ON "ConversationState"("lastActivity");`);
 
     return res.status(200).json({
       success: true,
       message: 'Tabelas criadas com sucesso!',
-      tables_created: ['Session', 'Message', 'ConversationResolution', 'ConversationRating']
+      tables_created: ['Session', 'Message', 'ConversationResolution', 'ConversationRating', 'ConversationState']
     });
 
   } catch (error) {
