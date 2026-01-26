@@ -1,5 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { PrismaClient } from '@prisma/client';
 import { REQUESTS_CATALOG } from './catalog.js';
+
+const prisma = new PrismaClient();
 
 // Armazenamento de sessões em memória (em produção, usar Redis ou similar)
 const sessions = new Map();
@@ -171,6 +174,67 @@ function cleanResponse(response) {
     .trim();
 }
 
+/**
+ * Salva a resolução da conversa no banco de dados
+ */
+async function saveConversationResolution(sessionId, aiResponse) {
+  try {
+    // Verificar se resolveu via troubleshooting
+    if (aiResponse.includes('PROBLEMA_RESOLVIDO')) {
+      await prisma.conversationResolution.upsert({
+        where: { sessionId },
+        update: {
+          resolved: true,
+          resolvedBy: 'troubleshooting',
+          resolvedAt: new Date(),
+          updatedAt: new Date()
+        },
+        create: {
+          sessionId,
+          resolved: true,
+          resolvedBy: 'troubleshooting',
+          category: 'troubleshooting',
+          resolvedAt: new Date()
+        }
+      });
+      console.log(`✅ Resolução salva: ${sessionId} - troubleshooting`);
+      return;
+    }
+
+    // Verificar se foi escalado para formulário
+    const match = aiResponse.match(/DIRECIONAR:(\w+)/);
+    if (match) {
+      const requestId = match[1];
+      const catalogItem = REQUESTS_CATALOG.find(item => item.id === requestId);
+
+      await prisma.conversationResolution.upsert({
+        where: { sessionId },
+        update: {
+          resolved: false,
+          resolvedBy: 'escalated',
+          requestId: requestId,
+          category: catalogItem ? catalogItem.area : 'unknown',
+          resolvedAt: new Date(),
+          updatedAt: new Date()
+        },
+        create: {
+          sessionId,
+          resolved: false,
+          resolvedBy: 'escalated',
+          requestId: requestId,
+          category: catalogItem ? catalogItem.area : 'unknown',
+          resolvedAt: new Date()
+        }
+      });
+      console.log(`✅ Escalação salva: ${sessionId} - ${requestId} (${catalogItem?.area})`);
+      return;
+    }
+  } catch (error) {
+    console.error('❌ Erro ao salvar resolução:', error);
+    // Não bloqueia o fluxo se der erro ao salvar
+  }
+}
+
 function analyzeResponse(aiResponse, stage) {
   // Verificar se resolveu
   if (aiResponse.includes('PROBLEMA_RESOLVIDO')) {
@@ -278,8 +342,12 @@ export default async function handler(req, res) {
     // Analisar resposta
     const result = analyzeResponse(aiResponse, stage);
 
-    // Se resolveu ou direcionou, limpar sessão
+    // Se resolveu ou direcionou, salvar no banco e limpar sessão
     if (result.type === 'direct_link' || aiResponse.includes('PROBLEMA_RESOLVIDO')) {
+      // Salvar resolução no banco de dados
+      await saveConversationResolution(sessionId, aiResponse);
+
+      // Limpar sessão da memória
       sessions.delete(sessionId);
     }
 
@@ -301,5 +369,7 @@ export default async function handler(req, res) {
       type: 'clarify',
       text: 'Desculpe, ocorreu um erro. Tente novamente em instantes.'
     });
+  } finally {
+    await prisma.$disconnect();
   }
 }
