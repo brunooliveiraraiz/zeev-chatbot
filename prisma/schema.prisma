@@ -90,3 +90,19 @@ model ConversationError {
   @@index([correctionStatus])
   @@index([createdAt])
 }
+
+// Tabela para persistir estado da conversação entre requests serverless
+model ConversationState {
+  id                    String   @id @default(cuid())
+  sessionId             String   @unique
+  attemptCount          Int      @default(0)
+  history               String   // JSON array of messages
+  hasSentLink           Boolean  @default(false)
+  messagesSinceLinkSent Int      @default(0)
+  lastActivity          DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([sessionId])
+  @@index([lastActivity])
+}

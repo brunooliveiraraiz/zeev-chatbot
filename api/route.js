@@ -4,8 +4,92 @@ import { REQUESTS_CATALOG } from './catalog.js';
 
 const prisma = new PrismaClient();
 
-// Armazenamento de sessões em memória (em produção, usar Redis ou similar)
-const sessions = new Map();
+/**
+ * Carrega o estado da sessão do banco de dados
+ */
+async function loadSessionState(sessionId) {
+  try {
+    const state = await prisma.conversationState.findUnique({
+      where: { sessionId }
+    });
+
+    if (!state) {
+      console.log(`📂 Nova sessão criada: ${sessionId}`);
+      return {
+        attemptCount: 0,
+        history: [],
+        hasSentLink: false,
+        messagesSinceLinkSent: 0
+      };
+    }
+
+    console.log(`📂 Sessão carregada do DB: ${sessionId} | ${state.history.length} chars de histórico`);
+
+    return {
+      attemptCount: state.attemptCount,
+      history: JSON.parse(state.history),
+      hasSentLink: state.hasSentLink,
+      messagesSinceLinkSent: state.messagesSinceLinkSent
+    };
+  } catch (error) {
+    console.error('❌ Erro ao carregar sessão:', error);
+    // Retorna sessão vazia em caso de erro
+    return {
+      attemptCount: 0,
+      history: [],
+      hasSentLink: false,
+      messagesSinceLinkSent: 0
+    };
+  }
+}
+
+/**
+ * Salva o estado da sessão no banco de dados
+ */
+async function saveSessionState(sessionId, session) {
+  try {
+    await prisma.conversationState.upsert({
+      where: { sessionId },
+      update: {
+        attemptCount: session.attemptCount,
+        history: JSON.stringify(session.history),
+        hasSentLink: session.hasSentLink,
+        messagesSinceLinkSent: session.messagesSinceLinkSent,
+        lastActivity: new Date(),
+        updatedAt: new Date()
+      },
+      create: {
+        sessionId,
+        attemptCount: session.attemptCount,
+        history: JSON.stringify(session.history),
+        hasSentLink: session.hasSentLink,
+        messagesSinceLinkSent: session.messagesSinceLinkSent,
+        lastActivity: new Date()
+      }
+    });
+
+    console.log(`💾 Sessão salva no DB: ${sessionId}`);
+  } catch (error) {
+    console.error('❌ Erro ao salvar sessão:', error);
+  }
+}
+
+/**
+ * Deleta o estado da sessão do banco de dados
+ */
+async function deleteSessionState(sessionId) {
+  try {
+    await prisma.conversationState.delete({
+      where: { sessionId }
+    });
+    console.log(`🗑️ Sessão deletada: ${sessionId}`);
+  } catch (error) {
+    // Ignora erro se sessão não existir
+    if (error.code !== 'P2025') {
+      console.error('❌ Erro ao deletar sessão:', error);
+    }
+  }
+}
 
 function buildCatalogContext() {
   // Mostrar apenas os primeiros 20 formulários mais relevantes para não estourar o contexto
@@ -358,17 +442,8 @@ export default async function handler(req, res) {
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
-    // Obter ou criar sessão
-    let session = sessions.get(sessionId);
-    if (!session) {
-      session = {
-        attemptCount: 0,
-        history: [],
-        hasSentLink: false,
-        messagesSinceLinkSent: 0
-      };
-      sessions.set(sessionId, session);
-    }
+    // Obter ou criar sessão do banco de dados
+    let session = await loadSessionState(sessionId);
 
     // Incrementar tentativas
     session.attemptCount++;
@@ -431,6 +506,8 @@ export default async function handler(req, res) {
     const result = analyzeResponse(aiResponse, stage);
 
     // Gerenciar sessão baseado na resposta
+    let shouldDeleteSession = false;
+
     if (result.type === 'direct_link') {
       // Marcou que direcionou, mas mantém sessão por mais algumas mensagens
       if (!session.hasSentLink) {
@@ -444,31 +521,29 @@ export default async function handler(req, res) {
 
         // Se já enviou link 2 vezes ou mais, deletar sessão
         if (session.messagesSinceLinkSent >= 2) {
-          sessions.delete(sessionId);
+          shouldDeleteSession = true;
         }
       }
     } else if (aiResponse.includes('PROBLEMA_RESOLVIDO')) {
       // Problema resolvido - salvar e deletar sessão
       await saveConversationResolution(sessionId, aiResponse);
-      sessions.delete(sessionId);
+      shouldDeleteSession = true;
     } else if (session.hasSentLink) {
       // Já enviou link mas usuário continua conversando
       session.messagesSinceLinkSent++;
 
       // Após 3 mensagens depois do link, deletar sessão
       if (session.messagesSinceLinkSent >= 3) {
-        sessions.delete(sessionId);
+        shouldDeleteSession = true;
       }
     }
 
-    // Limpar sessões antigas (mais de 1 hora)
-    const oneHourAgo = Date.now() - 60 * 60 * 1000;
-    for (const [sid, sess] of sessions.entries()) {
-      if (!sess.lastActivity || sess.lastActivity < oneHourAgo) {
-        sessions.delete(sid);
-      }
+    // Salvar ou deletar sessão no banco de dados
+    if (shouldDeleteSession) {
+      await deleteSessionState(sessionId);
+    } else {
+      await saveSessionState(sessionId, session);
     }
-    session.lastActivity = Date.now();
 
     res.status(200).json(result);
 
