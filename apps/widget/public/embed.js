@@ -76,7 +76,8 @@
       bottom: 90px;
       ${position}
       width: 400px;
-      height: 600px;
+      height: 650px;
+      max-width: calc(100vw - 40px);
       max-height: calc(100vh - 120px);
       background: white;
       border-radius: 12px;
@@ -94,8 +95,10 @@
       width: 100%;
       height: 100%;
       border: none;
+      display: block;
     `;
     iframe.title = 'Chatbot Zeev';
+    iframe.allow = 'clipboard-read; clipboard-write';
 
     container.appendChild(iframe);
 
