@@ -8,21 +8,14 @@ import nodemailer from 'nodemailer';
 // ============================================
 
 const config = {
-  // Opção 1: Gmail
+  // Google Workspace (Gmail corporativo @raizeducacao.com.br)
   smtp_host: 'smtp.gmail.com',
   smtp_port: 587,
   smtp_secure: false,
-  smtp_user: 'SEU_EMAIL@gmail.com',  // ← MUDE AQUI
-  smtp_pass: 'sua-senha-app-16-chars',  // ← MUDE AQUI (senha de app)
+  smtp_user: 'bruno.oliveira@raizeducacao.com.br',
+  smtp_pass: 'fpgj peuz fdfx hear',  // ← COLE A SENHA DE APP QUE VOCÊ GEROU
 
-  // Opção 2: Outlook/Office365
-  // smtp_host: 'smtp.office365.com',
-  // smtp_port: 587,
-  // smtp_secure: false,
-  // smtp_user: 'bruno.oliveira@raizeducacao.com.br',
-  // smtp_pass: 'sua-senha-normal',
-
-  // Destinatário
+  // Destinatário (você mesmo)
   report_email_to: 'bruno.oliveira@raizeducacao.com.br',
 };
 

@@ -180,6 +180,52 @@ function cleanResponse(response) {
 }
 
 /**
+ * Detecta se o usuário está indicando um erro
+ */
+function detectUserComplaint(message) {
+  const complaintPhrases = [
+    'não é isso',
+    'errado',
+    'incorreto',
+    'formulário errado',
+    'não era isso',
+    'não é o que eu preciso',
+    'não é esse',
+    'formulário está incorreto',
+    'direcionou errado',
+    'não quero esse formulário',
+    'não é esse formulário',
+    'outro formulário',
+    'formulário diferente'
+  ];
+
+  const lowerMessage = message.toLowerCase();
+  return complaintPhrases.some(phrase => lowerMessage.includes(phrase));
+}
+
+/**
+ * Registra erro detectado durante a conversa
+ */
+async function reportError(sessionId, errorType, userMessage, botResponse, history, suggestedFormId = null) {
+  try {
+    await prisma.conversationError.create({
+      data: {
+        sessionId,
+        errorType,
+        userMessage,
+        botResponse,
+        conversationHistory: JSON.stringify(history),
+        suggestedFormId,
+        correctionStatus: 'pending'
+      }
+    });
+    console.log(`⚠️ Erro auto-detectado: ${errorType} - Session: ${sessionId}`);
+  } catch (error) {
+    console.error('❌ Erro ao registrar erro automático:', error);
+  }
+}
+
+/**
  * Salva a resolução da conversa no banco de dados
  */
 async function saveConversationResolution(sessionId, aiResponse) {
@@ -314,6 +360,22 @@ export default async function handler(req, res) {
 
     // Incrementar tentativas
     session.attemptCount++;
+
+    // Detectar se usuário está reclamando de erro
+    if (detectUserComplaint(message) && session.history.length > 0) {
+      const lastBotMessage = session.history.slice().reverse().find(msg => msg.role === 'assistant');
+      if (lastBotMessage) {
+        const match = lastBotMessage.content.match(/DIRECIONAR:(\w+)/);
+        await reportError(
+          sessionId,
+          'user_complaint',
+          message,
+          lastBotMessage.content,
+          session.history,
+          match ? match[1] : null
+        );
+      }
+    }
 
     // Adicionar mensagem do usuário
     session.history.push({

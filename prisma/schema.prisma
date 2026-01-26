@@ -68,3 +68,25 @@ model ConversationRating {
   @@index([rating])
   @@index([createdAt])
 }
+
+// Tabela para rastrear erros de direcionamento e problemas reportados
+model ConversationError {
+  id                  String   @id @default(cuid())
+  sessionId           String
+  errorType           String   // "wrong_form", "wrong_response", "user_complaint", "timeout"
+  userMessage         String   // Mensagem que causou o erro
+  botResponse         String   // Resposta incorreta do bot
+  conversationHistory String   // JSON com histórico completo
+  suggestedFormId     String?  // Formulário que o bot sugeriu (se aplicável)
+  actualFormNeeded    String?  // Formulário correto (preenchido manualmente)
+  correctionStatus    String   @default("pending") // "pending", "reviewed", "corrected", "ignored"
+  correctedBy         String?  // Quem fez a correção
+  notes               String?  // Observações sobre o erro e correção
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([sessionId])
+  @@index([errorType])
+  @@index([correctionStatus])
+  @@index([createdAt])
+}

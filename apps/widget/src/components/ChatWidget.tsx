@@ -22,11 +22,13 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
   const [isEmbedded, setIsEmbedded] = useState(false);
 
   useEffect(() => {
-    // Detectar se está dentro de iframe
-    const inIframe = window.self !== window.top;
-    setIsEmbedded(inIframe);
-    if (inIframe) {
-      setIsOpen(true); // Auto-abrir quando em iframe
+    // Detectar modo embed via URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const embedMode = urlParams.get('embed') === 'true';
+
+    setIsEmbedded(embedMode);
+    if (embedMode) {
+      setIsOpen(true); // Auto-abrir quando em modo embed
     }
 
     const existing = getSessionId();

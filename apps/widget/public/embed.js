@@ -88,9 +88,9 @@
       transition: all 0.3s ease;
     `;
 
-    // Iframe
+    // Iframe - adiciona parâmetro para indicar modo embed
     const iframe = document.createElement('iframe');
-    iframe.src = CONFIG.widgetUrl;
+    iframe.src = CONFIG.widgetUrl + '?embed=true';
     iframe.style.cssText = `
       width: 100%;
       height: 100%;
