@@ -2,6 +2,9 @@
   "name": "zeev-chatbot-vercel",
   "version": "1.0.0",
   "type": "module",
+  "scripts": {
+    "build": "echo 'No build needed for serverless'"
+  },
   "dependencies": {
     "@prisma/client": "^5.7.1",
     "@anthropic-ai/sdk": "^0.71.2",
