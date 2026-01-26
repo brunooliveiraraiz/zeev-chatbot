@@ -42,10 +42,29 @@ export default async function handler(req, res) {
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationError_correctionStatus_idx" ON "ConversationError"("correctionStatus");`);
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationError_createdAt_idx" ON "ConversationError"("createdAt");`);
 
+    // SQL para criar tabela ConversationState
+    await prisma.$executeRawUnsafe(`
+      CREATE TABLE IF NOT EXISTS "ConversationState" (
+          "id" TEXT NOT NULL PRIMARY KEY,
+          "sessionId" TEXT NOT NULL UNIQUE,
+          "attemptCount" INTEGER NOT NULL DEFAULT 0,
+          "history" TEXT NOT NULL,
+          "hasSentLink" BOOLEAN NOT NULL DEFAULT false,
+          "messagesSinceLinkSent" INTEGER NOT NULL DEFAULT 0,
+          "lastActivity" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Criar índices ConversationState
+    await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationState_sessionId_idx" ON "ConversationState"("sessionId");`);
+    await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationState_lastActivity_idx" ON "ConversationState"("lastActivity");`);
+
     return res.status(200).json({
       success: true,
-      message: 'Tabela ConversationError criada com sucesso!',
-      table: 'ConversationError'
+      message: 'Tabelas ConversationError e ConversationState criadas com sucesso!',
+      tables: ['ConversationError', 'ConversationState']
     });
 
   } catch (error) {
