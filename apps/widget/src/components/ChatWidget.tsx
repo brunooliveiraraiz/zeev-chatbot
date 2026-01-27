@@ -41,6 +41,17 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
     }
   }, []);
 
+  const handleClose = () => {
+    setIsOpen(false);
+
+    // Se estiver em modo embedded, notificar o parent para esconder o container
+    if (isEmbedded && window.parent) {
+      window.parent.postMessage({
+        type: 'zeev-chatbot-close'
+      }, '*');
+    }
+  };
+
   if (!sessionId) {
     return (
       <div className={`chat-widget ${isEmbedded ? 'embedded-mode' : ''}`}>
@@ -53,7 +64,7 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
 
   return (
     <div className={`chat-widget ${isEmbedded ? 'embedded-mode' : ''}`}>
-      <button className="chat-widget-button" onClick={() => setIsOpen(!isOpen)}>
+      <button className="chat-widget-button" onClick={() => isOpen ? handleClose() : setIsOpen(true)}>
         {isOpen ? (
           <>
             <span className="close-icon">✕</span>
@@ -68,7 +79,7 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
       </button>
       {isOpen && (
         <div className="chat-widget-popup">
-          <ChatWindow sessionId={sessionId} stage={stage} onClose={() => setIsOpen(false)} />
+          <ChatWindow sessionId={sessionId} stage={stage} onClose={handleClose} />
         </div>
       )}
     </div>

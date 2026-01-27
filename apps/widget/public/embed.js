@@ -124,6 +124,12 @@
     }
   }
 
+  // Esconder widget (chamado pelo iframe)
+  function hideWidget() {
+    const container = document.getElementById('zeev-chatbot-container');
+    container.style.display = 'none';
+  }
+
   // Inicializar
   function init() {
     // Aguardar DOM carregar
@@ -142,6 +148,19 @@
 
     // Evento de clique
     button.addEventListener('click', toggleWidget);
+
+    // Escutar mensagens do iframe
+    window.addEventListener('message', function(event) {
+      // Verificar origem por segurança
+      if (event.origin !== 'https://brunooliveiraraiz.github.io') {
+        return;
+      }
+
+      // Processar comandos
+      if (event.data && event.data.type === 'zeev-chatbot-close') {
+        hideWidget();
+      }
+    });
 
     console.log('✅ Zeev Chatbot carregado com sucesso!');
   }
