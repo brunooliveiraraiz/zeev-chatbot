@@ -29,11 +29,14 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
     ]);
   }, [sessionId]);
 
-  // Mostrar widget de avaliação após um link ser enviado
+  // Mostrar widget de avaliação após resolução (link enviado ou problema resolvido)
   useEffect(() => {
     const hasLink = messages.some(msg => msg.link !== undefined);
-    if (hasLink && !showRating && !ratingSubmitted) {
-      // Aguardar 15 segundos após o link aparecer para mostrar o widget
+    const hasTroubleshooting = messages.some(msg => msg.responseType === 'troubleshooting');
+    const isResolved = hasLink || hasTroubleshooting;
+
+    if (isResolved && !showRating && !ratingSubmitted) {
+      // Aguardar 15 segundos após a resolução para mostrar o widget
       const timer = setTimeout(() => {
         setShowRating(true);
       }, 15000);
