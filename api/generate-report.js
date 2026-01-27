@@ -128,9 +128,9 @@ async function getMonthlyData() {
  * Obtém estatísticas gerais
  */
 async function getGeneralStats() {
-  const [resolutions, ratings] = await Promise.all([
+  const [resolutions, allRatings] = await Promise.all([
     prisma.conversationResolution.findMany(),
-    prisma.conversationRating.findMany({ where: { rating: { gt: 0 } } }),
+    prisma.conversationRating.findMany(),
   ]);
 
   const total = resolutions.length;
@@ -138,8 +138,20 @@ async function getGeneralStats() {
   const escalated = resolutions.filter(r => r.resolvedBy === 'escalated').length;
   const resolutionRate = total > 0 ? (resolved / total) * 100 : 0;
 
-  const avgRating = ratings.length > 0
-    ? ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length
+  // Separar avaliações por tipo
+  const starRatings = allRatings.filter(r => r.rating !== null && r.rating > 0);
+  const helpfulRatings = allRatings.filter(r => r.helpful !== null);
+
+  // Média de estrelas
+  const avgRating = starRatings.length > 0
+    ? starRatings.reduce((sum, r) => sum + r.rating, 0) / starRatings.length
+    : 0;
+
+  // Contadores útil/não útil
+  const helpful = helpfulRatings.filter(r => r.helpful === true).length;
+  const notHelpful = helpfulRatings.filter(r => r.helpful === false).length;
+  const helpfulRate = helpfulRatings.length > 0
+    ? (helpful / helpfulRatings.length) * 100
     : 0;
 
   return {
@@ -148,7 +160,11 @@ async function getGeneralStats() {
     escalated,
     resolutionRate: resolutionRate.toFixed(1),
     avgRating: avgRating.toFixed(1),
-    ratingCount: ratings.length,
+    ratingCount: starRatings.length,
+    helpful,
+    notHelpful,
+    helpfulRate: helpfulRate.toFixed(1),
+    totalRatings: allRatings.length,
   };
 }
 
@@ -239,20 +255,24 @@ async function generatePPT() {
     ['Problemas Resolvidos', stats.resolved.toString()],
     ['Escalados para Formulário', stats.escalated.toString()],
     ['Taxa de Resolução', `${stats.resolutionRate}%`],
-    ['Avaliação Média', `${stats.avgRating} ⭐ (${stats.ratingCount} avaliações)`],
+    ['', ''],
+    ['Avaliação Média (Estrelas)', `${stats.avgRating} ⭐ (${stats.ratingCount} avaliações)`],
+    ['Útil 👍', `${stats.helpful} avaliações`],
+    ['Não útil 👎', `${stats.notHelpful} avaliações`],
+    ['Taxa de Satisfação (Útil)', `${stats.helpfulRate}% (${stats.helpful + stats.notHelpful} avaliações)`],
   ];
 
   slide2.addTable(statsData, {
-    x: 1.5,
-    y: 1.5,
-    w: 7,
-    colW: [4, 3],
-    rowH: 0.5,
-    fontSize: 16,
+    x: 1,
+    y: 1.3,
+    w: 8,
+    colW: [5, 3],
+    rowH: 0.45,
+    fontSize: 14,
     border: { pt: 1, color: 'CCCCCC' },
     fill: { color: 'F3F4F6' },
     color: '1F2937',
-    align: 'center',
+    align: 'left',
     valign: 'middle',
   });
 
