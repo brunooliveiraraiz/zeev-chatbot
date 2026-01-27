@@ -99,9 +99,17 @@ export default async function handler(req, res) {
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationState_sessionId_idx" ON "ConversationState"("sessionId");`);
     await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "ConversationState_lastActivity_idx" ON "ConversationState"("lastActivity");`);
 
+    // Alterar coluna rating para ser nullable (suporta útil/não útil sem rating)
+    try {
+      await prisma.$executeRawUnsafe(`ALTER TABLE "ConversationRating" ALTER COLUMN "rating" DROP NOT NULL;`);
+    } catch (error) {
+      // Ignora se coluna já é nullable
+      console.log('Rating column already nullable or error:', error.message);
+    }
+
     return res.status(200).json({
       success: true,
-      message: 'Tabelas criadas com sucesso!',
+      message: 'Tabelas criadas/atualizadas com sucesso!',
       tables_created: ['Session', 'Message', 'ConversationResolution', 'ConversationRating', 'ConversationState']
     });
 
