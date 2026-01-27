@@ -33,10 +33,10 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
   useEffect(() => {
     const hasLink = messages.some(msg => msg.link !== undefined);
     if (hasLink && !showRating && !ratingSubmitted) {
-      // Aguardar 5 segundos após o link aparecer para mostrar o widget
+      // Aguardar 15 segundos após o link aparecer para mostrar o widget
       const timer = setTimeout(() => {
         setShowRating(true);
-      }, 5000);
+      }, 15000);
       return () => clearTimeout(timer);
     }
   }, [messages, showRating, ratingSubmitted]);
