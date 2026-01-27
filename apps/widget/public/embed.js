@@ -147,6 +147,21 @@
       return;
     }
 
+    // Verificar se está em uma página de formulário de solicitação
+    const currentUrl = window.location.href;
+    const isFormPage = currentUrl.includes('/request') ||
+                       currentUrl.includes('/form') ||
+                       currentUrl.includes('/workflow');
+
+    // Verificar se está dentro de um iframe
+    const isInIframe = window.self !== window.top;
+
+    // Não inicializar em páginas de formulário ou dentro de iframes
+    if (isFormPage || isInIframe) {
+      console.log('⏭️ Zeev Chatbot: Não inicializando em formulário ou iframe');
+      return;
+    }
+
     // Criar elementos
     const button = createFloatingButton();
     const container = createIframeContainer();
