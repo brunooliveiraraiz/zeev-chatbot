@@ -37,10 +37,10 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
     const isResolved = hasLink || hasTroubleshooting;
 
     if (isResolved && !showRating && !ratingSubmitted) {
-      // Aguardar 15 segundos após a resolução para mostrar o widget
+      // Aguardar 10 segundos após a resolução para mostrar o widget
       const timer = setTimeout(() => {
         setShowRating(true);
-      }, 15000);
+      }, 10000);
       return () => clearTimeout(timer);
     }
   }, [messages, showRating, ratingSubmitted]);
