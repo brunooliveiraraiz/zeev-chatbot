@@ -18,6 +18,7 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
   const [status, setStatus] = useState<'idle' | 'typing' | 'error'>('idle');
   const [showRating, setShowRating] = useState(false);
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
+  const [ratingRequestSent, setRatingRequestSent] = useState(false);
 
   useEffect(() => {
     setMessages([
@@ -58,6 +59,8 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
 
     try {
       const response = await routeMessage({ message: trimmed, sessionId, stage });
+
+      // Adicionar mensagem principal do bot
       const botMessage: Message = {
         role: 'bot',
         content: response.text,
@@ -67,6 +70,20 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
         responseType: response.type,
       };
       setMessages((prev) => [...prev, botMessage]);
+
+      // Se houve resolução (link ou troubleshooting), adicionar mensagem pedindo avaliação (apenas uma vez)
+      if ((response.type === 'direct_link' || response.type === 'troubleshooting') && !ratingRequestSent) {
+        setRatingRequestSent(true);
+        setTimeout(() => {
+          const ratingRequestMessage: Message = {
+            role: 'bot',
+            content: '\n\n📊 Por favor, avalie o atendimento para nos ajudar a melhorar cada vez mais!',
+            timestamp: new Date().toISOString(),
+          };
+          setMessages((prev) => [...prev, ratingRequestMessage]);
+        }, 2000); // Aguardar 2 segundos após a mensagem principal
+      }
+
       setStatus('idle');
     } catch (error) {
       console.error('Failed to send message', error);
