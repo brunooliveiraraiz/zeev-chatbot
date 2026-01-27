@@ -22,39 +22,44 @@
   function createFloatingButton() {
     const button = document.createElement('button');
     button.id = 'zeev-chatbot-button';
-    button.innerHTML = `
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span style="margin-left: 8px;">Ajuda</span>
-    `;
 
-    // Estilos do botão
+    // Usar a imagem do robozinho
+    const img = document.createElement('img');
+    img.src = CONFIG.widgetUrl + 'chatbot-icon.png';
+    img.alt = 'Chat Zeev';
+    img.style.cssText = `
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    `;
+    button.appendChild(img);
+
+    // Estilos do botão (circular)
     const position = CONFIG.buttonPosition === 'bottom-left' ? 'left: 20px;' : 'right: 20px;';
     button.style.cssText = `
       position: fixed;
       bottom: 20px;
       ${position}
-      background-color: ${CONFIG.buttonColor};
-      color: white;
+      width: 60px;
+      height: 60px;
+      background-color: transparent;
       border: none;
-      border-radius: 50px;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
+      border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       z-index: ${CONFIG.zIndex};
       display: flex;
       align-items: center;
+      justify-content: center;
       transition: all 0.3s ease;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 0;
+      overflow: hidden;
     `;
 
     // Hover effect
     button.addEventListener('mouseenter', function() {
-      button.style.transform = 'scale(1.05)';
-      button.style.boxShadow = '0 6px 16px rgba(0, 0, 0, 0.2)';
+      button.style.transform = 'scale(1.1)';
+      button.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.25)';
     });
 
     button.addEventListener('mouseleave', function() {
