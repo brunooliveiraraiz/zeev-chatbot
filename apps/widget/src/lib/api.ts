@@ -13,6 +13,10 @@ export type RouteResponse =
       text: string;
     }
   | {
+      type: 'resolved';
+      text: string;
+    }
+  | {
       type: 'direct_link';
       text: string;
       link: { label: string; url: string };

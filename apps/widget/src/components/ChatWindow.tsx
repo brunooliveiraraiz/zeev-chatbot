@@ -33,8 +33,8 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
   // Mostrar widget de avaliação após resolução (link enviado ou problema resolvido)
   useEffect(() => {
     const hasLink = messages.some(msg => msg.link !== undefined);
-    const hasTroubleshooting = messages.some(msg => msg.responseType === 'troubleshooting');
-    const isResolved = hasLink || hasTroubleshooting;
+    const hasResolved = messages.some(msg => msg.responseType === 'resolved');
+    const isResolved = hasLink || hasResolved;
 
     if (isResolved && !showRating && !ratingSubmitted) {
       // Aguardar 10 segundos após a resolução para mostrar o widget
@@ -71,8 +71,10 @@ export function ChatWindow({ sessionId, stage, onClose }: ChatWindowProps) {
       };
       setMessages((prev) => [...prev, botMessage]);
 
-      // Se houve resolução (link ou troubleshooting), adicionar mensagem pedindo avaliação (apenas uma vez)
-      if ((response.type === 'direct_link' || response.type === 'troubleshooting') && !ratingRequestSent) {
+      // Se houve resolução real (link ou resolved), adicionar mensagem pedindo avaliação (apenas uma vez)
+      const hasResolution = response.type === 'direct_link' || response.type === 'resolved';
+
+      if (hasResolution && !ratingRequestSent) {
         setRatingRequestSent(true);
         setTimeout(() => {
           const ratingRequestMessage: Message = {

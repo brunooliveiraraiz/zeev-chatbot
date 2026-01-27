@@ -383,10 +383,10 @@ async function saveConversationResolution(sessionId, aiResponse) {
 }
 
 function analyzeResponse(aiResponse, stage) {
-  // Verificar se resolveu
+  // Verificar se resolveu via troubleshooting
   if (aiResponse.includes('PROBLEMA_RESOLVIDO')) {
     return {
-      type: 'troubleshooting',
+      type: 'resolved',
       text: cleanResponse(aiResponse)
     };
   }

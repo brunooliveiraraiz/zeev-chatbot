@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     }
 
     // Validar que pelo menos rating ou helpful foi fornecido
-    if (rating === undefined && rating === null && helpful === undefined && helpful === null) {
+    if ((rating === undefined || rating === null) && (helpful === undefined || helpful === null)) {
       return res.status(400).json({ error: 'rating ou helpful é obrigatório' });
     }
 
@@ -43,13 +43,20 @@ export default async function handler(req, res) {
       }
     }
 
-    // Preparar dados para salvar
-    const data = {
-      sessionId,
-      rating: rating !== undefined && rating !== null ? rating : null,
-      helpful: helpful !== undefined && helpful !== null ? helpful : null,
-      feedback: feedback || null,
-    };
+    // Preparar dados para salvar (apenas incluir campos que foram fornecidos)
+    const data = { sessionId };
+
+    if (rating !== undefined && rating !== null) {
+      data.rating = rating;
+    }
+
+    if (helpful !== undefined && helpful !== null) {
+      data.helpful = helpful;
+    }
+
+    if (feedback) {
+      data.feedback = feedback;
+    }
 
     // Tentar criar ou atualizar rating
     const savedRating = await prisma.conversationRating.upsert({

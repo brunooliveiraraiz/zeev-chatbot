@@ -60,7 +60,7 @@ model ConversationResolution {
 model ConversationRating {
   id           String   @id @default(cuid())
   sessionId    String   @unique
-  rating       Int      // 1-5 estrelas
+  rating       Int?     // 1-5 estrelas (opcional)
   feedback     String?  // Comentário opcional do usuário
   helpful      Boolean? // true = útil, false = não útil (alternativa simples)
   createdAt    DateTime @default(now())
