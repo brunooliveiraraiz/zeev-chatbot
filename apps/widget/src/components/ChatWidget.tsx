@@ -26,32 +26,42 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
     const urlParams = new URLSearchParams(window.location.search);
     const embedMode = urlParams.get('embed') === 'true';
 
+    console.log('🔧 ChatWidget mounted | embedMode:', embedMode);
+
     setIsEmbedded(embedMode);
     if (embedMode) {
+      console.log('📱 Setting isOpen to true (embed mode)');
       setIsOpen(true); // Auto-abrir quando em modo embed
     }
 
     // Configurar sessão
     const existing = getSessionId();
     if (existing) {
+      console.log('📦 Using existing sessionId:', existing);
       setSessionId(existing);
     } else {
       const newId = generateSessionId();
+      console.log('✨ Generated new sessionId:', newId);
       saveSessionId(newId);
       setSessionId(newId);
     }
 
     // Escutar mensagens do parent (apenas em modo embed)
-    if (embedMode) {
-      const handleMessage = (event: MessageEvent) => {
-        if (event.data && event.data.type === 'zeev-chatbot-open') {
-          setIsOpen(true);
-        }
-      };
+    const handleMessage = (event: MessageEvent) => {
+      console.log('📨 Received message:', event.data);
+      if (embedMode && event.data && event.data.type === 'zeev-chatbot-open') {
+        console.log('🚀 Opening chat via postMessage');
+        setIsOpen(true);
+      }
+    };
 
-      window.addEventListener('message', handleMessage);
-      return () => window.removeEventListener('message', handleMessage);
-    }
+    window.addEventListener('message', handleMessage);
+
+    // Cleanup sempre retorna função
+    return () => {
+      console.log('🧹 Cleaning up event listener');
+      window.removeEventListener('message', handleMessage);
+    };
   }, []);
 
   const handleClose = () => {

@@ -119,16 +119,23 @@
     const container = document.getElementById('zeev-chatbot-container');
     const iframe = container.querySelector('iframe');
 
+    console.log('🔄 toggleWidget | current display:', container.style.display);
+
     if (container.style.display === 'none' || container.style.display === '') {
+      console.log('📖 Opening container');
       container.style.display = 'block';
 
       // Notificar o iframe para abrir o chat
       if (iframe && iframe.contentWindow) {
+        console.log('📤 Sending zeev-chatbot-open message to iframe');
         iframe.contentWindow.postMessage({
           type: 'zeev-chatbot-open'
         }, '*');
+      } else {
+        console.warn('⚠️ Iframe or contentWindow not found');
       }
     } else {
+      console.log('📕 Closing container');
       container.style.display = 'none';
     }
   }
@@ -160,13 +167,17 @@
 
     // Escutar mensagens do iframe
     window.addEventListener('message', function(event) {
+      console.log('📨 Received message from iframe:', event.data, '| origin:', event.origin);
+
       // Verificar origem por segurança
       if (event.origin !== 'https://brunooliveiraraiz.github.io') {
+        console.warn('⚠️ Message from untrusted origin, ignoring');
         return;
       }
 
       // Processar comandos
       if (event.data && event.data.type === 'zeev-chatbot-close') {
+        console.log('📕 Closing widget via message');
         hideWidget();
       }
     });
