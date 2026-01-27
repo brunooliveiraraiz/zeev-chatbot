@@ -2,6 +2,11 @@
   // evita duplicar
   if (document.getElementById("raiz-chatbot-root")) return;
 
+  // não mostrar na tela de login
+  var currentPath = window.location.pathname;
+  var isLoginPage = currentPath.includes("/login") || currentPath.includes("/auth");
+  if (isLoginPage) return;
+
   // contexto Zeev (se existir)
   var zeevCtx = window.__zeev || window._zeev || window.zeev || {};
   var ctxBase64 = "";
