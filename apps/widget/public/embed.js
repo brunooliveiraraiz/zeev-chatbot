@@ -23,48 +23,47 @@
     const button = document.createElement('button');
     button.id = 'zeev-chatbot-button';
 
-    // Usar a imagem do robozinho
+    // Usar a imagem do mascote
     const img = document.createElement('img');
     img.src = CONFIG.widgetUrl + 'chatbot-icon.png';
     img.alt = 'Chat Zeev';
     img.style.cssText = `
-      width: 100%;
-      height: 100%;
+      width: 75%;
+      height: 75%;
       object-fit: contain;
     `;
     button.appendChild(img);
 
-    // Estilos do botão (circular)
+    // Estilos do botão (circular azul maior)
     const position = CONFIG.buttonPosition === 'bottom-left' ? 'left: 20px;' : 'right: 20px;';
     button.style.cssText = `
       position: fixed;
       bottom: 20px;
       ${position}
-      width: 60px;
-      height: 60px;
-      background-color: transparent;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 16px rgba(33, 150, 243, 0.4);
       z-index: ${CONFIG.zIndex};
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
       padding: 0;
-      overflow: hidden;
     `;
 
     // Hover effect
     button.addEventListener('mouseenter', function() {
       button.style.transform = 'scale(1.1)';
-      button.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.25)';
+      button.style.boxShadow = '0 6px 24px rgba(33, 150, 243, 0.6)';
     });
 
     button.addEventListener('mouseleave', function() {
       button.style.transform = 'scale(1)';
-      button.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+      button.style.boxShadow = '0 4px 16px rgba(33, 150, 243, 0.4)';
     });
 
     return button;
