@@ -117,8 +117,17 @@
   // Toggle do widget
   function toggleWidget() {
     const container = document.getElementById('zeev-chatbot-container');
+    const iframe = container.querySelector('iframe');
+
     if (container.style.display === 'none' || container.style.display === '') {
       container.style.display = 'block';
+
+      // Notificar o iframe para abrir o chat
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({
+          type: 'zeev-chatbot-open'
+        }, '*');
+      }
     } else {
       container.style.display = 'none';
     }

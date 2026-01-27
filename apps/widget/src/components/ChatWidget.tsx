@@ -31,6 +31,7 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
       setIsOpen(true); // Auto-abrir quando em modo embed
     }
 
+    // Configurar sessão
     const existing = getSessionId();
     if (existing) {
       setSessionId(existing);
@@ -38,6 +39,18 @@ export function ChatWidget({ title = 'Zeev Chat', stage }: ChatWidgetProps) {
       const newId = generateSessionId();
       saveSessionId(newId);
       setSessionId(newId);
+    }
+
+    // Escutar mensagens do parent (apenas em modo embed)
+    if (embedMode) {
+      const handleMessage = (event: MessageEvent) => {
+        if (event.data && event.data.type === 'zeev-chatbot-open') {
+          setIsOpen(true);
+        }
+      };
+
+      window.addEventListener('message', handleMessage);
+      return () => window.removeEventListener('message', handleMessage);
     }
   }, []);
 
